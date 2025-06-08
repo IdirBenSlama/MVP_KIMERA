@@ -6,5 +6,9 @@ scipy
 httpx
 SQLAlchemy
 psycopg2-binary
+ mm4812-codex/implement-vector-search-for-geoids
+
+=======
+ main
 pgvector
 sentence-transformers

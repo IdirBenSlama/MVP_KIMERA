@@ -117,7 +117,10 @@ async def create_geoid(request: CreateGeoidRequest):
         geoid_id=geoid.geoid_id,
         symbolic_state=geoid.symbolic_state,
         metadata_json=geoid.metadata,
+ mm4812-codex/implement-vector-search-for-geoids
+=======
         semantic_state_json=geoid.semantic_state,
+ main
         semantic_vector=vector,
     )
     db.add(geoid_db)
@@ -331,7 +334,10 @@ async def search_geoids(query: str, limit: int = 5):
     finally:
         db.close()
 
+ mm4812-codex/implement-vector-search-for-geoids
+=======
 
+ main
 @app.get("/system/status")
 async def get_system_status():
     vault_manager = kimera_system['vault_manager']
