@@ -1,9 +1,10 @@
 from __future__ import annotations
-from typing import Dict, Any, List
+from typing import Dict, Any
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import uuid
 from datetime import datetime
+import os
 
 from ..core.geoid import GeoidState
 from ..core.scar import ScarRecord
@@ -11,14 +12,32 @@ from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
 from ..vault.database import SessionLocal, GeoidDB
-from sentence_transformers import SentenceTransformer
+import hashlib
 import numpy as np
+
+class _DummyTransformer:
+    def encode(self, text: str):
+        h = hashlib.sha256(text.encode()).digest()
+        vec = np.frombuffer(h, dtype=np.uint8).astype(float)
+        reps = (384 + len(vec) - 1) // len(vec)
+        return np.tile(vec, reps)[:384] / 255.0
+
+try:
+    from sentence_transformers import SentenceTransformer  # type: ignore
+except Exception:  # pragma: no cover - allow tests without heavy deps
+    SentenceTransformer = None  # type: ignore
+
+_fallback_model = _DummyTransformer()
 from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
 
 # Load embedding model once at startup for semantic vector persistence
-embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+LIGHTWEIGHT_EMBEDDING = os.getenv("LIGHTWEIGHT_EMBEDDING", "0") == "1"
+if SentenceTransformer is not None and not LIGHTWEIGHT_EMBEDDING:
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+else:  # pragma: no cover - lightweight fallback
+    embedding_model = _fallback_model
 
 kimera_system = {
     'contradiction_engine': ContradictionEngine(),
@@ -121,10 +140,22 @@ async def create_geoid(request: CreateGeoidRequest):
 
 @app.post("/process/contradictions", response_model=Dict[str, Any])
 async def process_contradictions(request: ProcessContradictionRequest):
+ adrx0s-codex/connect-contradiction-engine-with-vector-search
     """Autonomously discover contradictions for a trigger Geoid."""
 
     db = SessionLocal()
     trigger_db = db.query(GeoidDB).filter(GeoidDB.geoid_id == request.trigger_geoid_id).first()
+=======
+    """Autonomously find related Geoids and process contradictions."""
+
+    db = SessionLocal()
+
+    trigger_db = (
+        db.query(GeoidDB)
+        .filter(GeoidDB.geoid_id == request.trigger_geoid_id)
+        .first()
+    )
+ main
     if not trigger_db:
         db.close()
         raise HTTPException(status_code=404, detail="Trigger Geoid not found")
@@ -146,6 +177,7 @@ async def process_contradictions(request: ProcessContradictionRequest):
             .limit(request.search_limit)
             .all()
         )
+ adrx0s-codex/connect-contradiction-engine-with-vector-search
     db.close()
 
     def to_state(row: GeoidDB) -> GeoidState:
@@ -154,6 +186,27 @@ async def process_contradictions(request: ProcessContradictionRequest):
             semantic_state=row.semantic_state_json or {},
             symbolic_state=row.symbolic_state or {},
             metadata=row.metadata_json or {},
+=======
+
+    db.close()
+
+    trigger_state = kimera_system['active_geoids'].get(request.trigger_geoid_id)
+    if not trigger_state:
+        raise HTTPException(status_code=404, detail="Trigger Geoid state not active")
+
+    similar_states = [
+        kimera_system['active_geoids'][g.geoid_id]
+        for g in similar_db
+        if g.geoid_id in kimera_system['active_geoids']
+    ]
+
+    target_geoids = [trigger_state] + similar_states
+
+    if len(target_geoids) < 2:
+        raise HTTPException(
+            status_code=400,
+            detail="No related Geoids available for contradiction detection."
+ main
         )
 
     target_geoids: List[GeoidState] = []
@@ -210,9 +263,11 @@ async def process_contradictions(request: ProcessContradictionRequest):
 
     return {
         'cycle': kimera_system['system_state']['cycle_count'],
+        'trigger_geoid': request.trigger_geoid_id,
+        'semantically_related_geoids_found': len(similar_db),
         'contradictions_detected': len(tensions),
         'scars_created': scars_created,
-        'analysis_results': results
+        'analysis_results': results,
     }
 
 
@@ -248,25 +303,34 @@ async def search_geoids(query: str, limit: int = 5):
     """Find geoids semantically similar to a query string."""
     query_vector = embedding_model.encode(query).tolist()
     db = SessionLocal()
-    if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
-        results = (
-            db.query(GeoidDB)
-            .order_by(GeoidDB.semantic_vector.l2_distance(query_vector))
-            .limit(limit)
-            .all()
-        )
-    else:
-        results = db.query(GeoidDB).limit(limit).all()
-    similar = [
-        {
-            'geoid_id': r.geoid_id,
-            'symbolic_state': r.symbolic_state,
-            'metadata': r.metadata_json,
-        }
-        for r in results
-    ]
-    db.close()
-    return {"query": query, "similar_geoids": similar}
+    try:
+        if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+            results = (
+                db.query(GeoidDB)
+                .order_by(GeoidDB.semantic_vector.l2_distance(query_vector))
+                .limit(limit)
+                .all()
+            )
+        else:
+            all_rows = db.query(GeoidDB).all()
+            # Compute simple L2 distance in Python for sqlite fallback
+            def _dist(row):
+                vec = np.array(row.semantic_vector, dtype=float)
+                return np.linalg.norm(vec - np.array(query_vector, dtype=float))
+
+            results = sorted(all_rows, key=_dist)[:limit]
+        similar = [
+            {
+                'geoid_id': r.geoid_id,
+                'symbolic_state': r.symbolic_state,
+                'metadata': r.metadata_json,
+            }
+            for r in results
+        ]
+        return {"query": query, "similar_geoids": similar}
+    finally:
+        db.close()
+
 
 @app.get("/system/status")
 async def get_system_status():
