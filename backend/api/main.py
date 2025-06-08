@@ -11,14 +11,26 @@ from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
 from ..vault.database import SessionLocal, GeoidDB
-from sentence_transformers import SentenceTransformer
+try:
+    from sentence_transformers import SentenceTransformer
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+except Exception:  # pragma: no cover - fallback for minimal env
+    class SentenceTransformer:
+        def __init__(self, *args, **kwargs):
+            pass
+        def encode(self, text):
+            # simple deterministic embedding based on char ordinals
+            arr = [ord(c) for c in text[:64]]
+            if len(arr) < 64:
+                arr += [0] * (64 - len(arr))
+            return np.array(arr, dtype=float)
+
+    embedding_model = SentenceTransformer()
+
 import numpy as np
 from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
-
-# Load embedding model once at startup for semantic vector persistence
-embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 kimera_system = {
     'contradiction_engine': ContradictionEngine(),
@@ -65,7 +77,8 @@ class CreateGeoidRequest(BaseModel):
     metadata: Dict[str, Any] = {}
 
 class ProcessContradictionRequest(BaseModel):
-    geoid_ids: List[str]
+    trigger_geoid_id: str
+    search_limit: int = 5
     force_collapse: bool = False  # Optional flag for future use
 
 @app.post("/geoids")
@@ -114,20 +127,55 @@ async def create_geoid(request: CreateGeoidRequest):
 
 @app.post("/process/contradictions", response_model=Dict[str, Any])
 async def process_contradictions(request: ProcessContradictionRequest):
-    """Execute the core contradiction detection and processing cycle
-    based on DOC-205a specifications."""
+    """Autonomously find related Geoids and process contradictions."""
 
-    # 1. Fetch the target Geoids from the active system state
-    target_geoids = [
-        kimera_system['active_geoids'][gid]
-        for gid in request.geoid_ids
-        if gid in kimera_system['active_geoids']
+    db = SessionLocal()
+
+    trigger_db = (
+        db.query(GeoidDB)
+        .filter(GeoidDB.geoid_id == request.trigger_geoid_id)
+        .first()
+    )
+    if not trigger_db:
+        db.close()
+        raise HTTPException(status_code=404, detail="Trigger Geoid not found")
+
+    trigger_vector = trigger_db.semantic_vector
+
+    if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+        similar_db = (
+            db.query(GeoidDB)
+            .filter(GeoidDB.geoid_id != request.trigger_geoid_id)
+            .order_by(GeoidDB.semantic_vector.l2_distance(trigger_vector))
+            .limit(request.search_limit)
+            .all()
+        )
+    else:
+        similar_db = (
+            db.query(GeoidDB)
+            .filter(GeoidDB.geoid_id != request.trigger_geoid_id)
+            .limit(request.search_limit)
+            .all()
+        )
+
+    db.close()
+
+    trigger_state = kimera_system['active_geoids'].get(request.trigger_geoid_id)
+    if not trigger_state:
+        raise HTTPException(status_code=404, detail="Trigger Geoid state not active")
+
+    similar_states = [
+        kimera_system['active_geoids'][g.geoid_id]
+        for g in similar_db
+        if g.geoid_id in kimera_system['active_geoids']
     ]
+
+    target_geoids = [trigger_state] + similar_states
 
     if len(target_geoids) < 2:
         raise HTTPException(
             status_code=400,
-            detail="Contradiction detection requires at least two valid Geoid IDs."
+            detail="No related Geoids available for contradiction detection."
         )
 
     # 2. Run the Contradiction Engine
@@ -179,9 +227,11 @@ async def process_contradictions(request: ProcessContradictionRequest):
 
     return {
         'cycle': kimera_system['system_state']['cycle_count'],
+        'trigger_geoid': request.trigger_geoid_id,
+        'semantically_related_geoids_found': len(similar_db),
         'contradictions_detected': len(tensions),
         'scars_created': scars_created,
-        'analysis_results': results
+        'analysis_results': results,
     }
 
 

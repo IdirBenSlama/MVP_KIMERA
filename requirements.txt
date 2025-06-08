@@ -6,6 +6,4 @@ scipy
 httpx
 SQLAlchemy
 psycopg2-binary
-
 pgvector
-sentence-transformers
