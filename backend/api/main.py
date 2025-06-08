@@ -4,16 +4,40 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import uuid
 from datetime import datetime
+import os
 
 from ..core.geoid import GeoidState
 from ..core.scar import ScarRecord
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
+from ..vault.database import SessionLocal, GeoidDB
+import hashlib
 import numpy as np
+
+class _DummyTransformer:
+    def encode(self, text: str):
+        h = hashlib.sha256(text.encode()).digest()
+        vec = np.frombuffer(h, dtype=np.uint8).astype(float)
+        reps = (384 + len(vec) - 1) // len(vec)
+        return np.tile(vec, reps)[:384] / 255.0
+
+try:
+    from sentence_transformers import SentenceTransformer  # type: ignore
+except Exception:  # pragma: no cover - allow tests without heavy deps
+    SentenceTransformer = None  # type: ignore
+
+_fallback_model = _DummyTransformer()
 from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
+
+# Load embedding model once at startup for semantic vector persistence
+LIGHTWEIGHT_EMBEDDING = os.getenv("LIGHTWEIGHT_EMBEDDING", "0") == "1"
+if SentenceTransformer is not None and not LIGHTWEIGHT_EMBEDDING:
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+else:  # pragma: no cover - lightweight fallback
+    embedding_model = _fallback_model
 
 kimera_system = {
     'contradiction_engine': ContradictionEngine(),
@@ -79,6 +103,21 @@ async def create_geoid(request: CreateGeoidRequest):
         symbolic_state=request.symbolic_content,
         metadata=request.metadata,
     )
+
+    # --- VECTOR PERSISTENCE ---
+    semantic_text = " ".join([f"{k}:{v:.2f}" for k, v in request.semantic_features.items()])
+    vector = embedding_model.encode(semantic_text).tolist()
+    db = SessionLocal()
+    geoid_db = GeoidDB(
+        geoid_id=geoid.geoid_id,
+        symbolic_state=geoid.symbolic_state,
+        metadata_json=geoid.metadata,
+        semantic_vector=vector,
+    )
+    db.add(geoid_db)
+    db.commit()
+    db.refresh(geoid_db)
+    db.close()
 
     # Validate thermodynamic constraints for new geoid (no before state)
     kimera_system['thermodynamics_engine'].validate_transformation(
@@ -190,6 +229,40 @@ async def get_vault_contents(vault_id: str, limit: int = 10):
         for s in scars
     ]
     return {"vault_id": vault_id, "scars": scars_dicts}
+
+
+@app.get("/geoids/search")
+async def search_geoids(query: str, limit: int = 5):
+    """Find geoids semantically similar to a query string."""
+    query_vector = embedding_model.encode(query).tolist()
+    db = SessionLocal()
+    try:
+        if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+            results = (
+                db.query(GeoidDB)
+                .order_by(GeoidDB.semantic_vector.l2_distance(query_vector))
+                .limit(limit)
+                .all()
+            )
+        else:
+            all_rows = db.query(GeoidDB).all()
+            # Compute simple L2 distance in Python for sqlite fallback
+            def _dist(row):
+                vec = np.array(row.semantic_vector, dtype=float)
+                return np.linalg.norm(vec - np.array(query_vector, dtype=float))
+
+            results = sorted(all_rows, key=_dist)[:limit]
+        similar = [
+            {
+                'geoid_id': r.geoid_id,
+                'symbolic_state': r.symbolic_state,
+                'metadata': r.metadata_json,
+            }
+            for r in results
+        ]
+        return {"query": query, "similar_geoids": similar}
+    finally:
+        db.close()
 
 @app.get("/system/status")
 async def get_system_status():
