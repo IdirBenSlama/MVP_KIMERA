@@ -43,6 +43,7 @@ class GeoidDB(Base):
     geoid_id = Column(String, primary_key=True, index=True)
     symbolic_state = Column(JSON)
     metadata_json = Column(JSON)
+    semantic_state_json = Column(JSON)
     if DATABASE_URL.startswith("postgresql") and Vector is not None:
         semantic_vector = Column(Vector(384))  # type: ignore
     else:
