@@ -6,7 +6,7 @@ from backend.api.main import app, kimera_system
 client = TestClient(app)
 
 def test_create_geoid_and_status():
-    response = client.post('/geoids', json={'semantic_features': {'a': 0.6, 'b': 0.4}})
+    response = client.post('/geoids', json={'semantic_features': {'approval_score': 0.9, 'risk_factor': 0.1}})
     assert response.status_code == 200
     data = response.json()
     gid = data['geoid_id']
@@ -17,11 +17,11 @@ def test_create_geoid_and_status():
     assert 'system_entropy' in status
 
     # create another geoid for contradiction test
-    response2 = client.post('/geoids', json={'semantic_features': {'a': 1.0}})
+    response2 = client.post('/geoids', json={'semantic_features': {'approval_score': -0.8, 'risk_factor': 0.9}})
     assert response2.status_code == 200
     gid2 = response2.json()['geoid_id']
 
     contr = client.post('/process/contradictions', json={'geoid_ids': [gid, gid2]})
     assert contr.status_code == 200
     results = contr.json()
-    assert 'results' in results
+    assert 'analysis_results' in results

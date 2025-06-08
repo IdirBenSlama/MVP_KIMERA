@@ -26,6 +26,7 @@ class CreateGeoidRequest(BaseModel):
 
 class ProcessContradictionRequest(BaseModel):
     geoid_ids: List[str]
+    force_collapse: bool = False  # Optional flag for future use
 
 @app.post("/geoids")
 async def create_geoid(request: CreateGeoidRequest):
@@ -45,18 +46,64 @@ async def create_geoid(request: CreateGeoidRequest):
         'entropy': geoid.calculate_entropy(),
     }
 
-@app.post("/process/contradictions")
+@app.post("/process/contradictions", response_model=Dict[str, Any])
 async def process_contradictions(request: ProcessContradictionRequest):
-    target_geoids = [kimera_system['active_geoids'].get(gid) for gid in request.geoid_ids if gid in kimera_system['active_geoids']]
+    """Execute the core contradiction detection and processing cycle"""
+
+    # 1. Fetch the target Geoids from the active system state
+    target_geoids = [
+        kimera_system['active_geoids'][gid]
+        for gid in request.geoid_ids
+        if gid in kimera_system['active_geoids']
+    ]
+
     if len(target_geoids) < 2:
-        raise HTTPException(status_code=400, detail="Need at least 2 geoids")
-    tensions = kimera_system['contradiction_engine'].detect_tension_gradients(target_geoids)
+        raise HTTPException(
+            status_code=400,
+            detail="Contradiction detection requires at least two valid Geoid IDs."
+        )
+
+    # 2. Run the Contradiction Engine
+    contradiction_engine = kimera_system['contradiction_engine']
+    tensions = contradiction_engine.detect_tension_gradients(target_geoids)
+
+    if not tensions:
+        return {"status": "complete", "message": "No significant contradictions detected."}
+
+    # 3. Analyze each detected tension
     results = []
-    for t in tensions:
-        pulse = kimera_system['contradiction_engine'].calculate_pulse_strength(t, kimera_system['active_geoids'])
-        decision = kimera_system['contradiction_engine'].decide_collapse_or_surge(pulse, {})
-        results.append({'tension': {'geoid_a': t.geoid_a, 'geoid_b': t.geoid_b, 'score': t.tension_score}, 'pulse_strength': pulse, 'decision': decision})
-    return {'cycle': kimera_system['system_state']['cycle_count'], 'results': results, 'contradictions_detected': len(tensions)}
+    for tension in tensions:
+        pulse_strength = contradiction_engine.calculate_pulse_strength(
+            tension, kimera_system['active_geoids']
+        )
+
+        stability_metrics = {
+            'axis_convergence': 0.8,
+            'vault_resonance': 0.7,
+            'contradiction_lineage_ambiguity': 0.3
+        }
+
+        decision = contradiction_engine.decide_collapse_or_surge(
+            pulse_strength, stability_metrics
+        )
+
+        results.append({
+            'tension': {
+                'geoids_involved': [tension.geoid_a, tension.geoid_b],
+                'score': f"{tension.tension_score:.3f}",
+                'type': tension.gradient_type
+            },
+            'pulse_strength': f"{pulse_strength:.3f}",
+            'system_decision': decision
+        })
+
+    kimera_system['system_state']['cycle_count'] += 1
+
+    return {
+        'cycle': kimera_system['system_state']['cycle_count'],
+        'contradictions_detected': len(tensions),
+        'analysis_results': results
+    }
 
 @app.get("/system/status")
 async def get_system_status():
