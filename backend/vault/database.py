@@ -76,11 +76,15 @@ class GeoidDB(Base):
     geoid_id = Column(String, primary_key=True, index=True)
     symbolic_state = Column(JSON)
     metadata_json = Column(JSON)
+ codex/connect-contradiction-engine-with-vector-search
+    semantic_state_json = Column(JSON)
+=======
  8e2arw-codex/implement-vector-search-for-geoids
 =======
  mm4812-codex/implement-vector-search-for-geoids
 =======
     semantic_state_json = Column(JSON)
+ main
  main
  main
     if DATABASE_URL.startswith("postgresql") and Vector is not None:

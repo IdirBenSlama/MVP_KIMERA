@@ -56,7 +56,11 @@ def test_create_geoid_and_status():
     )
     assert response2.status_code == 200
 
+ codex/connect-contradiction-engine-with-vector-search
+    contr = client.post('/process/contradictions', json={'trigger_geoid_id': gid, 'search_limit': 5})
+=======
     contr = client.post('/process/contradictions', json={'trigger_geoid_id': gid, 'search_limit': 100})
+ main
  main
     assert contr.status_code == 200
     results = contr.json()
@@ -76,6 +80,8 @@ def test_geoid_search():
     res = client.get('/geoids/search', params={'query': 'alpha', 'limit': 20})
     assert res.status_code == 200
     data = res.json()
+ codex/connect-contradiction-engine-with-vector-search
+=======
     assert any(g['geoid_id'] == gid for g in data['similar_geoids'])
  8e2arw-codex/implement-vector-search-for-geoids
 =======
@@ -96,11 +102,25 @@ def test_geoid_search():
     )
     assert res.status_code == 200
     data = res.json()
+ main
     assert 'similar_geoids' in data
     assert len(data['similar_geoids']) > 0
 
 
 def test_autonomous_contradictions():
+ codex/connect-contradiction-engine-with-vector-search
+    g1 = client.post('/geoids', json={'semantic_features': {'x': 0.1, 'y': 0.2}})
+    assert g1.status_code == 200
+    gid1 = g1.json()['geoid_id']
+
+    g2 = client.post('/geoids', json={'semantic_features': {'x': -0.3, 'y': 0.4}})
+    assert g2.status_code == 200
+
+    g3 = client.post('/geoids', json={'semantic_features': {'x': 0.2, 'y': -0.5}})
+    assert g3.status_code == 200
+
+    res = client.post('/process/contradictions', json={'trigger_geoid_id': gid1, 'search_limit': 2})
+=======
     g1 = client.post(
         '/geoids',
         json={'semantic_features': {'x': 0.1, 'y': 0.2}},
@@ -127,9 +147,13 @@ def test_autonomous_contradictions():
 =======
     res = client.get('/geoids/search', params={'query': 'alpha', 'limit': 100})
  main
+ main
     assert res.status_code == 200
     data = res.json()
     assert 'analysis_results' in data
     assert isinstance(data.get('contradictions_detected'), int)
+ codex/connect-contradiction-engine-with-vector-search
+=======
+ main
  main
  main
