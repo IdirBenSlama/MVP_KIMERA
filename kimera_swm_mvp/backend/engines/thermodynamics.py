@@ -20,11 +20,11 @@ class SemanticThermodynamicsEngine:
         self.entropy_monitor = None
         self.energy_tracker = {}
 
-    def validate_transformation(self, geoid_before: GeoidState,
+    def validate_transformation(self, geoid_before: GeoidState | None,
                                geoid_after: GeoidState) -> bool:
         """Enforce ΔS ≥ 0 axiom per DOC-202"""
 
-        entropy_before = geoid_before.calculate_entropy()
+        entropy_before = 0.0 if geoid_before is None else geoid_before.calculate_entropy()
         entropy_after = geoid_after.calculate_entropy()
         delta_entropy = entropy_after - entropy_before
 
@@ -44,9 +44,11 @@ class SemanticThermodynamicsEngine:
 
     def _apply_entropy_compensation(self, geoid: GeoidState, deficit: float):
         """Add complexity feature to compensate entropy loss"""
-        # Add generic complexity feature to maintain ΔS ≥ 0
-        compensation_feature = f"complexity_feature_{len(geoid.semantic_state)}"
-        compensation_value = deficit / 10.0  # Scale appropriately
+        import random
+
+        current_sum = sum(geoid.semantic_state.values())
+        compensation_value = current_sum * 0.05
+        compensation_feature = f"complexity_feature_{random.randint(1000, 9999)}"
 
         geoid.semantic_state[compensation_feature] = compensation_value
         geoid.__post_init__()  # Re-normalize

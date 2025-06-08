@@ -33,6 +33,10 @@ class ContradictionEngine:
         vec_b = [b.semantic_state.get(k, 0.0) for k in keys]
         if not any(vec_a) or not any(vec_b):
             return 0.0
+        # Extra guard against zero vectors for scipy cosine
+        import numpy as np
+        if np.linalg.norm(vec_a) == 0 or np.linalg.norm(vec_b) == 0:
+            return 0.0
         return float(cosine(vec_a, vec_b))
 
     def calculate_pulse_strength(self, tension: TensionGradient, geoids: Dict[str, GeoidState]) -> float:
