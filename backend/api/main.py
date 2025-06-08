@@ -11,6 +11,7 @@ from ..core.scar import ScarRecord
 from ..core.constants import EMBEDDING_DIM
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
+from ..engines.asm import AxisStabilityMonitor
 from ..vault.vault_manager import VaultManager
 from ..vault.database import SessionLocal, GeoidDB, ScarDB
 import hashlib
@@ -153,6 +154,11 @@ async def process_contradictions(request: ProcessContradictionRequest):
     """Autonomously discover contradictions for a trigger Geoid."""
 
     db = SessionLocal()
+
+    # Use Axis Stability Monitor for global metrics
+    asm = AxisStabilityMonitor(db)
+    stability_metrics = asm.get_stability_metrics()
+
     trigger_db = db.query(GeoidDB).filter(GeoidDB.geoid_id == request.trigger_geoid_id).first()
     if not trigger_db:
         db.close()
@@ -205,11 +211,7 @@ async def process_contradictions(request: ProcessContradictionRequest):
             tension, geoids_dict
         )
 
-        stability_metrics = {
-            'axis_convergence': 0.8,
-            'vault_resonance': 0.7,
-            'contradiction_lineage_ambiguity': 0.3
-        }
+        metrics = stability_metrics.copy()
 
         # --- Scar Resonance: consult similar scars ---
         current_summary = f"Tension between {tension.geoid_a} and {tension.geoid_b}"
@@ -229,10 +231,10 @@ async def process_contradictions(request: ProcessContradictionRequest):
         if past_scars:
             avg_entropy = sum(s.delta_entropy for s in past_scars) / len(past_scars)
             if avg_entropy > 0.2:
-                stability_metrics['vault_resonance'] += 0.2
+                metrics['vault_resonance'] += 0.2
 
         decision = contradiction_engine.decide_collapse_or_surge(
-            pulse_strength, stability_metrics
+            pulse_strength, metrics
         )
 
         scar_created = False
