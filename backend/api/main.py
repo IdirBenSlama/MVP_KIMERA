@@ -1,19 +1,47 @@
 from __future__ import annotations
-from typing import Dict, Any, List
+from typing import Dict, Any
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import uuid
 from datetime import datetime
+import os
 
 from ..core.geoid import GeoidState
 from ..core.scar import ScarRecord
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
+ vfv4q0-codex/implement-persistence-layer-with-postgresql
 import numpy as np
+=======
+from ..vault.database import SessionLocal, GeoidDB
+import hashlib
+import numpy as np
+
+class _DummyTransformer:
+    def encode(self, text: str):
+        h = hashlib.sha256(text.encode()).digest()
+        vec = np.frombuffer(h, dtype=np.uint8).astype(float)
+        reps = (384 + len(vec) - 1) // len(vec)
+        return np.tile(vec, reps)[:384] / 255.0
+
+try:
+    from sentence_transformers import SentenceTransformer  # type: ignore
+except Exception:  # pragma: no cover - allow tests without heavy deps
+    SentenceTransformer = None  # type: ignore
+
+_fallback_model = _DummyTransformer()
+ main
 from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
+
+# Load embedding model once at startup for semantic vector persistence
+LIGHTWEIGHT_EMBEDDING = os.getenv("LIGHTWEIGHT_EMBEDDING", "0") == "1"
+if SentenceTransformer is not None and not LIGHTWEIGHT_EMBEDDING:
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+else:  # pragma: no cover - lightweight fallback
+    embedding_model = _fallback_model
 
 kimera_system = {
     'contradiction_engine': ContradictionEngine(),
@@ -22,6 +50,7 @@ kimera_system = {
     'active_geoids': {},
     'system_state': {'cycle_count': 0}
 }
+
 
 def create_scar_from_tension(
     tension: TensionGradient,
@@ -54,14 +83,18 @@ def create_scar_from_tension(
         mutation_frequency=tension.tension_score,
     )
 
+
 class CreateGeoidRequest(BaseModel):
     semantic_features: Dict[str, float]
     symbolic_content: Dict[str, Any] = {}
     metadata: Dict[str, Any] = {}
 
+
 class ProcessContradictionRequest(BaseModel):
-    geoid_ids: List[str]
+    trigger_geoid_id: str
+    search_limit: int = 5
     force_collapse: bool = False  # Optional flag for future use
+
 
 @app.post("/geoids")
 async def create_geoid(request: CreateGeoidRequest):
@@ -80,6 +113,25 @@ async def create_geoid(request: CreateGeoidRequest):
         metadata=request.metadata,
     )
 
+    # --- VECTOR PERSISTENCE ---
+    semantic_text = " ".join([f"{k}:{v:.2f}" for k, v in request.semantic_features.items()])
+    vector = embedding_model.encode(semantic_text).tolist()
+    db = SessionLocal()
+    geoid_db = GeoidDB(
+        geoid_id=geoid.geoid_id,
+        symbolic_state=geoid.symbolic_state,
+        metadata_json=geoid.metadata,
+ mm4812-codex/implement-vector-search-for-geoids
+=======
+        semantic_state_json=geoid.semantic_state,
+ main
+        semantic_vector=vector,
+    )
+    db.add(geoid_db)
+    db.commit()
+    db.refresh(geoid_db)
+    db.close()
+
     # Validate thermodynamic constraints for new geoid (no before state)
     kimera_system['thermodynamics_engine'].validate_transformation(
         None,
@@ -92,23 +144,82 @@ async def create_geoid(request: CreateGeoidRequest):
         'entropy': geoid.calculate_entropy(),
     }
 
+
 @app.post("/process/contradictions", response_model=Dict[str, Any])
 async def process_contradictions(request: ProcessContradictionRequest):
-    """Execute the core contradiction detection and processing cycle
-    based on DOC-205a specifications."""
+ adrx0s-codex/connect-contradiction-engine-with-vector-search
+    """Autonomously discover contradictions for a trigger Geoid."""
 
-    # 1. Fetch the target Geoids from the active system state
-    target_geoids = [
-        kimera_system['active_geoids'][gid]
-        for gid in request.geoid_ids
-        if gid in kimera_system['active_geoids']
+    db = SessionLocal()
+    trigger_db = db.query(GeoidDB).filter(GeoidDB.geoid_id == request.trigger_geoid_id).first()
+=======
+    """Autonomously find related Geoids and process contradictions."""
+
+    db = SessionLocal()
+
+    trigger_db = (
+        db.query(GeoidDB)
+        .filter(GeoidDB.geoid_id == request.trigger_geoid_id)
+        .first()
+    )
+ main
+    if not trigger_db:
+        db.close()
+        raise HTTPException(status_code=404, detail="Trigger Geoid not found")
+
+    trigger_vector = trigger_db.semantic_vector
+
+    if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+        similar_db = (
+            db.query(GeoidDB)
+            .filter(GeoidDB.geoid_id != request.trigger_geoid_id)
+            .order_by(GeoidDB.semantic_vector.l2_distance(trigger_vector))
+            .limit(request.search_limit)
+            .all()
+        )
+    else:
+        similar_db = (
+            db.query(GeoidDB)
+            .filter(GeoidDB.geoid_id != request.trigger_geoid_id)
+            .limit(request.search_limit)
+            .all()
+        )
+ adrx0s-codex/connect-contradiction-engine-with-vector-search
+    db.close()
+
+    def to_state(row: GeoidDB) -> GeoidState:
+        return GeoidState(
+            geoid_id=row.geoid_id,
+            semantic_state=row.semantic_state_json or {},
+            symbolic_state=row.symbolic_state or {},
+            metadata=row.metadata_json or {},
+=======
+
+    db.close()
+
+    trigger_state = kimera_system['active_geoids'].get(request.trigger_geoid_id)
+    if not trigger_state:
+        raise HTTPException(status_code=404, detail="Trigger Geoid state not active")
+
+    similar_states = [
+        kimera_system['active_geoids'][g.geoid_id]
+        for g in similar_db
+        if g.geoid_id in kimera_system['active_geoids']
     ]
+
+    target_geoids = [trigger_state] + similar_states
 
     if len(target_geoids) < 2:
         raise HTTPException(
             status_code=400,
-            detail="Contradiction detection requires at least two valid Geoid IDs."
+            detail="No related Geoids available for contradiction detection."
+ main
         )
+
+    target_geoids: List[GeoidState] = []
+    target_geoids.append(to_state(trigger_db))
+    target_geoids.extend([to_state(r) for r in similar_db])
+    geoids_dict = {g.geoid_id: g for g in target_geoids}
 
     # 2. Run the Contradiction Engine
     contradiction_engine = kimera_system['contradiction_engine']
@@ -122,7 +233,7 @@ async def process_contradictions(request: ProcessContradictionRequest):
     scars_created = 0
     for tension in tensions:
         pulse_strength = contradiction_engine.calculate_pulse_strength(
-            tension, kimera_system['active_geoids']
+            tension, geoids_dict
         )
 
         stability_metrics = {
@@ -137,7 +248,7 @@ async def process_contradictions(request: ProcessContradictionRequest):
 
         scar_created = False
         if decision == 'collapse':
-            scar = create_scar_from_tension(tension, kimera_system['active_geoids'])
+            scar = create_scar_from_tension(tension, geoids_dict)
             kimera_system['vault_manager'].insert_scar(scar)
             scars_created += 1
             scar_created = True
@@ -159,9 +270,11 @@ async def process_contradictions(request: ProcessContradictionRequest):
 
     return {
         'cycle': kimera_system['system_state']['cycle_count'],
+        'trigger_geoid': request.trigger_geoid_id,
+        'semantically_related_geoids_found': len(similar_db),
         'contradictions_detected': len(tensions),
         'scars_created': scars_created,
-        'analysis_results': results
+        'analysis_results': results,
     }
 
 
@@ -191,6 +304,47 @@ async def get_vault_contents(vault_id: str, limit: int = 10):
     ]
     return {"vault_id": vault_id, "scars": scars_dicts}
 
+ vfv4q0-codex/implement-persistence-layer-with-postgresql
+=======
+
+@app.get("/geoids/search")
+async def search_geoids(query: str, limit: int = 5):
+    """Find geoids semantically similar to a query string."""
+    query_vector = embedding_model.encode(query).tolist()
+    db = SessionLocal()
+    try:
+        if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+            results = (
+                db.query(GeoidDB)
+                .order_by(GeoidDB.semantic_vector.l2_distance(query_vector))
+                .limit(limit)
+                .all()
+            )
+        else:
+            all_rows = db.query(GeoidDB).all()
+            # Compute simple L2 distance in Python for sqlite fallback
+            def _dist(row):
+                vec = np.array(row.semantic_vector, dtype=float)
+                return np.linalg.norm(vec - np.array(query_vector, dtype=float))
+
+            results = sorted(all_rows, key=_dist)[:limit]
+        similar = [
+            {
+                'geoid_id': r.geoid_id,
+                'symbolic_state': r.symbolic_state,
+                'metadata': r.metadata_json,
+            }
+            for r in results
+        ]
+        return {"query": query, "similar_geoids": similar}
+    finally:
+        db.close()
+
+ mm4812-codex/implement-vector-search-for-geoids
+=======
+
+ main
+ main
 @app.get("/system/status")
 async def get_system_status():
     vault_manager = kimera_system['vault_manager']
