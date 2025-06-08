@@ -10,6 +10,7 @@ sys.path.insert(0, os.path.abspath("."))
 
 from fastapi.testclient import TestClient  # noqa: E402
 from backend.api.main import app, kimera_system  # noqa: E402
+from backend.vault.database import SessionLocal, ScarDB  # noqa: E402
 
 
 client = TestClient(app)
@@ -107,6 +108,13 @@ def test_autonomous_contradictions():
     assert search.status_code == 200
     sdata = search.json()
     assert 'similar_scars' in sdata
+
+    sid = sdata['similar_scars'][0]['scar_id']
+    db = SessionLocal()
+    scar = db.query(ScarDB).filter_by(scar_id=sid).first()
+    assert scar.weight >= 2.0
+    assert scar.last_accessed is not None
+    db.close()
 
 
 def test_system_stability_endpoint():

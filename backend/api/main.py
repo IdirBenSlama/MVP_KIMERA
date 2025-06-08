@@ -14,6 +14,7 @@ from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..engines.asm import AxisStabilityMonitor
 from ..vault.vault_manager import VaultManager
 from ..vault.database import SessionLocal, GeoidDB, ScarDB
+from ..engines.background_jobs import start_background_jobs, stop_background_jobs
 import hashlib
 import numpy as np
 
@@ -48,6 +49,16 @@ kimera_system = {
     'active_geoids': {},
     'system_state': {'cycle_count': 0}
 }
+
+
+@app.on_event("startup")
+def _startup_background_jobs() -> None:
+    start_background_jobs(embedding_model.encode)
+
+
+@app.on_event("shutdown")
+def _shutdown_background_jobs() -> None:
+    stop_background_jobs()
 
 
 def create_scar_from_tension(
@@ -334,14 +345,19 @@ async def search_scars(query: str, limit: int = 3):
         )
     else:
         results = db.query(ScarDB).limit(limit).all()
-    similar = [
-        {
-            'scar_id': r.scar_id,
-            'reason': r.reason,
-            'delta_entropy': r.delta_entropy,
-        }
-        for r in results
-    ]
+    now = datetime.utcnow()
+    similar = []
+    for r in results:
+        r.last_accessed = now
+        r.weight += 1.0
+        similar.append(
+            {
+                'scar_id': r.scar_id,
+                'reason': r.reason,
+                'delta_entropy': r.delta_entropy,
+            }
+        )
+    db.commit()
     db.close()
     return {"query": query, "similar_scars": similar}
 

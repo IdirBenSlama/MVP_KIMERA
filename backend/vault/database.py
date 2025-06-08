@@ -34,6 +34,8 @@ class ScarDB(Base):
     cls_angle = Column(Float)
     semantic_polarity = Column(Float)
     mutation_frequency = Column(Float)
+    weight = Column(Float, default=1.0, nullable=False)
+    last_accessed = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     if DATABASE_URL.startswith("postgresql") and Vector is not None:
         scar_vector = Column(Vector(EMBEDDING_DIM))  # type: ignore
     else:
