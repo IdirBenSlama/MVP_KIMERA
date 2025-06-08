@@ -6,6 +6,8 @@ This repository contains a minimal implementation of the KIMERA Semantic Working
 
 - Python 3.12+
 - See `requirements.txt` for Python package dependencies.
+- The `httpx` dependency is pinned to `<0.27` due to compatibility with
+  FastAPI's test client.
 
 Install dependencies with:
 
