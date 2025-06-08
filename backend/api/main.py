@@ -1,6 +1,9 @@
 from __future__ import annotations
 from typing import Dict, Any, List
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi.staticfiles import StaticFiles
+from PIL import Image
+import io
 from pydantic import BaseModel
 import uuid
 from datetime import datetime
@@ -15,6 +18,7 @@ from ..engines.asm import AxisStabilityMonitor
 from ..vault.vault_manager import VaultManager
 from ..vault.database import SessionLocal, GeoidDB, ScarDB
 from ..engines.background_jobs import start_background_jobs, stop_background_jobs
+from ..engines.clip_service import clip_service
 import hashlib
 import numpy as np
 
@@ -34,6 +38,7 @@ _fallback_model = _DummyTransformer()
 from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
+app.mount("/images", StaticFiles(directory="static/images"), name="images")
 
 # Load embedding model once at startup for semantic vector persistence
 LIGHTWEIGHT_EMBEDDING = os.getenv("LIGHTWEIGHT_EMBEDDING", "0") == "1"
@@ -157,6 +162,45 @@ async def create_geoid(request: CreateGeoidRequest):
         'geoid_id': geoid_id,
         'geoid': geoid.to_dict(),
         'entropy': geoid.calculate_entropy(),
+    }
+
+
+@app.post("/geoids/from_image", response_model=Dict[str, Any])
+async def create_geoid_from_image(file: UploadFile = File(...)):
+    """Create a Geoid from an uploaded image using CLIP embeddings."""
+    image_bytes = await file.read()
+    image = Image.open(io.BytesIO(image_bytes))
+
+    vector = clip_service.get_image_embedding(image)
+
+    geoid_id = f"GEOID_IMG_{uuid.uuid4().hex[:8]}"
+    geoid = GeoidState(
+        geoid_id=geoid_id,
+        symbolic_state={'type': 'image', 'filename': file.filename},
+        metadata={'image_uri': f"/images/{file.filename}"},
+    )
+
+    db = SessionLocal()
+    geoid_db_entry = GeoidDB(
+        geoid_id=geoid.geoid_id,
+        symbolic_state=geoid.symbolic_state,
+        metadata_json=geoid.metadata,
+        semantic_state_json={},
+        semantic_vector=vector.tolist(),
+    )
+    db.add(geoid_db_entry)
+    db.commit()
+    db.refresh(geoid_db_entry)
+    db.close()
+
+    os.makedirs("static/images", exist_ok=True)
+    with open(f"static/images/{file.filename}", "wb") as buffer:
+        buffer.write(image_bytes)
+
+    return {
+        "message": "Geoid created from image",
+        "geoid_id": geoid_id,
+        "geoid_db": geoid_db_entry.geoid_id,
     }
 
 

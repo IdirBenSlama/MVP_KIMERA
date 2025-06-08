@@ -10,3 +10,6 @@ psycopg2-binary
 pgvector
 sentence-transformers
 apscheduler
+transformers
+torch
+Pillow
