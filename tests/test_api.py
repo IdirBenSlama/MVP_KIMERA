@@ -21,7 +21,7 @@ def test_create_geoid_and_status():
     assert response2.status_code == 200
     gid2 = response2.json()['geoid_id']
 
-    contr = client.post('/process/contradictions', json={'geoid_ids': [gid, gid2]})
+    contr = client.post('/process/contradictions', json={'trigger_geoid_id': gid, 'search_limit': 100})
     assert contr.status_code == 200
     results = contr.json()
     assert 'analysis_results' in results
@@ -33,7 +33,7 @@ def test_geoid_search():
     assert create.status_code == 200
     gid = create.json()['geoid_id']
 
-    res = client.get('/geoids/search', params={'query': 'alpha'})
+    res = client.get('/geoids/search', params={'query': 'alpha', 'limit': 100})
     assert res.status_code == 200
     data = res.json()
     assert any(g['geoid_id'] == gid for g in data['similar_geoids'])
