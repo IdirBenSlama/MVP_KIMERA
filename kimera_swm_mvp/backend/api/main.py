@@ -118,6 +118,9 @@ async def process_contradictions(request: ProcessContradictionRequest):
             'pulse_strength': pulse_strength,
             'decision': decision
         })
+    if 'cycle_count' not in kimera_system['system_state']:
+        kimera_system['system_state']['cycle_count'] = 0
+    kimera_system['system_state']['cycle_count'] += 1
 
     return {
         'cycle': kimera_system['system_state']['cycle_count'],
