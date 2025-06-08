@@ -1,11 +1,23 @@
 fastapi
-uvicorn
+uvicorn[standard]
 pydantic
 numpy
 scipy
 httpx
 SQLAlchemy
 psycopg2-binary
+ 8e2arw-codex/implement-vector-search-for-geoids
 
 pgvector
 sentence-transformers
+=======
+ vfv4q0-codex/implement-persistence-layer-with-postgresql
+=======
+ mm4812-codex/implement-vector-search-for-geoids
+
+=======
+ main
+pgvector
+sentence-transformers
+ main
+ main
