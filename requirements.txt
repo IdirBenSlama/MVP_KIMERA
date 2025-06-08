@@ -4,3 +4,5 @@ pydantic
 numpy
 scipy
 httpx
+SQLAlchemy
+psycopg2-binary
