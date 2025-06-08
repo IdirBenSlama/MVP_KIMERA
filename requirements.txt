@@ -9,4 +9,3 @@ psycopg2-binary
 
 pgvector
 sentence-transformers
-scikit-learn

@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from sklearn.metrics.pairwise import cosine_distances
-from ..vault.database import ScarDB, GeoidDB
 import numpy as np
+from scipy.spatial.distance import pdist
+from ..vault.database import ScarDB, GeoidDB
 
 
 class AxisStabilityMonitor:
@@ -33,7 +33,9 @@ class AxisStabilityMonitor:
         if len(recent_geoids) > 1:
             vectors = [g.semantic_vector for g in recent_geoids if g.semantic_vector is not None]
             if len(vectors) > 1:
-                avg_distance = float(np.mean(cosine_distances(vectors)))
+                # Compute pairwise cosine distances without heavy dependencies
+                distances = pdist(np.array(vectors), metric="cosine")
+                avg_distance = float(np.mean(distances))
                 semantic_cohesion = 1.0 - avg_distance
 
         # Metric 3: Entropic Stability - trend of entropy change
