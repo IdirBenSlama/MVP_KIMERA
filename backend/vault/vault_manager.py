@@ -33,6 +33,7 @@ class VaultManager:
             cls_angle=scar.cls_angle,
             semantic_polarity=scar.semantic_polarity,
             mutation_frequency=scar.mutation_frequency,
+            weight=scar.weight,
             scar_vector=vector,
             vault_id=vault_id,
         )
@@ -42,13 +43,18 @@ class VaultManager:
         return scar_db
 
     def get_scars_from_vault(self, vault_id: str, limit: int = 100) -> List[ScarDB]:
-        return (
+        scars = (
             self.db.query(ScarDB)
             .filter(ScarDB.vault_id == vault_id)
             .order_by(ScarDB.timestamp.desc())
             .limit(limit)
             .all()
         )
+        now = datetime.utcnow()
+        for s in scars:
+            s.last_accessed = now
+        self.db.commit()
+        return scars
 
     def get_total_scar_count(self, vault_id: str) -> int:
         return self.db.query(ScarDB).filter(ScarDB.vault_id == vault_id).count()
