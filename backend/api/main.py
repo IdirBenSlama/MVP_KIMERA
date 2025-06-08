@@ -169,33 +169,44 @@ async def create_geoid(request: CreateGeoidRequest):
 async def create_geoid_from_image(file: UploadFile = File(...)):
     """Create a Geoid from an uploaded image using CLIP embeddings."""
     image_bytes = await file.read()
-    image = Image.open(io.BytesIO(image_bytes))
+    try:
+        image = Image.open(io.BytesIO(image_bytes))
+        image.verify()  # Verify it's a valid image
+        image = Image.open(io.BytesIO(image_bytes))  # Reopen after verify
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid image file")
 
     vector = clip_service.get_image_embedding(image)
 
     geoid_id = f"GEOID_IMG_{uuid.uuid4().hex[:8]}"
+    unique_filename = f"{uuid.uuid4().hex}.png"
     geoid = GeoidState(
         geoid_id=geoid_id,
         symbolic_state={'type': 'image', 'filename': file.filename},
-        metadata={'image_uri': f"/images/{file.filename}"},
+        metadata={'image_uri': f"/images/{unique_filename}"},
     )
 
     db = SessionLocal()
-    geoid_db_entry = GeoidDB(
-        geoid_id=geoid.geoid_id,
-        symbolic_state=geoid.symbolic_state,
-        metadata_json=geoid.metadata,
-        semantic_state_json={},
-        semantic_vector=vector.tolist(),
-    )
-    db.add(geoid_db_entry)
-    db.commit()
-    db.refresh(geoid_db_entry)
-    db.close()
+    try:
+        geoid_db_entry = GeoidDB(
+            geoid_id=geoid.geoid_id,
+            symbolic_state=geoid.symbolic_state,
+            metadata_json=geoid.metadata,
+            semantic_state_json={},
+            semantic_vector=vector.tolist(),
+        )
+        db.add(geoid_db_entry)
+        db.commit()
+        db.refresh(geoid_db_entry)
 
-    os.makedirs("static/images", exist_ok=True)
-    with open(f"static/images/{file.filename}", "wb") as buffer:
-        buffer.write(image_bytes)
+        os.makedirs("static/images", exist_ok=True)
+        with open(f"static/images/{unique_filename}", "wb") as buffer:
+            buffer.write(image_bytes)
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.close()
 
     return {
         "message": "Geoid created from image",
