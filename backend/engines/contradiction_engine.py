@@ -43,9 +43,27 @@ class ContradictionEngine:
         # For MVP use tension score as pulse strength
         return min(tension.tension_score, 1.0)
 
-    def decide_collapse_or_surge(self, pulse_strength: float, stability: Dict[str, float]) -> str:
+    def decide_collapse_or_surge(
+        self,
+        pulse_strength: float,
+        stability: Dict[str, float],
+        profile: Dict[str, object] | None = None,
+    ) -> str:
+        """Determine whether to collapse or surge based on pulse and profile."""
+
+        allow_surges = True
+        if profile is not None:
+            allow_surges = bool(profile.get("allow_surges", True))
+
+        decision: str
         if pulse_strength > 0.8:
-            return 'collapse'
-        if pulse_strength < 0.5:
-            return 'surge'
-        return 'buffer'
+            decision = "collapse"
+        elif pulse_strength < 0.5:
+            decision = "surge"
+        else:
+            decision = "buffer"
+
+        if not allow_surges and decision == "surge":
+            decision = "collapse"
+
+        return decision
