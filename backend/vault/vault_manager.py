@@ -3,7 +3,9 @@ from typing import List
 from datetime import datetime
 
 from ..core.scar import ScarRecord
+from ..core.geoid import GeoidState
 from .database import SessionLocal, ScarDB
+import uuid
 
 
 class VaultManager:
@@ -18,8 +20,22 @@ class VaultManager:
         b_count = self.get_total_scar_count("vault_b")
         return "vault_a" if a_count <= b_count else "vault_b"
 
-    def insert_scar(self, scar: ScarRecord, vector: list[float]) -> ScarDB:
+    def insert_scar(self, scar: ScarRecord | GeoidState, vector: list[float]) -> ScarDB:
         """Insert a ScarRecord and its vector into the persistent store."""
+        if isinstance(scar, GeoidState):
+            scar = ScarRecord(
+                scar_id=f"SCAR_{uuid.uuid4().hex[:8]}",
+                geoids=[scar.geoid_id],
+                reason="auto-generated",
+                timestamp=datetime.utcnow().isoformat(),
+                resolved_by="vault_manager",
+                pre_entropy=0.0,
+                post_entropy=0.0,
+                delta_entropy=0.0,
+                cls_angle=0.0,
+                semantic_polarity=0.0,
+                mutation_frequency=0.0,
+            )
         vault_id = self._select_vault()
         scar_db = ScarDB(
             scar_id=scar.scar_id,
