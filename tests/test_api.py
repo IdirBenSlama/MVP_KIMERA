@@ -1,5 +1,7 @@
-import sys, os; sys.path.insert(0, os.path.abspath("."))
-import json
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath("."))
 from fastapi.testclient import TestClient
 from backend.api.main import app, kimera_system
 
@@ -17,9 +19,11 @@ def test_create_geoid_and_status():
     assert 'system_entropy' in status
 
     # create another geoid for contradiction test
-    response2 = client.post('/geoids', json={'semantic_features': {'approval_score': -0.8, 'risk_factor': 0.9}})
+    response2 = client.post(
+        '/geoids',
+        json={'semantic_features': {'approval_score': -0.8, 'risk_factor': 0.9}},
+    )
     assert response2.status_code == 200
-    gid2 = response2.json()['geoid_id']
 
     contr = client.post('/process/contradictions', json={'trigger_geoid_id': gid, 'search_limit': 100})
     assert contr.status_code == 200
