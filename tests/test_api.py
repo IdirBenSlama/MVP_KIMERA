@@ -107,3 +107,12 @@ def test_autonomous_contradictions():
     assert search.status_code == 200
     sdata = search.json()
     assert 'similar_scars' in sdata
+
+
+def test_system_stability_endpoint():
+    res = client.get('/system/stability')
+    assert res.status_code == 200
+    data = res.json()
+    # Basic keys from AxisStabilityMonitor
+    assert 'vault_pressure' in data
+    assert 'semantic_cohesion' in data

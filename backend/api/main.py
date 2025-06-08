@@ -356,6 +356,16 @@ async def get_system_status():
         'cycle_count': kimera_system['system_state']['cycle_count']
     }
 
+
+@app.get("/system/stability")
+async def get_system_stability():
+    """Return global stability metrics from the Axis Stability Monitor."""
+    db = SessionLocal()
+    asm = AxisStabilityMonitor(db)
+    metrics = asm.get_stability_metrics()
+    db.close()
+    return metrics
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
