@@ -3,7 +3,7 @@ uvicorn
 pydantic
 numpy
 scipy
-httpx
+httpx==0.24.*
 SQLAlchemy
 psycopg2-binary
 
