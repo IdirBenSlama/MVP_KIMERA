@@ -10,10 +10,15 @@ from ..core.scar import ScarRecord
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
+from ..vault.database import SessionLocal, GeoidDB
+from sentence_transformers import SentenceTransformer
 import numpy as np
 from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
+
+# Load embedding model once at startup for semantic vector persistence
+embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 kimera_system = {
     'contradiction_engine': ContradictionEngine(),
@@ -79,6 +84,21 @@ async def create_geoid(request: CreateGeoidRequest):
         symbolic_state=request.symbolic_content,
         metadata=request.metadata,
     )
+
+    # --- VECTOR PERSISTENCE ---
+    semantic_text = " ".join([f"{k}:{v:.2f}" for k, v in request.semantic_features.items()])
+    vector = embedding_model.encode(semantic_text).tolist()
+    db = SessionLocal()
+    geoid_db = GeoidDB(
+        geoid_id=geoid.geoid_id,
+        symbolic_state=geoid.symbolic_state,
+        metadata_json=geoid.metadata,
+        semantic_vector=vector,
+    )
+    db.add(geoid_db)
+    db.commit()
+    db.refresh(geoid_db)
+    db.close()
 
     # Validate thermodynamic constraints for new geoid (no before state)
     kimera_system['thermodynamics_engine'].validate_transformation(
@@ -190,6 +210,32 @@ async def get_vault_contents(vault_id: str, limit: int = 10):
         for s in scars
     ]
     return {"vault_id": vault_id, "scars": scars_dicts}
+
+
+@app.get("/geoids/search")
+async def search_geoids(query: str, limit: int = 5):
+    """Find geoids semantically similar to a query string."""
+    query_vector = embedding_model.encode(query).tolist()
+    db = SessionLocal()
+    if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+        results = (
+            db.query(GeoidDB)
+            .order_by(GeoidDB.semantic_vector.l2_distance(query_vector))
+            .limit(limit)
+            .all()
+        )
+    else:
+        results = db.query(GeoidDB).limit(limit).all()
+    similar = [
+        {
+            'geoid_id': r.geoid_id,
+            'symbolic_state': r.symbolic_state,
+            'metadata': r.metadata_json,
+        }
+        for r in results
+    ]
+    db.close()
+    return {"query": query, "similar_geoids": similar}
 
 @app.get("/system/status")
 async def get_system_status():
