@@ -3,9 +3,11 @@ from typing import Dict, Any, List
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import uuid
+from datetime import datetime
 
 from ..core.geoid import GeoidState
-from ..engines.contradiction_engine import ContradictionEngine
+from ..core.scar import ScarRecord
+from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
 
@@ -18,6 +20,32 @@ kimera_system = {
     'active_geoids': {},
     'system_state': {'cycle_count': 0}
 }
+
+def create_scar_from_tension(
+    tension: TensionGradient,
+    geoids_dict: Dict[str, GeoidState]
+) -> ScarRecord:
+    """Create a ScarRecord from a resolved tension."""
+
+    geoid_a = geoids_dict[tension.geoid_a]
+    geoid_b = geoids_dict[tension.geoid_b]
+
+    pre_entropy = (geoid_a.calculate_entropy() + geoid_b.calculate_entropy()) / 2
+    post_entropy = pre_entropy + 0.1  # Simulate entropy change after collapse
+
+    return ScarRecord(
+        scar_id=f"SCAR_{uuid.uuid4().hex[:8]}",
+        geoids=[tension.geoid_a, tension.geoid_b],
+        reason=f"Resolved '{tension.gradient_type}' tension.",
+        timestamp=datetime.now().isoformat(),
+        resolved_by="ContradictionEngine:Collapse",
+        pre_entropy=pre_entropy,
+        post_entropy=post_entropy,
+        delta_entropy=post_entropy - pre_entropy,
+        cls_angle=45.0,
+        semantic_polarity=0.2,
+        mutation_frequency=0.85,
+    )
 
 class CreateGeoidRequest(BaseModel):
     semantic_features: Dict[str, float]
@@ -73,6 +101,7 @@ async def process_contradictions(request: ProcessContradictionRequest):
 
     # 3. Analyze each detected tension
     results = []
+    scars_created = 0
     for tension in tensions:
         pulse_strength = contradiction_engine.calculate_pulse_strength(
             tension, kimera_system['active_geoids']
@@ -88,6 +117,13 @@ async def process_contradictions(request: ProcessContradictionRequest):
             pulse_strength, stability_metrics
         )
 
+        scar_created = False
+        if decision == 'collapse':
+            scar = create_scar_from_tension(tension, kimera_system['active_geoids'])
+            kimera_system['vault_manager'].insert_scar(scar)
+            scars_created += 1
+            scar_created = True
+
         results.append({
             'tension': {
                 'geoids_involved': [tension.geoid_a, tension.geoid_b],
@@ -95,7 +131,8 @@ async def process_contradictions(request: ProcessContradictionRequest):
                 'type': tension.gradient_type
             },
             'pulse_strength': f"{pulse_strength:.3f}",
-            'system_decision': decision
+            'system_decision': decision,
+            'scar_created': scar_created
         })
 
     kimera_system['system_state']['cycle_count'] += 1
@@ -103,6 +140,7 @@ async def process_contradictions(request: ProcessContradictionRequest):
     return {
         'cycle': kimera_system['system_state']['cycle_count'],
         'contradictions_detected': len(tensions),
+        'scars_created': scars_created,
         'analysis_results': results
     }
 

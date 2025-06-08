@@ -25,3 +25,4 @@ def test_create_geoid_and_status():
     assert contr.status_code == 200
     results = contr.json()
     assert 'analysis_results' in results
+    assert 'scars_created' in results
