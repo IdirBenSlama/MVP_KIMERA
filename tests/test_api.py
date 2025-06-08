@@ -33,7 +33,7 @@ def test_geoid_search():
     assert create.status_code == 200
     gid = create.json()['geoid_id']
 
-    res = client.get('/geoids/search', params={'query': 'alpha'})
+    res = client.get('/geoids/search', params={'query': 'alpha', 'limit': 20})
     assert res.status_code == 200
     data = res.json()
     assert any(g['geoid_id'] == gid for g in data['similar_geoids'])

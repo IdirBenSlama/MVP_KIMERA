@@ -4,6 +4,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import uuid
 from datetime import datetime
+import os
 
 from ..core.geoid import GeoidState
 from ..core.scar import ScarRecord
@@ -11,14 +12,32 @@ from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
 from ..vault.database import SessionLocal, GeoidDB
-from sentence_transformers import SentenceTransformer
+import hashlib
 import numpy as np
+
+class _DummyTransformer:
+    def encode(self, text: str):
+        h = hashlib.sha256(text.encode()).digest()
+        vec = np.frombuffer(h, dtype=np.uint8).astype(float)
+        reps = (384 + len(vec) - 1) // len(vec)
+        return np.tile(vec, reps)[:384] / 255.0
+
+try:
+    from sentence_transformers import SentenceTransformer  # type: ignore
+except Exception:  # pragma: no cover - allow tests without heavy deps
+    SentenceTransformer = None  # type: ignore
+
+_fallback_model = _DummyTransformer()
 from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
 
 # Load embedding model once at startup for semantic vector persistence
-embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+LIGHTWEIGHT_EMBEDDING = os.getenv("LIGHTWEIGHT_EMBEDDING", "0") == "1"
+if SentenceTransformer is not None and not LIGHTWEIGHT_EMBEDDING:
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+else:  # pragma: no cover - lightweight fallback
+    embedding_model = _fallback_model
 
 kimera_system = {
     'contradiction_engine': ContradictionEngine(),
@@ -225,7 +244,13 @@ async def search_geoids(query: str, limit: int = 5):
             .all()
         )
     else:
-        results = db.query(GeoidDB).limit(limit).all()
+        all_rows = db.query(GeoidDB).all()
+        # Compute simple L2 distance in Python for sqlite fallback
+        def _dist(row):
+            vec = np.array(row.semantic_vector, dtype=float)
+            return np.linalg.norm(vec - np.array(query_vector, dtype=float))
+
+        results = sorted(all_rows, key=_dist)[:limit]
     similar = [
         {
             'geoid_id': r.geoid_id,
