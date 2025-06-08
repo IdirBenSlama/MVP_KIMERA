@@ -26,3 +26,14 @@ def test_create_geoid_and_status():
     results = contr.json()
     assert 'analysis_results' in results
     assert 'scars_created' in results
+
+def test_geoid_search():
+    # create geoid to search for
+    create = client.post('/geoids', json={'semantic_features': {'alpha': 1.0}})
+    assert create.status_code == 200
+    gid = create.json()['geoid_id']
+
+    res = client.get('/geoids/search', params={'query': 'alpha'})
+    assert res.status_code == 200
+    data = res.json()
+    assert any(g['geoid_id'] == gid for g in data['similar_geoids'])
