@@ -1,6 +1,7 @@
 # KIMERA SWM MVP
 
 This repository contains a minimal implementation of the KIMERA Semantic Working Memory (SWM) system.
+The authoritative implementation lives in the top-level `backend/` package. The `kimera_swm_mvp/` directory is an archived prototype kept for reference only.
 
 ## Requirements
 
