@@ -68,6 +68,9 @@ function GeoidExplorer() {
         {results.map(g => (
           <li key={g.geoid_id}>
             {g.geoid_id}
+            {g.metadata?.image_uri && (
+              <img src={`${API_BASE}${g.metadata.image_uri}`} alt={g.geoid_id} style={{maxWidth: '100px', display: 'block'}} />
+            )}
             <button onClick={() => trigger(g.geoid_id)}>Process</button>
           </li>
         ))}

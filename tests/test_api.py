@@ -124,3 +124,19 @@ def test_system_stability_endpoint():
     # Basic keys from AxisStabilityMonitor
     assert 'vault_pressure' in data
     assert 'semantic_cohesion' in data
+
+
+def test_create_geoid_from_image():
+    from PIL import Image
+    import io
+
+    img = Image.new('RGB', (2, 2), color='red')
+    buf = io.BytesIO()
+    img.save(buf, format='PNG')
+    buf.seek(0)
+
+    files = {'file': ('test.png', buf.getvalue(), 'image/png')}
+    res = client.post('/geoids/from_image', files=files)
+    assert res.status_code == 200
+    data = res.json()
+    assert 'geoid_id' in data
