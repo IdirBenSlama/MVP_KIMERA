@@ -10,10 +10,10 @@ This repository contains a minimal implementation of the KIMERA Semantic Working
   FastAPI's test client.
 
 Install dependencies with:
-
 ```bash
 pip install -r requirements.txt
 ```
+The `python-multipart` package is required for endpoints that accept image uploads.
 
 ## Running the API
 
