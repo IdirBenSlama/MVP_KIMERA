@@ -16,7 +16,11 @@ function SystemHealthDashboard() {
     setMetrics({ ...status, ...stability });
   };
 
-  useEffect(() => { fetchData(); }, []);
+  useEffect(() => {
+    fetchData();
+    const id = setInterval(fetchData, 5000);
+    return () => clearInterval(id);
+  }, []);
 
   if (!metrics) return React.createElement('p', null, 'Loading...');
 

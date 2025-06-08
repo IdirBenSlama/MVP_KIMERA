@@ -3,7 +3,8 @@
 This folder contains a minimal React dashboard for interacting with the MVP API.
 
 Open `index.html` in a web browser while the FastAPI server is running
-(on `http://localhost:8000` by default). The dashboard provides three main views:
+(on `http://localhost:8000` by default). The dashboard automatically refreshes
+system metrics every few seconds and provides three main views:
 
 - **System Health** – displays metrics from `/system/status` and `/system/stability`.
 - **Geoid Explorer** – search for geoids and trigger contradiction processing.

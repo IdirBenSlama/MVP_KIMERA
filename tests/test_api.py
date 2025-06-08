@@ -116,3 +116,4 @@ def test_system_stability_endpoint():
     # Basic keys from AxisStabilityMonitor
     assert 'vault_pressure' in data
     assert 'semantic_cohesion' in data
+    assert 'entropic_stability' in data

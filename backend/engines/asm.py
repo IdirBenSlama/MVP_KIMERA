@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from sqlalchemy.orm import Session
 import numpy as np
 from scipy.spatial.distance import pdist
@@ -18,7 +18,7 @@ class AxisStabilityMonitor:
 
         # Metric 1: Vault Pressure - recent knowledge consolidation rate
         recent_scars_count = self.db.query(ScarDB).filter(
-            ScarDB.timestamp > datetime.utcnow() - timedelta(hours=1)
+            ScarDB.timestamp > datetime.now(timezone.utc) - timedelta(hours=1)
         ).count()
         vault_pressure = min(recent_scars_count / 10.0, 1.0)
 
@@ -54,7 +54,4 @@ class AxisStabilityMonitor:
             "vault_pressure": vault_pressure,
             "semantic_cohesion": semantic_cohesion,
             "entropic_stability": entropic_stability,
-            "axis_convergence": semantic_cohesion,
-            "vault_resonance": 1.0 - vault_pressure,
-            "contradiction_lineage_ambiguity": vault_pressure,
         }
