@@ -8,10 +8,11 @@ import os
 
 from ..core.geoid import GeoidState
 from ..core.scar import ScarRecord
+from ..core.constants import EMBEDDING_DIM
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
-from ..vault.database import SessionLocal, GeoidDB
+from ..vault.database import SessionLocal, GeoidDB, ScarDB
 import hashlib
 import numpy as np
 
@@ -19,8 +20,8 @@ class _DummyTransformer:
     def encode(self, text: str):
         h = hashlib.sha256(text.encode()).digest()
         vec = np.frombuffer(h, dtype=np.uint8).astype(float)
-        reps = (384 + len(vec) - 1) // len(vec)
-        return np.tile(vec, reps)[:384] / 255.0
+        reps = (EMBEDDING_DIM + len(vec) - 1) // len(vec)
+        return np.tile(vec, reps)[:EMBEDDING_DIM] / 255.0
 
 try:
     from sentence_transformers import SentenceTransformer  # type: ignore
@@ -51,7 +52,7 @@ kimera_system = {
 def create_scar_from_tension(
     tension: TensionGradient,
     geoids_dict: Dict[str, GeoidState]
-) -> ScarRecord:
+) -> tuple[ScarRecord, list[float]]:
     """Create a ScarRecord from a resolved tension with real metrics."""
 
     geoid_a = geoids_dict[tension.geoid_a]
@@ -65,7 +66,7 @@ def create_scar_from_tension(
     vec_b = [geoid_b.semantic_state.get(f, 0.0) for f in all_features]
     cls_angle_proxy = cosine(vec_a, vec_b) if any(vec_a) and any(vec_b) else 0.0
 
-    return ScarRecord(
+    scar = ScarRecord(
         scar_id=f"SCAR_{uuid.uuid4().hex[:8]}",
         geoids=[tension.geoid_a, tension.geoid_b],
         reason=f"Resolved '{tension.gradient_type}' tension.",
@@ -78,6 +79,15 @@ def create_scar_from_tension(
         semantic_polarity=np.mean(list(geoid_a.semantic_state.values())) - np.mean(list(geoid_b.semantic_state.values())),
         mutation_frequency=tension.tension_score,
     )
+
+    geoid_a_summary = " ".join(geoid_a.semantic_state.keys())
+    geoid_b_summary = " ".join(geoid_b.semantic_state.keys())
+    scar_summary_text = (
+        f"Contradiction between '{geoid_a_summary}' and '{geoid_b_summary}'"
+    )
+
+    vector = embedding_model.encode(scar_summary_text).tolist()
+    return scar, vector
 
 
 class CreateGeoidRequest(BaseModel):
@@ -201,14 +211,34 @@ async def process_contradictions(request: ProcessContradictionRequest):
             'contradiction_lineage_ambiguity': 0.3
         }
 
+        # --- Scar Resonance: consult similar scars ---
+        current_summary = f"Tension between {tension.geoid_a} and {tension.geoid_b}"
+        query_vector = embedding_model.encode(current_summary).tolist()
+        db = SessionLocal()
+        if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+            past_scars = (
+                db.query(ScarDB)
+                .order_by(ScarDB.scar_vector.l2_distance(query_vector))
+                .limit(3)
+                .all()
+            )
+        else:
+            past_scars = db.query(ScarDB).limit(3).all()
+        db.close()
+
+        if past_scars:
+            avg_entropy = sum(s.delta_entropy for s in past_scars) / len(past_scars)
+            if avg_entropy > 0.2:
+                stability_metrics['vault_resonance'] += 0.2
+
         decision = contradiction_engine.decide_collapse_or_surge(
             pulse_strength, stability_metrics
         )
 
         scar_created = False
         if decision == 'collapse':
-            scar = create_scar_from_tension(tension, geoids_dict)
-            kimera_system['vault_manager'].insert_scar(scar)
+            scar, vector = create_scar_from_tension(tension, geoids_dict)
+            kimera_system['vault_manager'].insert_scar(scar, vector)
             scars_created += 1
             scar_created = True
 
@@ -286,6 +316,32 @@ async def search_geoids(query: str, limit: int = 5):
     ]
     db.close()
     return {"query": query, "similar_geoids": similar}
+
+
+@app.get("/scars/search")
+async def search_scars(query: str, limit: int = 3):
+    """Find scars semantically similar to a query describing a contradiction."""
+    query_vector = embedding_model.encode(query).tolist()
+    db = SessionLocal()
+    if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+        results = (
+            db.query(ScarDB)
+            .order_by(ScarDB.scar_vector.l2_distance(query_vector))
+            .limit(limit)
+            .all()
+        )
+    else:
+        results = db.query(ScarDB).limit(limit).all()
+    similar = [
+        {
+            'scar_id': r.scar_id,
+            'reason': r.reason,
+            'delta_entropy': r.delta_entropy,
+        }
+        for r in results
+    ]
+    db.close()
+    return {"query": query, "similar_scars": similar}
 
 @app.get("/system/status")
 async def get_system_status():
