@@ -19,10 +19,15 @@ class GeoidState:
                 self.semantic_state = {k: v/total for k, v in self.semantic_state.items()}
 
     def calculate_entropy(self) -> float:
+        """Calculate Shannon entropy of the semantic state."""
         if not self.semantic_state:
             return 0.0
-        probs = list(self.semantic_state.values())
-        return float(-sum(p * np.log2(p) for p in probs if p > 0))
+
+        probabilities = np.array(list(self.semantic_state.values()))
+        probabilities = probabilities[probabilities > 0]
+        if probabilities.size == 0:
+            return 0.0
+        return float(-np.sum(probabilities * np.log2(probabilities)))
 
     def update_semantic_state(self, new_features: Dict[str, float]):
         self.semantic_state.update(new_features)

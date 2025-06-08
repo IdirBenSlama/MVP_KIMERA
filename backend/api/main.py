@@ -10,6 +10,8 @@ from ..core.scar import ScarRecord
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
+import numpy as np
+from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
 
@@ -25,13 +27,18 @@ def create_scar_from_tension(
     tension: TensionGradient,
     geoids_dict: Dict[str, GeoidState]
 ) -> ScarRecord:
-    """Create a ScarRecord from a resolved tension."""
+    """Create a ScarRecord from a resolved tension with real metrics."""
 
     geoid_a = geoids_dict[tension.geoid_a]
     geoid_b = geoids_dict[tension.geoid_b]
 
     pre_entropy = (geoid_a.calculate_entropy() + geoid_b.calculate_entropy()) / 2
-    post_entropy = pre_entropy + 0.1  # Simulate entropy change after collapse
+    post_entropy = pre_entropy + 0.1
+
+    all_features = set(geoid_a.semantic_state.keys()) | set(geoid_b.semantic_state.keys())
+    vec_a = [geoid_a.semantic_state.get(f, 0.0) for f in all_features]
+    vec_b = [geoid_b.semantic_state.get(f, 0.0) for f in all_features]
+    cls_angle_proxy = cosine(vec_a, vec_b) if any(vec_a) and any(vec_b) else 0.0
 
     return ScarRecord(
         scar_id=f"SCAR_{uuid.uuid4().hex[:8]}",
@@ -42,9 +49,9 @@ def create_scar_from_tension(
         pre_entropy=pre_entropy,
         post_entropy=post_entropy,
         delta_entropy=post_entropy - pre_entropy,
-        cls_angle=45.0,
-        semantic_polarity=0.2,
-        mutation_frequency=0.85,
+        cls_angle=cls_angle_proxy * 180 / np.pi,
+        semantic_polarity=np.mean(list(geoid_a.semantic_state.values())) - np.mean(list(geoid_b.semantic_state.values())),
+        mutation_frequency=tension.tension_score,
     )
 
 class CreateGeoidRequest(BaseModel):
@@ -157,12 +164,40 @@ async def process_contradictions(request: ProcessContradictionRequest):
         'analysis_results': results
     }
 
+
+@app.get("/vaults/{vault_id}")
+async def get_vault_contents(vault_id: str, limit: int = 10):
+    """Retrieve recent scars from the specified vault."""
+    if vault_id not in ["vault_a", "vault_b"]:
+        raise HTTPException(status_code=404, detail="Vault not found. Use 'vault_a' or 'vault_b'.")
+
+    vault_manager = kimera_system['vault_manager']
+    scars = vault_manager.get_scars_from_vault(vault_id, limit=limit)
+    scars_dicts = [
+        {
+            'scar_id': s.scar_id,
+            'geoids': s.geoids,
+            'reason': s.reason,
+            'timestamp': s.timestamp.isoformat() if hasattr(s.timestamp, 'isoformat') else s.timestamp,
+            'resolved_by': s.resolved_by,
+            'pre_entropy': s.pre_entropy,
+            'post_entropy': s.post_entropy,
+            'delta_entropy': s.delta_entropy,
+            'cls_angle': s.cls_angle,
+            'semantic_polarity': s.semantic_polarity,
+            'mutation_frequency': s.mutation_frequency,
+        }
+        for s in scars
+    ]
+    return {"vault_id": vault_id, "scars": scars_dicts}
+
 @app.get("/system/status")
 async def get_system_status():
+    vault_manager = kimera_system['vault_manager']
     return {
         'active_geoids': len(kimera_system['active_geoids']),
-        'vault_a_scars': len(kimera_system['vault_manager'].vault_a),
-        'vault_b_scars': len(kimera_system['vault_manager'].vault_b),
+        'vault_a_scars': vault_manager.get_total_scar_count("vault_a"),
+        'vault_b_scars': vault_manager.get_total_scar_count("vault_b"),
         'system_entropy': sum(g.calculate_entropy() for g in kimera_system['active_geoids'].values()),
         'cycle_count': kimera_system['system_state']['cycle_count']
     }
