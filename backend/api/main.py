@@ -11,12 +11,18 @@ from ..core.scar import ScarRecord
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
+ 8e2arw-codex/implement-vector-search-for-geoids
+from ..vault.database import SessionLocal, GeoidDB
+import hashlib
+import numpy as np
+=======
  vfv4q0-codex/implement-persistence-layer-with-postgresql
 import numpy as np
 =======
 from ..vault.database import SessionLocal, GeoidDB
 import hashlib
 import numpy as np
+ main
 
 class _DummyTransformer:
     def encode(self, text: str):
@@ -31,6 +37,9 @@ except Exception:  # pragma: no cover - allow tests without heavy deps
     SentenceTransformer = None  # type: ignore
 
 _fallback_model = _DummyTransformer()
+ 8e2arw-codex/implement-vector-search-for-geoids
+=======
+ main
  main
 from scipy.spatial.distance import cosine
 
@@ -121,9 +130,12 @@ async def create_geoid(request: CreateGeoidRequest):
         geoid_id=geoid.geoid_id,
         symbolic_state=geoid.symbolic_state,
         metadata_json=geoid.metadata,
+ 8e2arw-codex/implement-vector-search-for-geoids
+=======
  mm4812-codex/implement-vector-search-for-geoids
 =======
         semantic_state_json=geoid.semantic_state,
+ main
  main
         semantic_vector=vector,
     )
@@ -304,8 +316,11 @@ async def get_vault_contents(vault_id: str, limit: int = 10):
     ]
     return {"vault_id": vault_id, "scars": scars_dicts}
 
+ 8e2arw-codex/implement-vector-search-for-geoids
+=======
  vfv4q0-codex/implement-persistence-layer-with-postgresql
 =======
+ main
 
 @app.get("/geoids/search")
 async def search_geoids(query: str, limit: int = 5):
@@ -340,9 +355,12 @@ async def search_geoids(query: str, limit: int = 5):
     finally:
         db.close()
 
+ 8e2arw-codex/implement-vector-search-for-geoids
+=======
  mm4812-codex/implement-vector-search-for-geoids
 =======
 
+ main
  main
  main
 @app.get("/system/status")

@@ -63,7 +63,10 @@ def test_create_geoid_and_status():
     assert 'analysis_results' in results
     assert 'scars_created' in results
 
+ 8e2arw-codex/implement-vector-search-for-geoids
+=======
  mm4812-codex/implement-vector-search-for-geoids
+ main
 def test_geoid_search():
     # create geoid to search for
     create = client.post('/geoids', json={'semantic_features': {'alpha': 1.0}})
@@ -74,6 +77,8 @@ def test_geoid_search():
     assert res.status_code == 200
     data = res.json()
     assert any(g['geoid_id'] == gid for g in data['similar_geoids'])
+ 8e2arw-codex/implement-vector-search-for-geoids
+=======
 =======
 
 def test_geoid_search():
@@ -126,4 +131,5 @@ def test_autonomous_contradictions():
     data = res.json()
     assert 'analysis_results' in data
     assert isinstance(data.get('contradictions_detected'), int)
+ main
  main
