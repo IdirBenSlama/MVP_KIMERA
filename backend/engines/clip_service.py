@@ -5,6 +5,7 @@ except Exception:  # pragma: no cover - allow tests without heavy deps
     CLIPModel = None  # type: ignore
 from PIL import Image
 import numpy as np
+from ..core.constants import EMBEDDING_DIM
 try:
     import torch
 except Exception:  # pragma: no cover - allow tests without heavy deps
@@ -29,10 +30,10 @@ class CLIPService:
 
     def get_image_embedding(self, image: Image.Image):
         if self.model is None or self.processor is None:
-            return np.zeros(512)
+            return np.zeros(EMBEDDING_DIM)
         inputs = self.processor(images=image, return_tensors="pt").to(self.device)
         if torch is None:
-            return np.zeros(512)
+            return np.zeros(EMBEDDING_DIM)
         with torch.no_grad():
             image_features = self.model.get_image_features(**inputs)
         image_features /= image_features.norm(dim=-1, keepdim=True)
@@ -40,10 +41,10 @@ class CLIPService:
 
     def get_text_embedding(self, text: str):
         if self.model is None or self.processor is None:
-            return np.zeros(512)
+            return np.zeros(EMBEDDING_DIM)
         inputs = self.processor(text=text, return_tensors="pt").to(self.device)
         if torch is None:
-            return np.zeros(512)
+            return np.zeros(EMBEDDING_DIM)
         with torch.no_grad():
             text_features = self.model.get_text_features(**inputs)
         text_features /= text_features.norm(dim=-1, keepdim=True)
