@@ -13,3 +13,4 @@ apscheduler
 transformers
 torch
 Pillow
+python-multipart

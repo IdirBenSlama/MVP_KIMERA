@@ -8,10 +8,10 @@ This repository contains a minimal implementation of the KIMERA Semantic Working
 - See `requirements.txt` for Python package dependencies.
 
 Install dependencies with:
-
 ```bash
 pip install -r requirements.txt
 ```
+The `python-multipart` package is required for endpoints that accept image uploads.
 
 ## Running the API
 
