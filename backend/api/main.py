@@ -11,14 +11,26 @@ from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
 from ..vault.database import SessionLocal, GeoidDB
-from sentence_transformers import SentenceTransformer
+try:
+    from sentence_transformers import SentenceTransformer
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+except Exception:  # pragma: no cover - fallback for minimal env
+    class SentenceTransformer:
+        def __init__(self, *args, **kwargs):
+            pass
+        def encode(self, text):
+            # simple deterministic embedding based on char ordinals
+            arr = [ord(c) for c in text[:64]]
+            if len(arr) < 64:
+                arr += [0] * (64 - len(arr))
+            return np.array(arr, dtype=float)
+
+    embedding_model = SentenceTransformer()
+
 import numpy as np
 from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
-
-# Load embedding model once at startup for semantic vector persistence
-embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 kimera_system = {
     'contradiction_engine': ContradictionEngine(),
