@@ -11,6 +11,9 @@ from ..core.scar import ScarRecord
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
+ vfv4q0-codex/implement-persistence-layer-with-postgresql
+import numpy as np
+=======
 from ..vault.database import SessionLocal, GeoidDB
 import hashlib
 import numpy as np
@@ -28,6 +31,7 @@ except Exception:  # pragma: no cover - allow tests without heavy deps
     SentenceTransformer = None  # type: ignore
 
 _fallback_model = _DummyTransformer()
+ main
 from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
@@ -300,6 +304,8 @@ async def get_vault_contents(vault_id: str, limit: int = 10):
     ]
     return {"vault_id": vault_id, "scars": scars_dicts}
 
+ vfv4q0-codex/implement-persistence-layer-with-postgresql
+=======
 
 @app.get("/geoids/search")
 async def search_geoids(query: str, limit: int = 5):
@@ -337,6 +343,7 @@ async def search_geoids(query: str, limit: int = 5):
  mm4812-codex/implement-vector-search-for-geoids
 =======
 
+ main
  main
 @app.get("/system/status")
 async def get_system_status():
