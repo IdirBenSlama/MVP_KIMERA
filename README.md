@@ -25,11 +25,12 @@ The API exposes endpoints for managing geoids and scars. Static images are serve
 
 ## Testing
 
-Unit tests are located in the `tests` directory and can be run with `pytest`:
+Unit tests are located in the `tests` directory. Make sure all dependencies are installed and, for faster runs, you may opt into the lightweight embedding mode.
 
 ```bash
-pytest
+pip install -r requirements.txt
+LIGHTWEIGHT_EMBEDDING=1 pytest
 ```
 
-Some stress tests require significant compute time. Set the environment variable `LIGHTWEIGHT_EMBEDDING=1` to avoid downloading heavy models during testing.
+Setting `LIGHTWEIGHT_EMBEDDING=1` avoids downloading heavy models during testing.
 
