@@ -48,7 +48,8 @@ async def create_geoid(request: CreateGeoidRequest):
 
 @app.post("/process/contradictions", response_model=Dict[str, Any])
 async def process_contradictions(request: ProcessContradictionRequest):
-    """Execute the core contradiction detection and processing cycle"""
+    """Execute the core contradiction detection and processing cycle
+    based on DOC-205a specifications."""
 
     # 1. Fetch the target Geoids from the active system state
     target_geoids = [
