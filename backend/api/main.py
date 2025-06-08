@@ -28,6 +28,7 @@ kimera_system = {
     'system_state': {'cycle_count': 0}
 }
 
+
 def create_scar_from_tension(
     tension: TensionGradient,
     geoids_dict: Dict[str, GeoidState]
@@ -59,14 +60,18 @@ def create_scar_from_tension(
         mutation_frequency=tension.tension_score,
     )
 
+
 class CreateGeoidRequest(BaseModel):
     semantic_features: Dict[str, float]
     symbolic_content: Dict[str, Any] = {}
     metadata: Dict[str, Any] = {}
 
+
 class ProcessContradictionRequest(BaseModel):
-    geoid_ids: List[str]
+    trigger_geoid_id: str
+    search_limit: int = 5
     force_collapse: bool = False  # Optional flag for future use
+
 
 @app.post("/geoids")
 async def create_geoid(request: CreateGeoidRequest):
@@ -93,6 +98,7 @@ async def create_geoid(request: CreateGeoidRequest):
         geoid_id=geoid.geoid_id,
         symbolic_state=geoid.symbolic_state,
         metadata_json=geoid.metadata,
+        semantic_state_json=geoid.semantic_state,
         semantic_vector=vector,
     )
     db.add(geoid_db)
@@ -112,23 +118,48 @@ async def create_geoid(request: CreateGeoidRequest):
         'entropy': geoid.calculate_entropy(),
     }
 
+
 @app.post("/process/contradictions", response_model=Dict[str, Any])
 async def process_contradictions(request: ProcessContradictionRequest):
-    """Execute the core contradiction detection and processing cycle
-    based on DOC-205a specifications."""
+    """Autonomously discover contradictions for a trigger Geoid."""
 
-    # 1. Fetch the target Geoids from the active system state
-    target_geoids = [
-        kimera_system['active_geoids'][gid]
-        for gid in request.geoid_ids
-        if gid in kimera_system['active_geoids']
-    ]
+    db = SessionLocal()
+    trigger_db = db.query(GeoidDB).filter(GeoidDB.geoid_id == request.trigger_geoid_id).first()
+    if not trigger_db:
+        db.close()
+        raise HTTPException(status_code=404, detail="Trigger Geoid not found")
 
-    if len(target_geoids) < 2:
-        raise HTTPException(
-            status_code=400,
-            detail="Contradiction detection requires at least two valid Geoid IDs."
+    trigger_vector = trigger_db.semantic_vector
+
+    if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+        similar_db = (
+            db.query(GeoidDB)
+            .filter(GeoidDB.geoid_id != request.trigger_geoid_id)
+            .order_by(GeoidDB.semantic_vector.l2_distance(trigger_vector))
+            .limit(request.search_limit)
+            .all()
         )
+    else:
+        similar_db = (
+            db.query(GeoidDB)
+            .filter(GeoidDB.geoid_id != request.trigger_geoid_id)
+            .limit(request.search_limit)
+            .all()
+        )
+    db.close()
+
+    def to_state(row: GeoidDB) -> GeoidState:
+        return GeoidState(
+            geoid_id=row.geoid_id,
+            semantic_state=row.semantic_state_json or {},
+            symbolic_state=row.symbolic_state or {},
+            metadata=row.metadata_json or {},
+        )
+
+    target_geoids: List[GeoidState] = []
+    target_geoids.append(to_state(trigger_db))
+    target_geoids.extend([to_state(r) for r in similar_db])
+    geoids_dict = {g.geoid_id: g for g in target_geoids}
 
     # 2. Run the Contradiction Engine
     contradiction_engine = kimera_system['contradiction_engine']
@@ -142,7 +173,7 @@ async def process_contradictions(request: ProcessContradictionRequest):
     scars_created = 0
     for tension in tensions:
         pulse_strength = contradiction_engine.calculate_pulse_strength(
-            tension, kimera_system['active_geoids']
+            tension, geoids_dict
         )
 
         stability_metrics = {
@@ -157,7 +188,7 @@ async def process_contradictions(request: ProcessContradictionRequest):
 
         scar_created = False
         if decision == 'collapse':
-            scar = create_scar_from_tension(tension, kimera_system['active_geoids'])
+            scar = create_scar_from_tension(tension, geoids_dict)
             kimera_system['vault_manager'].insert_scar(scar)
             scars_created += 1
             scar_created = True

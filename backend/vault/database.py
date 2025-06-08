@@ -1,7 +1,5 @@
 from sqlalchemy import create_engine, Column, String, Float, JSON, DateTime
 from sqlalchemy.orm import sessionmaker, declarative_base
-from typing import Any
-
 try:
     from pgvector.sqlalchemy import Vector
 except Exception:  # pragma: no cover - allows sqlite tests without pgvector
@@ -19,6 +17,7 @@ if DATABASE_URL.startswith("postgresql"):
         conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+
 
 class ScarDB(Base):
     __tablename__ = "scars"
@@ -43,11 +42,13 @@ class GeoidDB(Base):
     geoid_id = Column(String, primary_key=True, index=True)
     symbolic_state = Column(JSON)
     metadata_json = Column(JSON)
+    semantic_state_json = Column(JSON)
     if DATABASE_URL.startswith("postgresql") and Vector is not None:
         semantic_vector = Column(Vector(384))  # type: ignore
     else:
         # Fallback for sqlite - store vector as JSON list
         semantic_vector = Column(JSON)
+
 
 # Create tables if they don't exist
 Base.metadata.create_all(bind=engine)
