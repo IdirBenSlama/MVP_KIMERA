@@ -1,13 +1,7 @@
 from __future__ import annotations
-from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict
 
-@dataclass
-class ScarRecord:
-    scar_id: str
-    geoids: List[str]
-    reason: str
-    timestamp: str
+from ..core.scar import ScarRecord
 
 class VaultManager:
     def __init__(self):
