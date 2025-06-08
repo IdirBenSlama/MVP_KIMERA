@@ -1,0 +1,14 @@
+{
+  "financial_analysis": {
+    "max_ambiguity_tolerance": 0.2,
+    "enforce_symbolic_consistency": true,
+    "allow_surges": false,
+    "decay_rate_modifier": 0.5
+  },
+  "creative_brainstorming": {
+    "max_ambiguity_tolerance": 0.8,
+    "enforce_symbolic_consistency": false,
+    "allow_surges": true,
+    "decay_rate_modifier": 1.5
+  }
+}

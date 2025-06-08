@@ -140,3 +140,11 @@ def test_create_geoid_from_image():
     assert res.status_code == 200
     data = res.json()
     assert 'geoid_id' in data
+
+
+def test_speak_geoid_endpoint():
+    create = client.post('/geoids', json={'semantic_features': {'z': 1.0}})
+    assert create.status_code == 200
+    gid = create.json()['geoid_id']
+    res = client.get(f'/geoids/{gid}/speak')
+    assert res.status_code in (200, 409)

@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Dict, Any, List
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, HTTPException, UploadFile, File, Request
 from fastapi.staticfiles import StaticFiles
 from PIL import Image
 import io
@@ -11,6 +11,7 @@ import os
 
 from ..core.geoid import GeoidState
 from ..core.scar import ScarRecord
+from ..core.models import LinguisticGeoid
 from ..core.constants import EMBEDDING_DIM
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
@@ -19,6 +20,7 @@ from ..vault.vault_manager import VaultManager
 from ..vault.database import SessionLocal, GeoidDB, ScarDB
 from ..engines.background_jobs import start_background_jobs, stop_background_jobs
 from ..engines.clip_service import clip_service
+from .middleware import icw_middleware
 import hashlib
 import numpy as np
 
@@ -39,6 +41,7 @@ from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
 app.mount("/images", StaticFiles(directory="static/images"), name="images")
+app.middleware("http")(icw_middleware)
 
 # Load embedding model once at startup for semantic vector persistence
 LIGHTWEIGHT_EMBEDDING = os.getenv("LIGHTWEIGHT_EMBEDDING", "0") == "1"
@@ -216,7 +219,7 @@ async def create_geoid_from_image(file: UploadFile = File(...)):
 
 
 @app.post("/process/contradictions", response_model=Dict[str, Any])
-async def process_contradictions(request: ProcessContradictionRequest):
+async def process_contradictions(body: ProcessContradictionRequest, request: Request):
     """Autonomously discover contradictions for a trigger Geoid."""
 
     db = SessionLocal()
@@ -224,8 +227,9 @@ async def process_contradictions(request: ProcessContradictionRequest):
     # Use Axis Stability Monitor for global metrics
     asm = AxisStabilityMonitor(db)
     stability_metrics = asm.get_stability_metrics()
+    profile = getattr(request.state, "kimera_profile", {})
 
-    trigger_db = db.query(GeoidDB).filter(GeoidDB.geoid_id == request.trigger_geoid_id).first()
+    trigger_db = db.query(GeoidDB).filter(GeoidDB.geoid_id == body.trigger_geoid_id).first()
     if not trigger_db:
         db.close()
         raise HTTPException(status_code=404, detail="Trigger Geoid not found")
@@ -235,16 +239,16 @@ async def process_contradictions(request: ProcessContradictionRequest):
     if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
         similar_db = (
             db.query(GeoidDB)
-            .filter(GeoidDB.geoid_id != request.trigger_geoid_id)
+            .filter(GeoidDB.geoid_id != body.trigger_geoid_id)
             .order_by(GeoidDB.semantic_vector.l2_distance(trigger_vector))
-            .limit(request.search_limit)
+            .limit(body.search_limit)
             .all()
         )
     else:
         similar_db = (
             db.query(GeoidDB)
-            .filter(GeoidDB.geoid_id != request.trigger_geoid_id)
-            .limit(request.search_limit)
+            .filter(GeoidDB.geoid_id != body.trigger_geoid_id)
+            .limit(body.search_limit)
             .all()
         )
     db.close()
@@ -300,7 +304,7 @@ async def process_contradictions(request: ProcessContradictionRequest):
                 metrics['vault_resonance'] += 0.2
 
         decision = contradiction_engine.decide_collapse_or_surge(
-            pulse_strength, metrics
+            pulse_strength, metrics, profile
         )
 
         scar_created = False
@@ -358,6 +362,42 @@ async def get_vault_contents(vault_id: str, limit: int = 10):
         for s in scars
     ]
     return {"vault_id": vault_id, "scars": scars_dicts}
+
+
+@app.get("/geoids/{geoid_id}/speak", response_model=LinguisticGeoid)
+async def speak_geoid(geoid_id: str):
+    db = SessionLocal()
+    geoid_db = db.query(GeoidDB).filter(GeoidDB.geoid_id == geoid_id).first()
+    if not geoid_db:
+        db.close()
+        raise HTTPException(status_code=404, detail="Geoid not found")
+
+    asm = AxisStabilityMonitor(db)
+    stability = asm.get_stability_metrics()["semantic_cohesion"]
+    if stability < 0.7:
+        db.close()
+        raise HTTPException(status_code=409, detail="Concept is currently unstable.")
+
+    supporting_scars = (
+        db.query(ScarDB)
+        .filter(ScarDB.geoids.contains([geoid_id]))
+        .limit(3)
+        .all()
+    )
+
+    primary_statement = (
+        f"Based on available data, the concept '{geoid_id}' represents: {geoid_db.symbolic_state}"
+    )
+
+    response = LinguisticGeoid(
+        primary_statement=primary_statement,
+        confidence_score=stability,
+        source_geoid_id=geoid_id,
+        supporting_scars=[scar.__dict__ for scar in supporting_scars],
+        explanation_lineage=f"This concept is supported by {len(supporting_scars)} resolved contradictions."
+    )
+    db.close()
+    return response
 
 
 @app.get("/geoids/search")
