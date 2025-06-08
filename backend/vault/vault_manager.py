@@ -18,8 +18,8 @@ class VaultManager:
         b_count = self.get_total_scar_count("vault_b")
         return "vault_a" if a_count <= b_count else "vault_b"
 
-    def insert_scar(self, scar: ScarRecord) -> ScarDB:
-        """Insert a ScarRecord into the persistent store."""
+    def insert_scar(self, scar: ScarRecord, vector: list[float]) -> ScarDB:
+        """Insert a ScarRecord and its vector into the persistent store."""
         vault_id = self._select_vault()
         scar_db = ScarDB(
             scar_id=scar.scar_id,
@@ -33,6 +33,7 @@ class VaultManager:
             cls_angle=scar.cls_angle,
             semantic_polarity=scar.semantic_polarity,
             mutation_frequency=scar.mutation_frequency,
+            scar_vector=vector,
             vault_id=vault_id,
         )
         self.db.add(scar_db)

@@ -5,6 +5,7 @@ try:
 except Exception:  # pragma: no cover - allows sqlite tests without pgvector
     Vector = None  # type: ignore
 from datetime import datetime
+from ..core.constants import EMBEDDING_DIM
 import os
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./kimera_swm.db")
@@ -33,6 +34,10 @@ class ScarDB(Base):
     cls_angle = Column(Float)
     semantic_polarity = Column(Float)
     mutation_frequency = Column(Float)
+    if DATABASE_URL.startswith("postgresql") and Vector is not None:
+        scar_vector = Column(Vector(EMBEDDING_DIM))  # type: ignore
+    else:
+        scar_vector = Column(JSON)
     vault_id = Column(String, index=True)
 
 
@@ -44,7 +49,7 @@ class GeoidDB(Base):
     metadata_json = Column(JSON)
     semantic_state_json = Column(JSON)
     if DATABASE_URL.startswith("postgresql") and Vector is not None:
-        semantic_vector = Column(Vector(384))  # type: ignore
+        semantic_vector = Column(Vector(EMBEDDING_DIM))  # type: ignore
     else:
         # Fallback for sqlite - store vector as JSON list
         semantic_vector = Column(JSON)

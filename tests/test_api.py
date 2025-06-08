@@ -1,6 +1,11 @@
 import os
 import sys
 
+# Use fresh database for tests
+os.environ["DATABASE_URL"] = "sqlite:///./test.db"
+if os.path.exists("./test.db"):
+    os.remove("./test.db")
+
 sys.path.insert(0, os.path.abspath("."))
 
 from fastapi.testclient import TestClient  # noqa: E402
@@ -97,3 +102,8 @@ def test_autonomous_contradictions():
     data = res.json()
     assert 'analysis_results' in data
     assert isinstance(data.get('contradictions_detected'), int)
+
+    search = client.get('/scars/search', params={'query': 'tension'})
+    assert search.status_code == 200
+    sdata = search.json()
+    assert 'similar_scars' in sdata
