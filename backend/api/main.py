@@ -179,7 +179,8 @@ async def create_geoid_from_image(file: UploadFile = File(...)):
     vector = clip_service.get_image_embedding(image)
 
     geoid_id = f"GEOID_IMG_{uuid.uuid4().hex[:8]}"
-    unique_filename = f"{uuid.uuid4().hex}.png"
+    ext = os.path.splitext(file.filename)[1] or ".bin"
+    unique_filename = f"{uuid.uuid4().hex}{ext}"
     geoid = GeoidState(
         geoid_id=geoid_id,
         symbolic_state={'type': 'image', 'filename': file.filename},
