@@ -69,7 +69,14 @@ class ContradictionEngine:
         vec_a = [geoid_a.semantic_state.get(f, 0.0) for f in all_features]
         vec_b = [geoid_b.semantic_state.get(f, 0.0) for f in all_features]
 
-        return cosine(vec_a, vec_b) if any(vec_a) and any(vec_b) else 0.0
+        if not any(vec_a) or not any(vec_b):
+            return 0.0
+
+        import numpy as np
+        if np.linalg.norm(vec_a) == 0 or np.linalg.norm(vec_b) == 0:
+            return 0.0
+
+        return cosine(vec_a, vec_b)
 
     def calculate_pulse_strength(self, tension: TensionGradient,
                                 geoids_dict: Dict[str, GeoidState]) -> float:

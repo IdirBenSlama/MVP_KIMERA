@@ -59,6 +59,13 @@ class ProcessContradictionRequest(BaseModel):
 @app.post("/geoids")
 async def create_geoid(request: CreateGeoidRequest):
     geoid_id = f"GEOID_{uuid.uuid4().hex[:8]}"
+    try:
+        for v in request.semantic_features.values():
+            if not isinstance(v, (int, float)):
+                raise ValueError("Semantic features must be numeric")
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Invalid semantic features: {exc}")
+
     geoid = GeoidState(
         geoid_id=geoid_id,
         semantic_state=request.semantic_features,
@@ -66,7 +73,11 @@ async def create_geoid(request: CreateGeoidRequest):
         metadata=request.metadata,
     )
 
-    kimera_system['thermodynamics_engine'].validate_transformation(GeoidState(geoid_id="temp"), geoid)
+    # Validate thermodynamic constraints for new geoid (no before state)
+    kimera_system['thermodynamics_engine'].validate_transformation(
+        None,
+        geoid,
+    )
     kimera_system['active_geoids'][geoid_id] = geoid
     return {
         'geoid_id': geoid_id,
@@ -135,6 +146,8 @@ async def process_contradictions(request: ProcessContradictionRequest):
             'scar_created': scar_created
         })
 
+    if 'cycle_count' not in kimera_system['system_state']:
+        kimera_system['system_state']['cycle_count'] = 0
     kimera_system['system_state']['cycle_count'] += 1
 
     return {

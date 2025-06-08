@@ -52,9 +52,17 @@ async def create_geoid(request: CreateGeoidRequest):
         metadata=request.metadata
     )
 
-    # Validate thermodynamic constraints
+    # Validate semantic features
+    try:
+        for v in request.semantic_features.values():
+            if not isinstance(v, (int, float)):
+                raise ValueError("Semantic features must be numeric")
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=f"Invalid semantic features: {exc}")
+
+    # Validate thermodynamic constraints for new geoid
     kimera_system['thermodynamics_engine'].validate_transformation(
-        GeoidState(geoid_id="dummy", semantic_state={}),
+        None,
         geoid,
     )
 
@@ -110,6 +118,9 @@ async def process_contradictions(request: ProcessContradictionRequest):
             'pulse_strength': pulse_strength,
             'decision': decision
         })
+    if 'cycle_count' not in kimera_system['system_state']:
+        kimera_system['system_state']['cycle_count'] = 0
+    kimera_system['system_state']['cycle_count'] += 1
 
     return {
         'cycle': kimera_system['system_state']['cycle_count'],
