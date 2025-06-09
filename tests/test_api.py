@@ -163,3 +163,16 @@ def test_echoform_parsing_and_storage():
     gid = res.json()['geoid_id']
     geoid = kimera_system['active_geoids'][gid]
     assert geoid.symbolic_state['echoform'] == [['hello', 'world', ['nested']]]
+
+
+def test_system_cycle_endpoint():
+    g1 = client.post('/geoids', json={'semantic_features': {'c1': 1.0}})
+    assert g1.status_code == 200
+    g2 = client.post('/geoids', json={'semantic_features': {'c2': 1.0}})
+    assert g2.status_code == 200
+
+    before = client.get('/system/status').json()['cycle_count']
+    res = client.post('/system/cycle')
+    assert res.status_code == 200
+    after = client.get('/system/status').json()['cycle_count']
+    assert after == before + 1
