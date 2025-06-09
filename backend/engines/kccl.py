@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 class KimeraCognitiveCycle:
     """Simplified core cognitive loop placeholder."""
 

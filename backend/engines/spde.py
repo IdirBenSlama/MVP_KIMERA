@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+
 class SPDE:
     """Semantic Pressure Diffusion Engine placeholder."""
 

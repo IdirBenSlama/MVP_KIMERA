@@ -31,7 +31,11 @@ class AxisStabilityMonitor:
         )
         semantic_cohesion = 1.0
         if len(recent_geoids) > 1:
-            vectors = [g.semantic_vector for g in recent_geoids if g.semantic_vector is not None]
+            vectors = [
+                g.semantic_vector
+                for g in recent_geoids
+                if g.semantic_vector is not None
+            ]
             if len(vectors) > 1:
                 min_len = min(len(v) for v in vectors)
                 norm_vectors = [np.array(v[:min_len]) for v in vectors]
@@ -52,7 +56,9 @@ class AxisStabilityMonitor:
         )
         entropic_stability = 0.5
         if recent_scars:
-            avg_delta_entropy = float(np.mean([s.delta_entropy for s in recent_scars]))
+            avg_delta_entropy = float(
+                np.mean([s.delta_entropy for s in recent_scars])
+            )
             entropic_stability = (avg_delta_entropy + 1.0) / 2.0
 
         return {
