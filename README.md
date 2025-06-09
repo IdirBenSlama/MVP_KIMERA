@@ -41,7 +41,8 @@ weights.
 ## Testing
 
 Unit tests are located in the `tests` directory. After installing the
-dependencies, run the helper script to execute all tests in lightweight mode.
+dependencies, run the helper script from the project root to execute all tests
+in lightweight mode.
 
 ```bash
 pip install -r requirements.txt
