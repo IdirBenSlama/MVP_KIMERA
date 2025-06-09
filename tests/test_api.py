@@ -234,3 +234,41 @@ def test_vault_rebalance_endpoint(api_env):
         count_b = db.query(ScarDB).filter(ScarDB.vault_id == 'vault_b').count()
     assert count_a == 2 and count_b == 2
 
+
+
+def test_vault_rebalance_endpoint_by_weight(api_env):
+    client, kimera_system, SessionLocal, ScarDB = api_env
+    vm = kimera_system['vault_manager']
+    with SessionLocal() as db:
+        db.query(ScarDB).delete()
+        db.commit()
+    weights = [1.0, 2.0, 2.0, 5.0]
+    for i, w in enumerate(weights):
+        scar = ScarRecord(
+            scar_id=f"AW{i}",
+            geoids=[f"GW{i}"],
+            reason="test",
+            timestamp=datetime.utcnow().isoformat(),
+            resolved_by="api_test",
+            pre_entropy=0.0,
+            post_entropy=0.0,
+            delta_entropy=0.0,
+            cls_angle=0.0,
+            semantic_polarity=0.0,
+            mutation_frequency=0.0,
+            weight=w,
+        )
+        vm.insert_scar(scar, [0.0])
+    with SessionLocal() as db:
+        db.query(ScarDB).update({ScarDB.vault_id: "vault_a"})
+        db.commit()
+
+    res = client.post('/vaults/rebalance?by_weight=true')
+    assert res.status_code == 200
+    data = res.json()
+    assert 'moved_scars' in data
+    weight_a = vm.get_total_scar_weight('vault_a')
+    weight_b = vm.get_total_scar_weight('vault_b')
+    assert weight_a == pytest.approx(5.0)
+    assert weight_b == pytest.approx(5.0)
+
