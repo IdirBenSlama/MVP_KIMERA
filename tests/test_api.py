@@ -164,6 +164,23 @@ def test_echoform_parsing_and_storage(api_env):
     assert geoid.symbolic_state['echoform'] == [['hello', 'world', ['nested']]]
 
 
+def test_complex_echoform_parsing(api_env):
+    client, kimera_system, *_ = api_env
+    text = "(greet 'world (+ 1 2) '(nested a))"
+    res = client.post(
+        '/geoids',
+        json={
+            'semantic_features': {'c': 1.0},
+            'echoform_text': text
+        },
+    )
+    assert res.status_code == 200
+    gid = res.json()['geoid_id']
+    geoid = kimera_system['active_geoids'][gid]
+    expected = [['greet', ['quote', 'world'], ['+', 1, 2], ['quote', ['nested', 'a']]]]
+    assert geoid.symbolic_state['echoform'] == expected
+
+
 def test_system_cycle_endpoint(api_env):
     client, kimera_system, *_ = api_env
     g1 = client.post('/geoids', json={'semantic_features': {'c1': 1.0}})
