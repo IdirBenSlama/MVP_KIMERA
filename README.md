@@ -77,8 +77,23 @@ curl -X POST http://localhost:8000/geoids \
          "echoform_text": "(hello (world))"}'
 ```
 
-The response returns the new `geoid_id` and the symbolic state will contain the
-parsed EchoForm list `[["hello", ["world"]]]`.
+Example response (truncated for brevity):
+
+```json
+{
+  "geoid_id": "GEOID_1234ABCD",
+  "geoid": {
+    "geoid_id": "GEOID_1234ABCD",
+    "semantic_state": {"greet": 1.0},
+    "symbolic_state": {"echoform": [["hello", ["world"]]]},
+    "metadata": {}
+  },
+  "entropy": 0.0
+}
+```
+
+The `symbolic_state` now contains the parsed EchoForm list under the
+`"echoform"` key.
 
 ## Cognitive cycle and vaults
 
