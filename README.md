@@ -40,15 +40,16 @@ weights.
 
 ## Testing
 
-Unit tests are located in the `tests` directory. Make sure all dependencies are installed and, for faster runs, you may opt into the lightweight embedding mode.
+Unit tests are located in the `tests` directory. After installing the
+dependencies, run the helper script to execute all tests in lightweight mode.
 
 ```bash
 pip install -r requirements.txt
-LIGHTWEIGHT_EMBEDDING=1 pytest
+./scripts/run_tests.sh
 ```
 
-Setting `LIGHTWEIGHT_EMBEDDING=1` avoids downloading heavy models during testing.
-Set `ENABLE_JOBS=0` during testing to skip the background scheduler.
+The script enables the lightweight embedding mode and disables background jobs
+so that heavy models are not downloaded during testing.
 
 ## EchoForm parser
 
