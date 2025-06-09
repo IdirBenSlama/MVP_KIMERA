@@ -1,6 +1,6 @@
 # KIMERA SWM Dashboard
 
-This folder contains a feature-complete React interface for interacting with the MVP prototype.
+This folder contains a feature-complete interface for interacting with the MVP prototype.
 
 ## Launching the backend
 
@@ -26,10 +26,11 @@ Open `index.html` in a web browser after the server is running (on
 - **Geoid Explorer** – search for geoids and trigger contradiction processing.
 - **Vault Inspector** – lists recent scars from `vault_a` and `vault_b`.
 
-The System Health view now includes:
-- **Run Cycle** – calls `POST /system/cycle`.
-The Vault Inspector provides:
-- **Rebalance Vaults** – sends `POST /vaults/rebalance`.
+The dashboard now includes additional control buttons:
+
+- **Run Cycle** – found in System Health; calls `POST /system/cycle`.
+- **Rebalance Vaults** – available in Vault Inspector; sends `POST /vaults/rebalance`.
+
 Clicking these buttons updates the displayed metrics or scar lists automatically.
 
 No build step is required as React is loaded from a CDN.
