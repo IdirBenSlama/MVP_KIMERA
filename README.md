@@ -53,8 +53,9 @@ pip install -r requirements.txt
 ./scripts/run_tests.sh
 ```
 
-The script enables the lightweight embedding mode and disables background jobs
-so that heavy models are not downloaded during testing.
+The script enables the lightweight embedding mode, disables background jobs, and
+adds the repository root to `PYTHONPATH` so that modules are importable without
+installing the package.
 GPU-heavy packages like `torch` are therefore optional when executing the tests.
 
 ## EchoForm parser
