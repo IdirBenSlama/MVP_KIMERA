@@ -24,7 +24,7 @@ class ContradictionEngine:
                 emb = self._embedding_misalignment(a, b)
                 layer = self._layer_conflict_intensity(a, b)
                 sym = self._symbolic_opposition(a, b)
-                score = 0.4 * emb + 0.3 * layer + 0.3 * sym
+                score = (emb + layer + sym) / 3
                 if score > self.tension_threshold:
                     tensions.append(
                         TensionGradient(a.geoid_id, b.geoid_id, score, "composite")
