@@ -18,8 +18,9 @@ class VaultManager:
 
     def _select_vault(self) -> str:
         """Choose a vault based on current counts."""
-        a_count = self.get_total_scar_count("vault_a")
-        b_count = self.get_total_scar_count("vault_b")
+        with SessionLocal() as db:
+            a_count = db.query(ScarDB).filter(ScarDB.vault_id == "vault_a").count()
+            b_count = db.query(ScarDB).filter(ScarDB.vault_id == "vault_b").count()
         return "vault_a" if a_count <= b_count else "vault_b"
 
     def insert_scar(self, scar: ScarRecord | GeoidState, vector: list[float]) -> ScarDB:
