@@ -26,4 +26,9 @@ Open `index.html` in a web browser after the server is running (on
 - **Geoid Explorer** – search for geoids and trigger contradiction processing.
 - **Vault Inspector** – lists recent scars from `vault_a` and `vault_b`.
 
+The System Health view now includes a **Run Cycle** button to call
+`POST /system/cycle`, and the Vault Inspector provides a **Rebalance Vaults**
+button that sends `POST /vaults/rebalance`.
+Clicking these buttons updates the displayed metrics or scar lists automatically.
+
 No build step is required as React is loaded from a CDN.

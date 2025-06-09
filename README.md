@@ -89,3 +89,52 @@ curl http://localhost:8000/vaults/vault_a?limit=5
 The returned list reflects scars generated both by manual contradiction
 processing and automatic cycles.
 
+To manually rebalance the vaults, call:
+
+```bash
+curl -X POST http://localhost:8000/vaults/rebalance
+```
+
+### Example EchoForm workflow
+
+Create two geoids with conflicting EchoForm statements:
+
+```bash
+curl -X POST http://localhost:8000/geoids \
+     -H "Content-Type: application/json" \
+     -d '{"semantic_features": {"belief": 1.0},
+         "echoform_text": "(claim \"cats are friendly\")"}'
+
+curl -X POST http://localhost:8000/geoids \
+     -H "Content-Type: application/json" \
+     -d '{"semantic_features": {"belief": -1.0},
+         "echoform_text": "(claim \"cats are hostile\")"}'
+
+curl -X POST http://localhost:8000/system/cycle
+
+curl http://localhost:8000/vaults/vault_a?limit=1
+```
+Example output:
+```json
+{
+  "vault_id": "vault_a",
+  "scars": [
+    {
+      "scar_id": "SC1",
+      "geoids": ["G1", "G2"],
+      "reason": "Resolved 'polar' tension.",
+      "timestamp": "...",
+      "resolved_by": "cycle",
+      "pre_entropy": 0.5,
+      "post_entropy": 0.4,
+      "delta_entropy": -0.1,
+      "cls_angle": 0.7,
+      "semantic_polarity": -0.6,
+      "mutation_frequency": 0.0
+    }
+  ]
+}
+```
+
+
+The response resembles the JSON above, showing the scar linking the two geoids.
