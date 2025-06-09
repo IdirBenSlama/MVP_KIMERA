@@ -138,3 +138,28 @@ Example output:
 
 
 The response resembles the JSON above, showing the scar linking the two geoids.
+
+## Request Profiles
+
+API endpoints can tune behavior by specifying a profile name in the `X-Kimera-Profile` header. `backend/api/middleware.py` loads the JSON config at `backend/core/cim_profiles.json` on startup. For each request the middleware looks up the given profile name and stores the resulting dictionary on `request.state.kimera_profile`. Unknown names result in an empty profile.
+
+A shortened example of the profiles file:
+
+```json
+{
+  "financial_analysis": {"...": "..."},
+  "creative_brainstorming": {"...": "..."}
+}
+```
+
+Use the header when calling endpoints:
+
+```bash
+curl -X POST http://localhost:8000/process/contradictions \
+     -H "Content-Type: application/json" \
+     -H "X-Kimera-Profile: financial_analysis" \
+     -d '{"trigger_geoid_id": "G1"}'
+
+curl http://localhost:8000/system/status \
+     -H "X-Kimera-Profile: creative_brainstorming"
+```
