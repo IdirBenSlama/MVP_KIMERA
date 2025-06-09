@@ -1,32 +1,35 @@
 import os
 import sys
-
-# Use fresh database for tests
-os.environ["DATABASE_URL"] = "sqlite:///./test.db"
-os.environ["ENABLE_JOBS"] = "0"
-if os.path.exists("./test.db"):
-    os.remove("./test.db")
-
 sys.path.insert(0, os.path.abspath("."))
-
-from fastapi.testclient import TestClient  # noqa: E402
-from backend.api.main import app, kimera_system  # noqa: E402
-import importlib  # noqa: E402
-import backend.vault.database as db_module  # noqa: E402
-importlib.reload(db_module)
-import backend.vault.vault_manager as vm_module  # noqa: E402
-importlib.reload(vm_module)
-kimera_system['vault_manager'] = vm_module.VaultManager()
-SessionLocal = db_module.SessionLocal
-ScarDB = db_module.ScarDB
-from backend.core.scar import ScarRecord  # noqa: E402
+import importlib
 from datetime import datetime
+import pytest
+from fastapi.testclient import TestClient
+from backend.core.scar import ScarRecord
 
 
-client = TestClient(app)
+def _init_app(db_url: str):
+    os.environ["DATABASE_URL"] = db_url
+    os.environ["ENABLE_JOBS"] = "0"
+    sys.path.insert(0, os.path.abspath("."))
+    import backend.vault.database as db_module
+    importlib.reload(db_module)
+    import backend.vault.vault_manager as vm_module
+    importlib.reload(vm_module)
+    from backend.api.main import app, kimera_system
+    kimera_system['vault_manager'] = vm_module.VaultManager()
+    client = TestClient(app)
+    return client, kimera_system, db_module.SessionLocal, db_module.ScarDB
 
 
-def test_create_geoid_and_status():
+@pytest.fixture()
+def api_env(tmp_path):
+    db_file = tmp_path / "api.db"
+    return _init_app(f"sqlite:///{db_file}")
+
+
+def test_create_geoid_and_status(api_env):
+    client, kimera_system, SessionLocal, ScarDB = api_env
     response = client.post(
         '/geoids',
         json={
@@ -45,7 +48,6 @@ def test_create_geoid_and_status():
     assert status['active_geoids'] >= 1
     assert 'system_entropy' in status
 
-    # create another geoid for contradiction test
     response2 = client.post(
         '/geoids',
         json={
@@ -67,48 +69,34 @@ def test_create_geoid_and_status():
     assert 'scars_created' in results
 
 
-def test_geoid_search():
-    # create geoid to search for
+def test_geoid_search(api_env):
+    client, kimera_system, *_ = api_env
     create = client.post(
         '/geoids',
         json={'semantic_features': {'alpha': 1.0}},
     )
     assert create.status_code == 200
 
-    res = client.get(
-        '/geoids/search',
-        params={'query': 'alpha'},
-    )
+    res = client.get('/geoids/search', params={'query': 'alpha'})
     assert res.status_code == 200
     data = res.json()
     assert 'similar_geoids' in data
     assert len(data['similar_geoids']) > 0
 
 
-def test_autonomous_contradictions():
-    g1 = client.post(
-        '/geoids',
-        json={'semantic_features': {'x': 0.1, 'y': 0.2}},
-    )
+def test_autonomous_contradictions(api_env):
+    client, kimera_system, SessionLocal, ScarDB = api_env
+    g1 = client.post('/geoids', json={'semantic_features': {'x': 0.1, 'y': 0.2}})
     assert g1.status_code == 200
     gid1 = g1.json()['geoid_id']
 
-    g2 = client.post(
-        '/geoids',
-        json={'semantic_features': {'x': -0.3, 'y': 0.4}},
-    )
+    g2 = client.post('/geoids', json={'semantic_features': {'x': -0.3, 'y': 0.4}})
     assert g2.status_code == 200
 
-    g3 = client.post(
-        '/geoids',
-        json={'semantic_features': {'x': 0.2, 'y': -0.5}},
-    )
+    g3 = client.post('/geoids', json={'semantic_features': {'x': 0.2, 'y': -0.5}})
     assert g3.status_code == 200
 
-    res = client.post(
-        '/process/contradictions',
-        json={'trigger_geoid_id': gid1, 'search_limit': 2},
-    )
+    res = client.post('/process/contradictions', json={'trigger_geoid_id': gid1, 'search_limit': 2})
     assert res.status_code == 200
     data = res.json()
     assert 'analysis_results' in data
@@ -120,23 +108,23 @@ def test_autonomous_contradictions():
     assert 'similar_scars' in sdata
 
     sid = sdata['similar_scars'][0]['scar_id']
-    db = SessionLocal()
-    scar = db.query(ScarDB).filter_by(scar_id=sid).first()
-    assert scar.weight >= 2.0
-    assert scar.last_accessed is not None
-    db.close()
+    with SessionLocal() as db:
+        scar = db.query(ScarDB).filter_by(scar_id=sid).first()
+        assert scar.weight >= 2.0
+        assert scar.last_accessed is not None
 
 
-def test_system_stability_endpoint():
+def test_system_stability_endpoint(api_env):
+    client, *_ = api_env
     res = client.get('/system/stability')
     assert res.status_code == 200
     data = res.json()
-    # Basic keys from AxisStabilityMonitor
     assert 'vault_pressure' in data
     assert 'semantic_cohesion' in data
 
 
-def test_create_geoid_from_image():
+def test_create_geoid_from_image(api_env):
+    client, *_ = api_env
     from PIL import Image
     import io
 
@@ -152,7 +140,8 @@ def test_create_geoid_from_image():
     assert 'geoid_id' in data
 
 
-def test_speak_geoid_endpoint():
+def test_speak_geoid_endpoint(api_env):
+    client, kimera_system, *_ = api_env
     create = client.post('/geoids', json={'semantic_features': {'z': 1.0}})
     assert create.status_code == 200
     gid = create.json()['geoid_id']
@@ -160,7 +149,8 @@ def test_speak_geoid_endpoint():
     assert res.status_code in (200, 409)
 
 
-def test_echoform_parsing_and_storage():
+def test_echoform_parsing_and_storage(api_env):
+    client, kimera_system, *_ = api_env
     res = client.post(
         '/geoids',
         json={
@@ -174,7 +164,8 @@ def test_echoform_parsing_and_storage():
     assert geoid.symbolic_state['echoform'] == [['hello', 'world', ['nested']]]
 
 
-def test_system_cycle_endpoint():
+def test_system_cycle_endpoint(api_env):
+    client, kimera_system, *_ = api_env
     g1 = client.post('/geoids', json={'semantic_features': {'c1': 1.0}})
     assert g1.status_code == 200
     g2 = client.post('/geoids', json={'semantic_features': {'c2': 1.0}})
@@ -187,7 +178,8 @@ def test_system_cycle_endpoint():
     assert after == before + 1
 
 
-def test_vault_rebalance_endpoint():
+def test_vault_rebalance_endpoint(api_env):
+    client, kimera_system, SessionLocal, ScarDB = api_env
     vm = kimera_system['vault_manager']
     with SessionLocal() as db:
         db.query(ScarDB).delete()
@@ -216,3 +208,4 @@ def test_vault_rebalance_endpoint():
     assert res.status_code == 200
     data = res.json()
     assert 'moved_scars' in data
+

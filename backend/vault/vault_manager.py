@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import List, Tuple
 from datetime import datetime
 from sqlalchemy import func
+import math
 
 from ..core.scar import ScarRecord
 from ..core.geoid import GeoidState
@@ -129,40 +130,44 @@ class VaultManager:
             return 0
 
         with SessionLocal() as db:
-            if by_weight:
-                from_val = self.get_total_scar_weight(from_vault)
-                to_val = self.get_total_scar_weight(to_vault)
-                diff = from_val - to_val
-                target = diff / 2.0
-                moved_weight = 0.0
-                scars = (
-                    db.query(ScarDB)
-                    .filter(ScarDB.vault_id == from_vault)
-                    .order_by(ScarDB.weight)
-                    .all()
-                )
-                moved = 0
-                for scar in scars:
-                    if moved_weight >= target:
-                        break
-                    scar.vault_id = to_vault
-                    moved_weight += scar.weight
-                    moved += 1
-            else:
-                from_val = self.get_total_scar_count(from_vault)
-                to_val = self.get_total_scar_count(to_vault)
-                diff = from_val - to_val
-                num_to_move = max(int(diff // 2), 1)
-                scars = (
-                    db.query(ScarDB)
-                    .filter(ScarDB.vault_id == from_vault)
-                    .order_by(ScarDB.weight)
-                    .limit(num_to_move)
-                    .all()
-                )
-                for scar in scars:
-                    scar.vault_id = to_vault
-                moved = len(scars)
+            try:
+                if by_weight:
+                    from_val = self.get_total_scar_weight(from_vault)
+                    to_val = self.get_total_scar_weight(to_vault)
+                    diff = from_val - to_val
+                    target = diff / 2.0
+                    moved_weight = 0.0
+                    scars = (
+                        db.query(ScarDB)
+                        .filter(ScarDB.vault_id == from_vault)
+                        .order_by(ScarDB.weight)
+                        .all()
+                    )
+                    moved = 0
+                    for scar in scars:
+                        if moved_weight >= target:
+                            break
+                        scar.vault_id = to_vault
+                        moved_weight += scar.weight
+                        moved += 1
+                else:
+                    from_val = self.get_total_scar_count(from_vault)
+                    to_val = self.get_total_scar_count(to_vault)
+                    diff = from_val - to_val
+                    num_to_move = max(math.ceil(diff / 2.0), 1)
+                    scars = (
+                        db.query(ScarDB)
+                        .filter(ScarDB.vault_id == from_vault)
+                        .order_by(ScarDB.weight)
+                        .limit(num_to_move)
+                        .all()
+                    )
+                    for scar in scars:
+                        scar.vault_id = to_vault
+                    moved = len(scars)
 
-            db.commit()
+                db.commit()
+            except Exception:
+                db.rollback()
+                raise
         return moved
