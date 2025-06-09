@@ -28,14 +28,12 @@ class KimeraCognitiveCycle:
         }
 
         # --- Semantic Pressure Diffusion ---
-        entropy_before = sum(
-            g.calculate_entropy() for g in system["active_geoids"].values()
-        )
+        entropy_before = 0.0
+        entropy_after = 0.0
         for geoid in system["active_geoids"].values():
+            entropy_before += geoid.calculate_entropy()
             geoid.semantic_state = spde.diffuse(geoid.semantic_state)
-        entropy_after = sum(
-            g.calculate_entropy() for g in system["active_geoids"].values()
-        )
+            entropy_after += geoid.calculate_entropy()
         cycle_stats["entropy_before_diffusion"] = entropy_before
         cycle_stats["entropy_after_diffusion"] = entropy_after
 
