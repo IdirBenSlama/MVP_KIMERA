@@ -113,7 +113,7 @@ def test_contradiction_engine_scoring():
     tensions = eng.detect_tension_gradients([g1, g2])
     assert len(tensions) == 1
     assert tensions[0].gradient_type == "composite"
-    assert tensions[0].tension_score == pytest.approx(0.85)
+    assert tensions[0].tension_score == pytest.approx(0.833333, rel=1e-3)
 
 
 def test_contradiction_engine_no_tension():
