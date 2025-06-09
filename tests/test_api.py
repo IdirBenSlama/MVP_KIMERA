@@ -11,7 +11,16 @@ sys.path.insert(0, os.path.abspath("."))
 
 from fastapi.testclient import TestClient  # noqa: E402
 from backend.api.main import app, kimera_system  # noqa: E402
-from backend.vault.database import SessionLocal, ScarDB  # noqa: E402
+import importlib  # noqa: E402
+import backend.vault.database as db_module  # noqa: E402
+importlib.reload(db_module)
+import backend.vault.vault_manager as vm_module  # noqa: E402
+importlib.reload(vm_module)
+kimera_system['vault_manager'] = vm_module.VaultManager()
+SessionLocal = db_module.SessionLocal
+ScarDB = db_module.ScarDB
+from backend.core.scar import ScarRecord  # noqa: E402
+from datetime import datetime
 
 
 client = TestClient(app)
@@ -176,3 +185,34 @@ def test_system_cycle_endpoint():
     assert res.status_code == 200
     after = client.get('/system/status').json()['cycle_count']
     assert after == before + 1
+
+
+def test_vault_rebalance_endpoint():
+    vm = kimera_system['vault_manager']
+    with SessionLocal() as db:
+        db.query(ScarDB).delete()
+        db.commit()
+    for i in range(4):
+        scar = ScarRecord(
+            scar_id=f"AP{i}",
+            geoids=[f"G{i}"],
+            reason="test",
+            timestamp=datetime.utcnow().isoformat(),
+            resolved_by="api_test",
+            pre_entropy=0.0,
+            post_entropy=0.0,
+            delta_entropy=0.0,
+            cls_angle=0.0,
+            semantic_polarity=0.0,
+            mutation_frequency=0.0,
+            weight=1.0,
+        )
+        vm.insert_scar(scar, [0.0])
+    with SessionLocal() as db:
+        db.query(ScarDB).update({ScarDB.vault_id: "vault_a"})
+        db.commit()
+
+    res = client.post('/vaults/rebalance')
+    assert res.status_code == 200
+    data = res.json()
+    assert 'moved_scars' in data

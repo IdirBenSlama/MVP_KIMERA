@@ -40,6 +40,9 @@ def _make_scar(i, weight=1.0):
 
 def test_detect_and_rebalance_counts():
     vm = VaultManager()
+    with SessionLocal() as db:
+        db.query(ScarDB).delete()
+        db.commit()
     for i in range(6):
         vm.insert_scar(_make_scar(i), [0.0])
     # force all scars into vault_a to create imbalance
@@ -58,6 +61,9 @@ def test_detect_and_rebalance_counts():
 
 def test_detect_imbalance_by_weight():
     vm = VaultManager()
+    with SessionLocal() as db:
+        db.query(ScarDB).delete()
+        db.commit()
     for i in range(4):
         weight = 5.0 if i < 3 else 1.0
         vm.insert_scar(_make_scar(10 + i, weight=weight), [0.0])
