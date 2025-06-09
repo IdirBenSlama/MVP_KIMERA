@@ -6,7 +6,8 @@ from __future__ import annotations
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("."))
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, ROOT_DIR)
 
 from backend.vault.vault_manager import VaultManager
 
