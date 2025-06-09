@@ -94,7 +94,12 @@ curl http://localhost:8000/vaults/vault_a?limit=5
 ```
 
 The returned list reflects scars generated both by manual contradiction
-processing and automatic cycles.
+processing and automatic cycles. You can get a summary of scar counts and
+their total weights with:
+
+```bash
+python scripts/vault_inspect.py
+```
 
 To manually rebalance the vaults, call:
 
