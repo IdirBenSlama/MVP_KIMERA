@@ -16,6 +16,8 @@ from ..core.embedding_utils import encode_text
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..engines.asm import AxisStabilityMonitor
+from ..engines.spde import SPDE
+from ..engines.kccl import KimeraCognitiveCycle
 from ..vault.vault_manager import VaultManager
 from ..vault.database import SessionLocal, GeoidDB, ScarDB
 from ..engines.background_jobs import start_background_jobs, stop_background_jobs
@@ -32,6 +34,8 @@ kimera_system = {
     'contradiction_engine': ContradictionEngine(),
     'thermodynamics_engine': SemanticThermodynamicsEngine(),
     'vault_manager': VaultManager(),
+    'spde_engine': SPDE(),
+    'cognitive_cycle': KimeraCognitiveCycle(),
     'active_geoids': {},
     'system_state': {'cycle_count': 0}
 }

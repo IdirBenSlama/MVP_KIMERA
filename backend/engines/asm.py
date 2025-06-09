@@ -33,10 +33,15 @@ class AxisStabilityMonitor:
         if len(recent_geoids) > 1:
             vectors = [g.semantic_vector for g in recent_geoids if g.semantic_vector is not None]
             if len(vectors) > 1:
+                min_len = min(len(v) for v in vectors)
+                norm_vectors = [np.array(v[:min_len]) for v in vectors]
                 # Compute pairwise cosine distances without heavy dependencies
-                distances = pdist(np.array(vectors), metric="cosine")
+                distances = pdist(np.vstack(norm_vectors), metric="cosine")
                 avg_distance = float(np.mean(distances))
-                semantic_cohesion = 1.0 - avg_distance
+                if np.isnan(avg_distance):
+                    semantic_cohesion = 0.0
+                else:
+                    semantic_cohesion = 1.0 - avg_distance
 
         # Metric 3: Entropic Stability - trend of entropy change
         recent_scars = (
