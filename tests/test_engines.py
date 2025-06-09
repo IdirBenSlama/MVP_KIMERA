@@ -91,6 +91,10 @@ def test_kccl_cycle_stats_and_scars():
     assert stats.get('contradictions_detected', 0) >= 1
     assert 'entropy_before_diffusion' in stats
     assert 'entropy_after_diffusion' in stats
+    assert 'entropy_delta' in stats
+    assert stats['entropy_delta'] == pytest.approx(
+        stats['entropy_after_diffusion'] - stats['entropy_before_diffusion']
+    )
 
 
 def test_contradiction_engine_scoring():

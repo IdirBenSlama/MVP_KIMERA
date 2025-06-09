@@ -25,6 +25,7 @@ class KimeraCognitiveCycle:
             "scars_created": 0,
             "entropy_before_diffusion": 0.0,
             "entropy_after_diffusion": 0.0,
+            "entropy_delta": 0.0,
         }
 
         # --- Semantic Pressure Diffusion ---
@@ -38,6 +39,7 @@ class KimeraCognitiveCycle:
         )
         cycle_stats["entropy_before_diffusion"] = entropy_before
         cycle_stats["entropy_after_diffusion"] = entropy_after
+        cycle_stats["entropy_delta"] = entropy_after - entropy_before
 
         # --- Contradiction Detection ---
         geoids = list(system["active_geoids"].values())

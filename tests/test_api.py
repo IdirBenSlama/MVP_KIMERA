@@ -183,7 +183,7 @@ def test_complex_echoform_parsing(api_env):
 
 
 def test_system_cycle_endpoint(api_env):
-    client, kimera_system, *_ = api_env
+    client, kimera_system, SessionLocal, ScarDB = api_env
     g1 = client.post('/geoids', json={'semantic_features': {'c1': 1.0}})
     assert g1.status_code == 200
     g2 = client.post('/geoids', json={'semantic_features': {'c2': 1.0}})
@@ -197,6 +197,15 @@ def test_system_cycle_endpoint(api_env):
     assert after == before + 1
     assert 'entropy_before_diffusion' in data
     assert 'entropy_after_diffusion' in data
+    assert 'entropy_delta' in data
+    assert data['entropy_delta'] == pytest.approx(
+        data['entropy_after_diffusion'] - data['entropy_before_diffusion']
+    )
+    assert data.get('contradictions_detected', 0) >= 1
+    assert data.get('scars_created', 0) >= 1
+    with SessionLocal() as db:
+        scar_count = db.query(ScarDB).count()
+    assert scar_count >= data['scars_created']
 
 
 def test_vault_rebalance_endpoint(api_env):
