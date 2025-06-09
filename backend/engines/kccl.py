@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 import uuid
 
 from ..core.scar import ScarRecord
@@ -20,7 +20,7 @@ class KimeraCognitiveCycle:
         vault_manager = system["vault_manager"]
 
         cycle_stats = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "contradictions_detected": 0,
             "scars_created": 0,
         }
@@ -40,7 +40,7 @@ class KimeraCognitiveCycle:
                 scar_id=f"SCAR_{uuid.uuid4().hex[:8]}",
                 geoids=[tension.geoid_a, tension.geoid_b],
                 reason="auto-cycle",
-                timestamp=datetime.utcnow().isoformat(),
+                timestamp=datetime.now(timezone.utc).isoformat(),
                 resolved_by="KimeraCognitiveCycle",
                 pre_entropy=0.0,
                 post_entropy=0.0,
