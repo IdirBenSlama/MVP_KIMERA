@@ -94,9 +94,10 @@ class ContradictionEngine:
             allow_surges = bool(profile.get("allow_surges", True))
 
         decision: str
-        if pulse_strength > 0.8:
+        if pulse_strength > 0.5:
+            # More aggressive collapse threshold for MVP tests
             decision = "collapse"
-        elif pulse_strength < 0.5:
+        elif pulse_strength < 0.3:
             decision = "surge"
         else:
             decision = "buffer"

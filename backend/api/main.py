@@ -32,7 +32,7 @@ app.mount("/images", StaticFiles(directory="static/images"), name="images")
 app.middleware("http")(icw_middleware)
 
 kimera_system = {
-    'contradiction_engine': ContradictionEngine(),
+    'contradiction_engine': ContradictionEngine(tension_threshold=0.5),
     'thermodynamics_engine': SemanticThermodynamicsEngine(),
     'vault_manager': VaultManager(),
     'spde_engine': SPDE(),
@@ -447,6 +447,16 @@ async def get_system_status():
         'vault_b_scars': vault_manager.get_total_scar_count("vault_b"),
         'system_entropy': sum(g.calculate_entropy() for g in kimera_system['active_geoids'].values()),
         'cycle_count': kimera_system['system_state']['cycle_count']
+    }
+
+
+@app.post("/system/cycle")
+async def trigger_cycle():
+    """Run one cognitive cycle."""
+    status = kimera_system['cognitive_cycle'].run_cycle(kimera_system)
+    return {
+        'status': status,
+        'cycle_count': kimera_system['system_state']['cycle_count'],
     }
 
 
