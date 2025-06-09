@@ -44,7 +44,7 @@ kimera_system = {
 
 @app.on_event("startup")
 def _startup_background_jobs() -> None:
-    if os.getenv("ENABLE_JOBS", "1") == "1":
+    if os.getenv("ENABLE_JOBS", "1") != "0":
         start_background_jobs(encode_text)
 
 
