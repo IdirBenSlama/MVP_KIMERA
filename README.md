@@ -32,6 +32,12 @@ The API exposes endpoints for managing geoids and scars. Static images are serve
 
 - `ENABLE_JOBS` controls whether periodic background jobs start on startup. Set this variable to `0` to disable them (default `1`).
 
+#### LIGHTWEIGHT_CLIP
+
+Set this variable to `1` to disable heavy CLIP downloads for image processing
+endpoints. They will run in a lightweight mode without pulling the full CLIP
+weights.
+
 ## Testing
 
 Unit tests are located in the `tests` directory. Make sure all dependencies are installed and, for faster runs, you may opt into the lightweight embedding mode.
