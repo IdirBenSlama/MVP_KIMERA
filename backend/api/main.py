@@ -19,7 +19,7 @@ from ..engines.asm import AxisStabilityMonitor
 from ..engines.spde import SPDE
 from ..engines.kccl import KimeraCognitiveCycle
 from ..vault.vault_manager import VaultManager
-from ..vault.database import SessionLocal, GeoidDB, ScarDB
+from ..vault.database import SessionLocal, GeoidDB, ScarDB, engine
 from ..engines.background_jobs import start_background_jobs, stop_background_jobs
 from ..engines.clip_service import clip_service
 from ..linguistic.echoform import parse_echoform
@@ -225,7 +225,7 @@ async def process_contradictions(body: ProcessContradictionRequest, request: Req
 
         trigger_vector = trigger_db.semantic_vector
 
-        if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+        if engine.url.drivername.startswith("postgresql"):
             similar_db = (
                 db.query(GeoidDB)
                 .filter(GeoidDB.geoid_id != body.trigger_geoid_id)
@@ -275,7 +275,7 @@ async def process_contradictions(body: ProcessContradictionRequest, request: Req
         current_summary = f"Tension between {tension.geoid_a} and {tension.geoid_b}"
         query_vector = encode_text(current_summary)
         with SessionLocal() as db:
-            if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+            if engine.url.drivername.startswith("postgresql"):
                 past_scars = (
                     db.query(ScarDB)
                     .order_by(ScarDB.scar_vector.l2_distance(query_vector))
@@ -389,7 +389,7 @@ async def search_geoids(query: str, limit: int = 5):
     """Find geoids semantically similar to a query string."""
     query_vector = encode_text(query)
     with SessionLocal() as db:
-        if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+        if engine.url.drivername.startswith("postgresql"):
             results = (
                 db.query(GeoidDB)
                 .order_by(GeoidDB.semantic_vector.l2_distance(query_vector))
@@ -414,7 +414,7 @@ async def search_scars(query: str, limit: int = 3):
     """Find scars semantically similar to a query describing a contradiction."""
     query_vector = encode_text(query)
     with SessionLocal() as db:
-        if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+        if engine.url.drivername.startswith("postgresql"):
             results = (
                 db.query(ScarDB)
                 .order_by(ScarDB.scar_vector.l2_distance(query_vector))
