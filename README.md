@@ -16,6 +16,11 @@ Install dependencies with:
 ```bash
 pip install -r requirements.txt
 ```
+GPU-accelerated features rely on additional heavy packages. Install them
+separately when needed, for example:
+```bash
+pip install torch
+```
 The `python-multipart` package is required for endpoints that accept image uploads.
 
 ## Running the API
@@ -50,6 +55,7 @@ pip install -r requirements.txt
 
 The script enables the lightweight embedding mode and disables background jobs
 so that heavy models are not downloaded during testing.
+GPU-heavy packages like `torch` are therefore optional when executing the tests.
 
 ## EchoForm parser
 
