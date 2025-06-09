@@ -454,9 +454,12 @@ async def get_system_status():
 async def trigger_cycle():
     """Run one cognitive cycle."""
     status = kimera_system['cognitive_cycle'].run_cycle(kimera_system)
+    cycle_stats = kimera_system['system_state'].get('last_cycle', {})
     return {
         'status': status,
         'cycle_count': kimera_system['system_state']['cycle_count'],
+        'contradictions_detected': cycle_stats.get('contradictions_detected', 0),
+        'scars_created': cycle_stats.get('scars_created', 0),
     }
 
 

@@ -19,6 +19,12 @@ class KimeraCognitiveCycle:
         contradiction_engine = system["contradiction_engine"]
         vault_manager = system["vault_manager"]
 
+        cycle_stats = {
+            "timestamp": datetime.utcnow().isoformat(),
+            "contradictions_detected": 0,
+            "scars_created": 0,
+        }
+
         # --- Semantic Pressure Diffusion ---
         for geoid in system["active_geoids"].values():
             geoid.semantic_state = spde.diffuse(geoid.semantic_state)
@@ -26,6 +32,7 @@ class KimeraCognitiveCycle:
         # --- Contradiction Detection ---
         geoids = list(system["active_geoids"].values())
         tensions = contradiction_engine.detect_tension_gradients(geoids)
+        cycle_stats["contradictions_detected"] = len(tensions)
         for tension in tensions:
             summary = f"Tension {tension.geoid_a}-{tension.geoid_b}"
             vector = encode_text(summary)
@@ -43,9 +50,11 @@ class KimeraCognitiveCycle:
                 mutation_frequency=tension.tension_score,
             )
             vault_manager.insert_scar(scar, vector)
+            cycle_stats["scars_created"] += 1
 
         # --- Cycle bookkeeping ---
-        system.setdefault("system_state", {}).setdefault("cycle_count", 0)
-        system["system_state"]["cycle_count"] += 1
+        state = system.setdefault("system_state", {})
+        state["cycle_count"] = state.get("cycle_count", 0) + 1
+        state["last_cycle"] = cycle_stats
 
         return "cycle complete"

@@ -62,6 +62,35 @@ def test_kccl_basic():
     assert system['system_state']['cycle_count'] == 1
 
 
+def test_kccl_cycle_stats_and_scars():
+    cycle = KimeraCognitiveCycle()
+
+    class DummyVault:
+        def __init__(self):
+            self.count = 0
+
+        def insert_scar(self, scar, vector):
+            self.count += 1
+
+    system = {
+        'spde_engine': SPDE(),
+        'contradiction_engine': ContradictionEngine(tension_threshold=0.5),
+        'vault_manager': DummyVault(),
+        'active_geoids': {
+            'A': GeoidState('A', {'x': 1.0}),
+            'B': GeoidState('B', {'y': 1.0}),
+        },
+        'system_state': {'cycle_count': 0},
+    }
+
+    cycle.run_cycle(system)
+
+    assert system['system_state']['cycle_count'] == 1
+    stats = system['system_state'].get('last_cycle', {})
+    assert stats.get('scars_created', 0) == system['vault_manager'].count
+    assert stats.get('contradictions_detected', 0) >= 1
+
+
 def test_contradiction_engine_scoring():
     eng = ContradictionEngine(tension_threshold=0.5)
     g1 = GeoidState(
