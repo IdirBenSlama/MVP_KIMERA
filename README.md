@@ -39,8 +39,8 @@ The API exposes endpoints for managing geoids and scars. Static images are serve
 ### Environment variables
 
 - `ENABLE_JOBS` controls whether periodic background jobs start on startup. Set this variable to `0` to disable them (default `1`).
-- `DATABASE_URL` connection string for the database (default `sqlite:///./kimera_swm.db`). Using a PostgreSQL URL enables `pgvector` support.
-- `LIGHTWEIGHT_EMBEDDING` set to `1` to avoid downloading heavy embedding weights and use a lightweight dummy model instead (default `0`).
+- `DATABASE_URL` – connection string for the database. Defaults to `sqlite:///./kimera_swm.db`. Providing a PostgreSQL URL enables `pgvector` support.
+- `LIGHTWEIGHT_EMBEDDING` – set to `1` to skip heavy embedding downloads and use a lightweight dummy model instead (default `0`).
 
 #### LIGHTWEIGHT_CLIP
 
