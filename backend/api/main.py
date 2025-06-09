@@ -22,6 +22,7 @@ from ..vault.vault_manager import VaultManager
 from ..vault.database import SessionLocal, GeoidDB, ScarDB
 from ..engines.background_jobs import start_background_jobs, stop_background_jobs
 from ..engines.clip_service import clip_service
+from ..linguistic.echoform import parse_echoform
 from .middleware import icw_middleware
 import numpy as np
 from scipy.spatial.distance import cosine
@@ -97,6 +98,7 @@ class CreateGeoidRequest(BaseModel):
     semantic_features: Dict[str, float]
     symbolic_content: Dict[str, Any] = {}
     metadata: Dict[str, Any] = {}
+    echoform_text: str | None = None
 
 
 class ProcessContradictionRequest(BaseModel):
@@ -115,10 +117,17 @@ async def create_geoid(request: CreateGeoidRequest):
     except Exception as exc:
         raise HTTPException(status_code=400, detail=f"Invalid semantic features: {exc}")
 
+    symbolic = dict(request.symbolic_content)
+    if request.echoform_text:
+        try:
+            symbolic["echoform"] = parse_echoform(request.echoform_text)
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=f"Invalid EchoForm: {exc}")
+
     geoid = GeoidState(
         geoid_id=geoid_id,
         semantic_state=request.semantic_features,
-        symbolic_state=request.symbolic_content,
+        symbolic_state=symbolic,
         metadata=request.metadata,
     )
 
