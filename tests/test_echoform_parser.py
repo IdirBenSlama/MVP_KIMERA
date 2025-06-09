@@ -1,4 +1,7 @@
+import os
 import pytest
+
+os.environ["ENABLE_JOBS"] = "0"
 from backend.linguistic.echoform import parse_echoform
 
 @pytest.mark.parametrize("text,expected", [

@@ -2,6 +2,8 @@ import os
 import sys
 import pytest
 
+os.environ["ENABLE_JOBS"] = "0"
+
 sys.path.insert(0, os.path.abspath('.'))
 
 from backend.engines.spde import SPDE

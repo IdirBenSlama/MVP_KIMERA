@@ -1,6 +1,8 @@
 import os
 import sys
 import importlib
+
+os.environ["ENABLE_JOBS"] = "0"
 from datetime import datetime
 import pytest
 
