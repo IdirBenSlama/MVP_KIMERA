@@ -12,7 +12,7 @@ import os
 from ..core.geoid import GeoidState
 from ..core.scar import ScarRecord
 from ..core.models import LinguisticGeoid
-from ..core.constants import EMBEDDING_DIM
+from ..core.embedding_utils import encode_text
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..engines.asm import AxisStabilityMonitor
@@ -21,34 +21,12 @@ from ..vault.database import SessionLocal, GeoidDB, ScarDB
 from ..engines.background_jobs import start_background_jobs, stop_background_jobs
 from ..engines.clip_service import clip_service
 from .middleware import icw_middleware
-import hashlib
 import numpy as np
-
-class _DummyTransformer:
-    def encode(self, text: str):
-        h = hashlib.sha256(text.encode()).digest()
-        vec = np.frombuffer(h, dtype=np.uint8).astype(float)
-        reps = (EMBEDDING_DIM + len(vec) - 1) // len(vec)
-        return np.tile(vec, reps)[:EMBEDDING_DIM] / 255.0
-
-try:
-    from sentence_transformers import SentenceTransformer  # type: ignore
-except Exception:  # pragma: no cover - allow tests without heavy deps
-    SentenceTransformer = None  # type: ignore
-
-_fallback_model = _DummyTransformer()
 from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
 app.mount("/images", StaticFiles(directory="static/images"), name="images")
 app.middleware("http")(icw_middleware)
-
-# Load embedding model once at startup for semantic vector persistence
-LIGHTWEIGHT_EMBEDDING = os.getenv("LIGHTWEIGHT_EMBEDDING", "0") == "1"
-if SentenceTransformer is not None and not LIGHTWEIGHT_EMBEDDING:
-    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
-else:  # pragma: no cover - lightweight fallback
-    embedding_model = _fallback_model
 
 kimera_system = {
     'contradiction_engine': ContradictionEngine(),
@@ -62,7 +40,7 @@ kimera_system = {
 @app.on_event("startup")
 def _startup_background_jobs() -> None:
     if os.getenv("ENABLE_JOBS", "1") == "1":
-        start_background_jobs(embedding_model.encode)
+        start_background_jobs(encode_text)
 
 
 @app.on_event("shutdown")
@@ -107,7 +85,7 @@ def create_scar_from_tension(
         f"Contradiction between '{geoid_a_summary}' and '{geoid_b_summary}'"
     )
 
-    vector = embedding_model.encode(scar_summary_text).tolist()
+    vector = encode_text(scar_summary_text)
     return scar, vector
 
 
@@ -142,7 +120,7 @@ async def create_geoid(request: CreateGeoidRequest):
 
     # --- VECTOR PERSISTENCE ---
     semantic_text = " ".join([f"{k}:{v:.2f}" for k, v in request.semantic_features.items()])
-    vector = embedding_model.encode(semantic_text).tolist()
+    vector = encode_text(semantic_text)
     with SessionLocal() as db:
         geoid_db = GeoidDB(
             geoid_id=geoid.geoid_id,
@@ -282,7 +260,7 @@ async def process_contradictions(body: ProcessContradictionRequest, request: Req
 
         # --- Scar Resonance: consult similar scars ---
         current_summary = f"Tension between {tension.geoid_a} and {tension.geoid_b}"
-        query_vector = embedding_model.encode(current_summary).tolist()
+        query_vector = encode_text(current_summary)
         with SessionLocal() as db:
             if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
                 past_scars = (
@@ -396,7 +374,7 @@ async def speak_geoid(geoid_id: str):
 @app.get("/geoids/search")
 async def search_geoids(query: str, limit: int = 5):
     """Find geoids semantically similar to a query string."""
-    query_vector = embedding_model.encode(query).tolist()
+    query_vector = encode_text(query)
     with SessionLocal() as db:
         if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
             results = (
@@ -421,7 +399,7 @@ async def search_geoids(query: str, limit: int = 5):
 @app.get("/scars/search")
 async def search_scars(query: str, limit: int = 3):
     """Find scars semantically similar to a query describing a contradiction."""
-    query_vector = embedding_model.encode(query).tolist()
+    query_vector = encode_text(query)
     with SessionLocal() as db:
         if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
             results = (
