@@ -11,8 +11,10 @@ import uuid
 class VaultManager:
     """Manage persistence of Scar records across multiple vaults."""
 
-    def __init__(self):
-        self.db = SessionLocal()
+    def __init__(self) -> None:
+        """Initialize the vault manager."""
+        # Sessions are created per-method; nothing needed here.
+        pass
 
     def _select_vault(self) -> str:
         """Choose a vault based on current counts."""
@@ -53,24 +55,29 @@ class VaultManager:
             scar_vector=vector,
             vault_id=vault_id,
         )
-        self.db.add(scar_db)
-        self.db.commit()
-        self.db.refresh(scar_db)
+        with SessionLocal() as db:
+            db.add(scar_db)
+            db.commit()
+            db.refresh(scar_db)
         return scar_db
 
     def get_scars_from_vault(self, vault_id: str, limit: int = 100) -> List[ScarDB]:
-        scars = (
-            self.db.query(ScarDB)
-            .filter(ScarDB.vault_id == vault_id)
-            .order_by(ScarDB.timestamp.desc())
-            .limit(limit)
-            .all()
-        )
-        now = datetime.utcnow()
-        for s in scars:
-            s.last_accessed = now
-        self.db.commit()
+        """Return recent scars from the requested vault."""
+        with SessionLocal() as db:
+            scars = (
+                db.query(ScarDB)
+                .filter(ScarDB.vault_id == vault_id)
+                .order_by(ScarDB.timestamp.desc())
+                .limit(limit)
+                .all()
+            )
+            now = datetime.utcnow()
+            for s in scars:
+                s.last_accessed = now
+            db.commit()
         return scars
 
     def get_total_scar_count(self, vault_id: str) -> int:
-        return self.db.query(ScarDB).filter(ScarDB.vault_id == vault_id).count()
+        """Return the total number of scars stored in the given vault."""
+        with SessionLocal() as db:
+            return db.query(ScarDB).filter(ScarDB.vault_id == vault_id).count()
