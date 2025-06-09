@@ -61,7 +61,8 @@ kimera_system = {
 
 @app.on_event("startup")
 def _startup_background_jobs() -> None:
-    start_background_jobs(embedding_model.encode)
+    if os.getenv("ENABLE_JOBS", "1") == "1":
+        start_background_jobs(embedding_model.encode)
 
 
 @app.on_event("shutdown")

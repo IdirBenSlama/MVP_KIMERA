@@ -8,6 +8,7 @@ import random
 import string
 
 sys.path.insert(0, os.path.abspath("."))
+os.environ["ENABLE_JOBS"] = "0"
 
 from apscheduler.schedulers.background import BackgroundScheduler
 

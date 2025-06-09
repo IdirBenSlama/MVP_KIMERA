@@ -25,6 +25,8 @@ uvicorn backend.api.main:app --reload
 ```
 
 The API exposes endpoints for managing geoids and scars. Static images are served from `static/images`.
+Set the `ENABLE_JOBS` environment variable to `0` if you want to disable the
+recurring background jobs that run on startup (they are enabled by default).
 
 ## Testing
 
@@ -36,4 +38,5 @@ LIGHTWEIGHT_EMBEDDING=1 pytest
 ```
 
 Setting `LIGHTWEIGHT_EMBEDDING=1` avoids downloading heavy models during testing.
+Set `ENABLE_JOBS=0` during testing to skip the background scheduler.
 
