@@ -229,4 +229,8 @@ def test_vault_rebalance_endpoint(api_env):
     assert res.status_code == 200
     data = res.json()
     assert 'moved_scars' in data
+    with SessionLocal() as db:
+        count_a = db.query(ScarDB).filter(ScarDB.vault_id == 'vault_a').count()
+        count_b = db.query(ScarDB).filter(ScarDB.vault_id == 'vault_b').count()
+    assert count_a == 2 and count_b == 2
 
