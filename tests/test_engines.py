@@ -1,10 +1,13 @@
 import os
 import sys
+import pytest
 
 sys.path.insert(0, os.path.abspath('.'))
 
 from backend.engines.spde import SPDE
 from backend.engines.kccl import KimeraCognitiveCycle
+from backend.engines.contradiction_engine import ContradictionEngine
+from backend.core.geoid import GeoidState
 
 
 def test_spde_basic():
@@ -17,3 +20,39 @@ def test_spde_basic():
 def test_kccl_basic():
     cycle = KimeraCognitiveCycle()
     assert cycle.run_cycle() == 'cycle complete'
+
+
+def test_contradiction_engine_scoring():
+    eng = ContradictionEngine(tension_threshold=0.5)
+    g1 = GeoidState(
+        geoid_id="A",
+        semantic_state={"a": 1.0},
+        symbolic_state={"status": "on"},
+    )
+    g2 = GeoidState(
+        geoid_id="B",
+        semantic_state={"b": 1.0},
+        symbolic_state={"status": "off"},
+    )
+
+    tensions = eng.detect_tension_gradients([g1, g2])
+    assert len(tensions) == 1
+    assert tensions[0].gradient_type == "composite"
+    assert tensions[0].tension_score == pytest.approx(0.85)
+
+
+def test_contradiction_engine_no_tension():
+    eng = ContradictionEngine(tension_threshold=0.1)
+    g1 = GeoidState(
+        geoid_id="A",
+        semantic_state={"a": 1.0},
+        symbolic_state={"status": "on"},
+    )
+    g2 = GeoidState(
+        geoid_id="B",
+        semantic_state={"a": 1.0},
+        symbolic_state={"status": "on"},
+    )
+
+    tensions = eng.detect_tension_gradients([g1, g2])
+    assert tensions == []

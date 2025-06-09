@@ -17,12 +17,18 @@ class ContradictionEngine:
         self.tension_threshold = tension_threshold
 
     def detect_tension_gradients(self, geoids: List[GeoidState]) -> List[TensionGradient]:
+        """Detect tension gradients using composite scoring."""
         tensions = []
         for i, a in enumerate(geoids):
-            for b in geoids[i+1:]:
-                score = self._embedding_misalignment(a, b)
+            for b in geoids[i + 1 :]:
+                emb = self._embedding_misalignment(a, b)
+                layer = self._layer_conflict_intensity(a, b)
+                sym = self._symbolic_opposition(a, b)
+                score = 0.4 * emb + 0.3 * layer + 0.3 * sym
                 if score > self.tension_threshold:
-                    tensions.append(TensionGradient(a.geoid_id, b.geoid_id, score, 'embedding'))
+                    tensions.append(
+                        TensionGradient(a.geoid_id, b.geoid_id, score, "composite")
+                    )
         return tensions
 
     def _embedding_misalignment(self, a: GeoidState, b: GeoidState) -> float:
@@ -38,6 +44,38 @@ class ContradictionEngine:
         if np.linalg.norm(vec_a) == 0 or np.linalg.norm(vec_b) == 0:
             return 0.0
         return float(cosine(vec_a, vec_b))
+
+    def _layer_conflict_intensity(self, a: GeoidState, b: GeoidState) -> float:
+        """Simple proxy for semantic vs symbolic layer disagreement."""
+        sem_a = set(a.semantic_state)
+        sem_b = set(b.semantic_state)
+        sym_a = set(a.symbolic_state)
+        sym_b = set(b.symbolic_state)
+
+        if not (sem_a or sem_b or sym_a or sym_b):
+            return 0.0
+
+        def jaccard_distance(x: set, y: set) -> float:
+            if not (x or y):
+                return 0.0
+            inter = len(x & y)
+            union = len(x | y)
+            return 1.0 - inter / union
+
+        sem_diff = jaccard_distance(sem_a, sem_b)
+        sym_diff = jaccard_distance(sym_a, sym_b)
+
+        return (sem_diff + sym_diff) / 2
+
+    def _symbolic_opposition(self, a: GeoidState, b: GeoidState) -> float:
+        """Measure direct conflicts in overlapping symbolic assertions."""
+        overlap = set(a.symbolic_state) & set(b.symbolic_state)
+        if not overlap:
+            return 0.0
+        conflicts = sum(
+            1 for key in overlap if a.symbolic_state.get(key) != b.symbolic_state.get(key)
+        )
+        return conflicts / len(overlap)
 
     def calculate_pulse_strength(self, tension: TensionGradient, geoids: Dict[str, GeoidState]) -> float:
         # For MVP use tension score as pulse strength
