@@ -470,6 +470,7 @@ async def trigger_cycle():
         'scars_created': cycle_stats.get('scars_created', 0),
         'entropy_before_diffusion': cycle_stats.get('entropy_before_diffusion', 0.0),
         'entropy_after_diffusion': cycle_stats.get('entropy_after_diffusion', 0.0),
+        'entropy_delta': cycle_stats.get('entropy_delta', 0.0),
     }
 
 
