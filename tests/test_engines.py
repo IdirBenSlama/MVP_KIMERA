@@ -38,6 +38,13 @@ def test_spde_custom_parameters():
     assert [out[k] for k in state] == pytest.approx(expected)
 
 
+def test_spde_invalid_parameters():
+    with pytest.raises(ValueError):
+        SPDE(diffusion_rate=-0.1)
+    with pytest.raises(ValueError):
+        SPDE(decay_factor=0)
+
+
 def test_kccl_basic():
     cycle = KimeraCognitiveCycle()
     class DummyVault:

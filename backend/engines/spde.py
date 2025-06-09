@@ -12,6 +12,12 @@ class SPDE:
     diffusion_rate: float = 0.5
     decay_factor: float = 1.0
 
+    def __post_init__(self) -> None:
+        if not 0.0 <= self.diffusion_rate <= 1.0:
+            raise ValueError("diffusion_rate must be between 0 and 1")
+        if self.decay_factor <= 0.0:
+            raise ValueError("decay_factor must be positive")
+
     def diffuse(self, state: dict[str, float]) -> dict[str, float]:
         """Return a diffused copy of the state using a Gaussian blur."""
         if not state:
