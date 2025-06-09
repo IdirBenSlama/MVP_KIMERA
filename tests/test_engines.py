@@ -1,13 +1,14 @@
+# flake8: noqa
 import os
 import sys
-import pytest
 
 sys.path.insert(0, os.path.abspath('.'))
 
-from backend.engines.spde import SPDE
-from backend.engines.kccl import KimeraCognitiveCycle
-from backend.engines.contradiction_engine import ContradictionEngine
-from backend.core.geoid import GeoidState
+import pytest
+from backend.engines.spde import SPDE  # noqa: E402
+from backend.engines.kccl import KimeraCognitiveCycle  # noqa: E402
+from backend.engines.contradiction_engine import ContradictionEngine  # noqa: E402
+from backend.core.geoid import GeoidState  # noqa: E402
 
 
 def test_spde_basic():

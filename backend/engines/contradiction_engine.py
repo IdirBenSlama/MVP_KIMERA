@@ -1,9 +1,12 @@
 from __future__ import annotations
-from typing import List, Dict
+
 from dataclasses import dataclass
+from typing import Dict, List
+
 from scipy.spatial.distance import cosine
 
 from ..core.geoid import GeoidState
+
 
 @dataclass
 class TensionGradient:
@@ -12,22 +15,30 @@ class TensionGradient:
     tension_score: float
     gradient_type: str
 
+
 class ContradictionEngine:
     def __init__(self, tension_threshold: float = 0.75):
         self.tension_threshold = tension_threshold
 
-    def detect_tension_gradients(self, geoids: List[GeoidState]) -> List[TensionGradient]:
+    def detect_tension_gradients(
+        self, geoids: List[GeoidState]
+    ) -> List[TensionGradient]:
         """Detect tension gradients using composite scoring."""
         tensions = []
         for i, a in enumerate(geoids):
-            for b in geoids[i + 1 :]:
+            for b in geoids[i + 1:]:
                 emb = self._embedding_misalignment(a, b)
                 layer = self._layer_conflict_intensity(a, b)
                 sym = self._symbolic_opposition(a, b)
                 score = 0.4 * emb + 0.3 * layer + 0.3 * sym
                 if score > self.tension_threshold:
                     tensions.append(
-                        TensionGradient(a.geoid_id, b.geoid_id, score, "composite")
+                        TensionGradient(
+                            a.geoid_id,
+                            b.geoid_id,
+                            score,
+                            "composite",
+                        )
                     )
         return tensions
 
@@ -73,11 +84,15 @@ class ContradictionEngine:
         if not overlap:
             return 0.0
         conflicts = sum(
-            1 for key in overlap if a.symbolic_state.get(key) != b.symbolic_state.get(key)
+            1
+            for key in overlap
+            if a.symbolic_state.get(key) != b.symbolic_state.get(key)
         )
         return conflicts / len(overlap)
 
-    def calculate_pulse_strength(self, tension: TensionGradient, geoids: Dict[str, GeoidState]) -> float:
+    def calculate_pulse_strength(
+        self, tension: TensionGradient, geoids: Dict[str, GeoidState]
+    ) -> float:
         # For MVP use tension score as pulse strength
         return min(tension.tension_score, 1.0)
 
@@ -87,7 +102,7 @@ class ContradictionEngine:
         stability: Dict[str, float],
         profile: Dict[str, object] | None = None,
     ) -> str:
-        """Determine whether to collapse or surge based on pulse and profile."""
+        """Decide whether to collapse or surge based on pulse and profile."""
 
         allow_surges = True
         if profile is not None:
