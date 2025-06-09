@@ -16,6 +16,11 @@ function SystemHealthDashboard() {
     setMetrics({ ...status, ...stability });
   };
 
+  const triggerCycle = async () => {
+    await fetch(`${API_BASE}/system/cycle`, { method: 'POST' });
+    await fetchData();
+  };
+
   useEffect(() => { fetchData(); }, []);
 
   if (!metrics) return React.createElement('p', null, 'Loading...');
@@ -37,6 +42,7 @@ function SystemHealthDashboard() {
           </>
         )}
       </ul>
+      <button onClick={triggerCycle}>Run Cycle</button>
     </div>
   );
 }
@@ -90,6 +96,11 @@ function VaultInspector() {
     setB(b.scars || []);
   };
 
+  const rebalance = async () => {
+    await fetch(`${API_BASE}/vaults/rebalance`, { method: 'POST' });
+    await fetchVaults();
+  };
+
   useEffect(() => { fetchVaults(); }, []);
 
   return (
@@ -105,6 +116,7 @@ function VaultInspector() {
           <ul>{vaultB.map(s => <li key={s.scar_id}>{s.scar_id}</li>)}</ul>
         </div>
       </div>
+      <button onClick={rebalance}>Rebalance Vaults</button>
     </div>
   );
 }
