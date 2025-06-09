@@ -149,3 +149,17 @@ def test_speak_geoid_endpoint():
     gid = create.json()['geoid_id']
     res = client.get(f'/geoids/{gid}/speak')
     assert res.status_code in (200, 409)
+
+
+def test_echoform_parsing_and_storage():
+    res = client.post(
+        '/geoids',
+        json={
+            'semantic_features': {'e': 1.0},
+            'echoform_text': '(hello world (nested))'
+        },
+    )
+    assert res.status_code == 200
+    gid = res.json()['geoid_id']
+    geoid = kimera_system['active_geoids'][gid]
+    assert geoid.symbolic_state['echoform'] == [['hello', 'world', ['nested']]]
