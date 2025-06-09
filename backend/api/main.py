@@ -142,18 +142,17 @@ async def create_geoid(request: CreateGeoidRequest):
     # --- VECTOR PERSISTENCE ---
     semantic_text = " ".join([f"{k}:{v:.2f}" for k, v in request.semantic_features.items()])
     vector = embedding_model.encode(semantic_text).tolist()
-    db = SessionLocal()
-    geoid_db = GeoidDB(
-        geoid_id=geoid.geoid_id,
-        symbolic_state=geoid.symbolic_state,
-        metadata_json=geoid.metadata,
-        semantic_state_json=geoid.semantic_state,
-        semantic_vector=vector,
-    )
-    db.add(geoid_db)
-    db.commit()
-    db.refresh(geoid_db)
-    db.close()
+    with SessionLocal() as db:
+        geoid_db = GeoidDB(
+            geoid_id=geoid.geoid_id,
+            symbolic_state=geoid.symbolic_state,
+            metadata_json=geoid.metadata,
+            semantic_state_json=geoid.semantic_state,
+            semantic_vector=vector,
+        )
+        db.add(geoid_db)
+        db.commit()
+        db.refresh(geoid_db)
 
     # Validate thermodynamic constraints for new geoid (no before state)
     kimera_system['thermodynamics_engine'].validate_transformation(
@@ -190,27 +189,25 @@ async def create_geoid_from_image(file: UploadFile = File(...)):
         metadata={'image_uri': f"/images/{unique_filename}"},
     )
 
-    db = SessionLocal()
-    try:
-        geoid_db_entry = GeoidDB(
-            geoid_id=geoid.geoid_id,
-            symbolic_state=geoid.symbolic_state,
-            metadata_json=geoid.metadata,
-            semantic_state_json={},
-            semantic_vector=vector.tolist(),
-        )
-        db.add(geoid_db_entry)
-        db.commit()
-        db.refresh(geoid_db_entry)
+    with SessionLocal() as db:
+        try:
+            geoid_db_entry = GeoidDB(
+                geoid_id=geoid.geoid_id,
+                symbolic_state=geoid.symbolic_state,
+                metadata_json=geoid.metadata,
+                semantic_state_json={},
+                semantic_vector=vector.tolist(),
+            )
+            db.add(geoid_db_entry)
+            db.commit()
+            db.refresh(geoid_db_entry)
 
-        os.makedirs("static/images", exist_ok=True)
-        with open(f"static/images/{unique_filename}", "wb") as buffer:
-            buffer.write(image_bytes)
-    except Exception:
-        db.rollback()
-        raise
-    finally:
-        db.close()
+            os.makedirs("static/images", exist_ok=True)
+            with open(f"static/images/{unique_filename}", "wb") as buffer:
+                buffer.write(image_bytes)
+        except Exception:
+            db.rollback()
+            raise
 
     return {
         "message": "Geoid created from image",
@@ -223,36 +220,34 @@ async def create_geoid_from_image(file: UploadFile = File(...)):
 async def process_contradictions(body: ProcessContradictionRequest, request: Request):
     """Autonomously discover contradictions for a trigger Geoid."""
 
-    db = SessionLocal()
+    with SessionLocal() as db:
 
-    # Use Axis Stability Monitor for global metrics
-    asm = AxisStabilityMonitor(db)
-    stability_metrics = asm.get_stability_metrics()
-    profile = getattr(request.state, "kimera_profile", {})
+        # Use Axis Stability Monitor for global metrics
+        asm = AxisStabilityMonitor(db)
+        stability_metrics = asm.get_stability_metrics()
+        profile = getattr(request.state, "kimera_profile", {})
 
-    trigger_db = db.query(GeoidDB).filter(GeoidDB.geoid_id == body.trigger_geoid_id).first()
-    if not trigger_db:
-        db.close()
-        raise HTTPException(status_code=404, detail="Trigger Geoid not found")
+        trigger_db = db.query(GeoidDB).filter(GeoidDB.geoid_id == body.trigger_geoid_id).first()
+        if not trigger_db:
+            raise HTTPException(status_code=404, detail="Trigger Geoid not found")
 
-    trigger_vector = trigger_db.semantic_vector
+        trigger_vector = trigger_db.semantic_vector
 
-    if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
-        similar_db = (
-            db.query(GeoidDB)
-            .filter(GeoidDB.geoid_id != body.trigger_geoid_id)
-            .order_by(GeoidDB.semantic_vector.l2_distance(trigger_vector))
-            .limit(body.search_limit)
-            .all()
-        )
-    else:
-        similar_db = (
-            db.query(GeoidDB)
-            .filter(GeoidDB.geoid_id != body.trigger_geoid_id)
-            .limit(body.search_limit)
-            .all()
-        )
-    db.close()
+        if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+            similar_db = (
+                db.query(GeoidDB)
+                .filter(GeoidDB.geoid_id != body.trigger_geoid_id)
+                .order_by(GeoidDB.semantic_vector.l2_distance(trigger_vector))
+                .limit(body.search_limit)
+                .all()
+            )
+        else:
+            similar_db = (
+                db.query(GeoidDB)
+                .filter(GeoidDB.geoid_id != body.trigger_geoid_id)
+                .limit(body.search_limit)
+                .all()
+            )
 
     def to_state(row: GeoidDB) -> GeoidState:
         return GeoidState(
@@ -287,17 +282,16 @@ async def process_contradictions(body: ProcessContradictionRequest, request: Req
         # --- Scar Resonance: consult similar scars ---
         current_summary = f"Tension between {tension.geoid_a} and {tension.geoid_b}"
         query_vector = embedding_model.encode(current_summary).tolist()
-        db = SessionLocal()
-        if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
-            past_scars = (
-                db.query(ScarDB)
-                .order_by(ScarDB.scar_vector.l2_distance(query_vector))
-                .limit(3)
-                .all()
-            )
-        else:
-            past_scars = db.query(ScarDB).limit(3).all()
-        db.close()
+        with SessionLocal() as db:
+            if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+                past_scars = (
+                    db.query(ScarDB)
+                    .order_by(ScarDB.scar_vector.l2_distance(query_vector))
+                    .limit(3)
+                    .all()
+                )
+            else:
+                past_scars = db.query(ScarDB).limit(3).all()
 
         if past_scars:
             avg_entropy = sum(s.delta_entropy for s in past_scars) / len(past_scars)
@@ -367,24 +361,22 @@ async def get_vault_contents(vault_id: str, limit: int = 10):
 
 @app.get("/geoids/{geoid_id}/speak", response_model=LinguisticGeoid)
 async def speak_geoid(geoid_id: str):
-    db = SessionLocal()
-    geoid_db = db.query(GeoidDB).filter(GeoidDB.geoid_id == geoid_id).first()
-    if not geoid_db:
-        db.close()
-        raise HTTPException(status_code=404, detail="Geoid not found")
+    with SessionLocal() as db:
+        geoid_db = db.query(GeoidDB).filter(GeoidDB.geoid_id == geoid_id).first()
+        if not geoid_db:
+            raise HTTPException(status_code=404, detail="Geoid not found")
 
-    asm = AxisStabilityMonitor(db)
-    stability = asm.get_stability_metrics()["semantic_cohesion"]
-    if stability < 0.7:
-        db.close()
-        raise HTTPException(status_code=409, detail="Concept is currently unstable.")
+        asm = AxisStabilityMonitor(db)
+        stability = asm.get_stability_metrics()["semantic_cohesion"]
+        if stability < 0.7:
+            raise HTTPException(status_code=409, detail="Concept is currently unstable.")
 
-    supporting_scars = (
-        db.query(ScarDB)
-        .filter(ScarDB.geoids.contains([geoid_id]))
-        .limit(3)
-        .all()
-    )
+        supporting_scars = (
+            db.query(ScarDB)
+            .filter(ScarDB.geoids.contains([geoid_id]))
+            .limit(3)
+            .all()
+        )
 
     primary_statement = (
         f"Based on available data, the concept '{geoid_id}' represents: {geoid_db.symbolic_state}"
@@ -397,7 +389,6 @@ async def speak_geoid(geoid_id: str):
         supporting_scars=[scar.__dict__ for scar in supporting_scars],
         explanation_lineage=f"This concept is supported by {len(supporting_scars)} resolved contradictions."
     )
-    db.close()
     return response
 
 
@@ -405,25 +396,24 @@ async def speak_geoid(geoid_id: str):
 async def search_geoids(query: str, limit: int = 5):
     """Find geoids semantically similar to a query string."""
     query_vector = embedding_model.encode(query).tolist()
-    db = SessionLocal()
-    if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
-        results = (
-            db.query(GeoidDB)
-            .order_by(GeoidDB.semantic_vector.l2_distance(query_vector))
-            .limit(limit)
-            .all()
-        )
-    else:
-        results = db.query(GeoidDB).limit(limit).all()
-    similar = [
-        {
-            'geoid_id': r.geoid_id,
-            'symbolic_state': r.symbolic_state,
-            'metadata': r.metadata_json,
-        }
-        for r in results
-    ]
-    db.close()
+    with SessionLocal() as db:
+        if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+            results = (
+                db.query(GeoidDB)
+                .order_by(GeoidDB.semantic_vector.l2_distance(query_vector))
+                .limit(limit)
+                .all()
+            )
+        else:
+            results = db.query(GeoidDB).limit(limit).all()
+        similar = [
+            {
+                'geoid_id': r.geoid_id,
+                'symbolic_state': r.symbolic_state,
+                'metadata': r.metadata_json,
+            }
+            for r in results
+        ]
     return {"query": query, "similar_geoids": similar}
 
 
@@ -431,30 +421,29 @@ async def search_geoids(query: str, limit: int = 5):
 async def search_scars(query: str, limit: int = 3):
     """Find scars semantically similar to a query describing a contradiction."""
     query_vector = embedding_model.encode(query).tolist()
-    db = SessionLocal()
-    if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
-        results = (
-            db.query(ScarDB)
-            .order_by(ScarDB.scar_vector.l2_distance(query_vector))
-            .limit(limit)
-            .all()
-        )
-    else:
-        results = db.query(ScarDB).limit(limit).all()
-    now = datetime.utcnow()
-    similar = []
-    for r in results:
-        r.last_accessed = now
-        r.weight += 1.0
-        similar.append(
-            {
-                'scar_id': r.scar_id,
-                'reason': r.reason,
-                'delta_entropy': r.delta_entropy,
-            }
-        )
-    db.commit()
-    db.close()
+    with SessionLocal() as db:
+        if kimera_system['vault_manager'].db.bind.url.drivername.startswith("postgresql"):
+            results = (
+                db.query(ScarDB)
+                .order_by(ScarDB.scar_vector.l2_distance(query_vector))
+                .limit(limit)
+                .all()
+            )
+        else:
+            results = db.query(ScarDB).limit(limit).all()
+        now = datetime.utcnow()
+        similar = []
+        for r in results:
+            r.last_accessed = now
+            r.weight += 1.0
+            similar.append(
+                {
+                    'scar_id': r.scar_id,
+                    'reason': r.reason,
+                    'delta_entropy': r.delta_entropy,
+                }
+            )
+        db.commit()
     return {"query": query, "similar_scars": similar}
 
 @app.get("/system/status")
@@ -472,10 +461,9 @@ async def get_system_status():
 @app.get("/system/stability")
 async def get_system_stability():
     """Return global stability metrics from the Axis Stability Monitor."""
-    db = SessionLocal()
-    asm = AxisStabilityMonitor(db)
-    metrics = asm.get_stability_metrics()
-    db.close()
+    with SessionLocal() as db:
+        asm = AxisStabilityMonitor(db)
+        metrics = asm.get_stability_metrics()
     return metrics
 
 if __name__ == "__main__":
