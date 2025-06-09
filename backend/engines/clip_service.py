@@ -1,4 +1,7 @@
+import os
 try:
+    if os.getenv("LIGHTWEIGHT_CLIP", "0") == "1":
+        raise ImportError
     from transformers import CLIPProcessor, CLIPModel
     import torch
 except Exception:  # pragma: no cover - allow tests without heavy deps
