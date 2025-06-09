@@ -50,8 +50,10 @@ The endpoint `/geoids` accepts an optional `echoform_text` field that is parsed
 using the lightweight EchoForm parser implemented in
 `backend/linguistic/echoform.py`.
 The parser supports a small s-expression style syntax where parentheses denote
-nested lists and tokens are separated by whitespace. Submitting EchoForm text
-stores the parsed structure in the Geoid's symbolic state.
+nested lists and tokens are separated by whitespace.  Double quoted strings are
+treated as string atoms and the single quote character functions as the Lisp
+style `quote` operator.  Submitting EchoForm text stores the parsed structure in
+the Geoid's symbolic state.
 
 Example request:
 
