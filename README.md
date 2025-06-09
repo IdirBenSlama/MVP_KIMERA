@@ -6,8 +6,10 @@ The authoritative implementation lives in the top-level `backend/` package. The 
 ## Requirements
 
 - Python 3.12+
-- See `requirements.txt` for Python package dependencies.
-- The `httpx` dependency is pinned to `0.24.*` for FastAPI test client
+- Tested with FastAPI 0.115, Transformers 4.52, Torch 2.7 and
+  Sentence-Transformers 4.1.
+- See `requirements.txt` for pinned Python package dependencies. The
+  `httpx` dependency is pinned to `0.24.*` for FastAPI test client
   compatibility.
 
 Install dependencies with:
