@@ -48,7 +48,7 @@ def test_kccl_basic():
 
     system = {
         'spde_engine': SPDE(),
-        'contradiction_engine': ContradictionEngine(tension_threshold=0.49),
+        'contradiction_engine': ContradictionEngine(tension_threshold=0.5),
         'vault_manager': DummyVault(),
         'active_geoids': {
             'A': GeoidState('A', {'x': 1.0}),
@@ -74,7 +74,7 @@ def test_kccl_cycle_stats_and_scars():
 
     system = {
         'spde_engine': SPDE(),
-        'contradiction_engine': ContradictionEngine(tension_threshold=0.49),
+        'contradiction_engine': ContradictionEngine(tension_threshold=0.5),
         'vault_manager': DummyVault(),
         'active_geoids': {
             'A': GeoidState('A', {'x': 1.0}),
