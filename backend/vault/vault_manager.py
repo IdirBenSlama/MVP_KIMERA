@@ -1,6 +1,8 @@
 from __future__ import annotations
-from typing import List
+from typing import List, Tuple
 from datetime import datetime
+from sqlalchemy import func
+import math
 
 from ..core.scar import ScarRecord
 from ..core.geoid import GeoidState
@@ -81,3 +83,91 @@ class VaultManager:
         """Return the total number of scars stored in the given vault."""
         with SessionLocal() as db:
             return db.query(ScarDB).filter(ScarDB.vault_id == vault_id).count()
+
+    def get_total_scar_weight(self, vault_id: str) -> float:
+        """Return the sum of scar weights in the given vault."""
+        with SessionLocal() as db:
+            total = db.query(func.sum(ScarDB.weight)).filter(ScarDB.vault_id == vault_id).scalar()
+            return float(total or 0.0)
+
+    def detect_vault_imbalance(
+        self,
+        *,
+        by_weight: bool = False,
+        threshold: float = 1.5,
+    ) -> Tuple[bool, str, str]:
+        """Determine if one vault significantly outweighs the other.
+
+        Returns a tuple of (imbalanced?, overloaded_vault, underloaded_vault).
+        """
+        if by_weight:
+            a_val = self.get_total_scar_weight("vault_a")
+            b_val = self.get_total_scar_weight("vault_b")
+        else:
+            a_val = self.get_total_scar_count("vault_a")
+            b_val = self.get_total_scar_count("vault_b")
+
+        if b_val == 0 and a_val == 0:
+            return False, "", ""
+
+        if a_val > threshold * max(b_val, 1e-9):
+            return True, "vault_a", "vault_b"
+        if b_val > threshold * max(a_val, 1e-9):
+            return True, "vault_b", "vault_a"
+        return False, "", ""
+
+    def rebalance_vaults(
+        self,
+        *,
+        by_weight: bool = False,
+        threshold: float = 1.5,
+    ) -> int:
+        """Move low priority scars from the overloaded vault to the other."""
+        imbalanced, from_vault, to_vault = self.detect_vault_imbalance(
+            by_weight=by_weight, threshold=threshold
+        )
+        if not imbalanced:
+            return 0
+
+        with SessionLocal() as db:
+            try:
+                if by_weight:
+                    from_val = self.get_total_scar_weight(from_vault)
+                    to_val = self.get_total_scar_weight(to_vault)
+                    diff = from_val - to_val
+                    target = diff / 2.0
+                    moved_weight = 0.0
+                    scars = (
+                        db.query(ScarDB)
+                        .filter(ScarDB.vault_id == from_vault)
+                        .order_by(ScarDB.weight)
+                        .all()
+                    )
+                    moved = 0
+                    for scar in scars:
+                        if moved_weight >= target:
+                            break
+                        scar.vault_id = to_vault
+                        moved_weight += scar.weight
+                        moved += 1
+                else:
+                    from_val = self.get_total_scar_count(from_vault)
+                    to_val = self.get_total_scar_count(to_vault)
+                    diff = from_val - to_val
+                    num_to_move = max(math.ceil(diff / 2.0), 1)
+                    scars = (
+                        db.query(ScarDB)
+                        .filter(ScarDB.vault_id == from_vault)
+                        .order_by(ScarDB.weight)
+                        .limit(num_to_move)
+                        .all()
+                    )
+                    for scar in scars:
+                        scar.vault_id = to_vault
+                    moved = len(scars)
+
+                db.commit()
+            except Exception:
+                db.rollback()
+                raise
+        return moved

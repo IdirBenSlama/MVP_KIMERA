@@ -351,6 +351,14 @@ async def get_vault_contents(vault_id: str, limit: int = 10):
     return {"vault_id": vault_id, "scars": scars_dicts}
 
 
+@app.post("/vaults/rebalance")
+async def rebalance_vaults(by_weight: bool = False):
+    """Manually trigger vault rebalancing."""
+    vault_manager = kimera_system['vault_manager']
+    moved = vault_manager.rebalance_vaults(by_weight=by_weight)
+    return {"moved_scars": moved}
+
+
 @app.get("/geoids/{geoid_id}/speak", response_model=LinguisticGeoid)
 async def speak_geoid(geoid_id: str):
     with SessionLocal() as db:
