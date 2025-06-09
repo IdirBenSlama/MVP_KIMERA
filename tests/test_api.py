@@ -16,10 +16,11 @@ def _init_app(db_url: str):
     importlib.reload(db_module)
     import backend.vault.vault_manager as vm_module
     importlib.reload(vm_module)
-    from backend.api.main import app, kimera_system
-    kimera_system['vault_manager'] = vm_module.VaultManager()
-    client = TestClient(app)
-    return client, kimera_system, db_module.SessionLocal, db_module.ScarDB
+    import backend.api.main as main_module
+    importlib.reload(main_module)
+    main_module.kimera_system['vault_manager'] = vm_module.VaultManager()
+    client = TestClient(main_module.app)
+    return client, main_module.kimera_system, db_module.SessionLocal, db_module.ScarDB
 
 
 @pytest.fixture()
@@ -191,8 +192,11 @@ def test_system_cycle_endpoint(api_env):
     before = client.get('/system/status').json()['cycle_count']
     res = client.post('/system/cycle')
     assert res.status_code == 200
+    data = res.json()
     after = client.get('/system/status').json()['cycle_count']
     assert after == before + 1
+    assert 'entropy_before_diffusion' in data
+    assert 'entropy_after_diffusion' in data
 
 
 def test_vault_rebalance_endpoint(api_env):

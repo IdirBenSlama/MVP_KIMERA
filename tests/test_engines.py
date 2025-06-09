@@ -89,6 +89,8 @@ def test_kccl_cycle_stats_and_scars():
     stats = system['system_state'].get('last_cycle', {})
     assert stats.get('scars_created', 0) == system['vault_manager'].count
     assert stats.get('contradictions_detected', 0) >= 1
+    assert 'entropy_before_diffusion' in stats
+    assert 'entropy_after_diffusion' in stats
 
 
 def test_contradiction_engine_scoring():

@@ -468,6 +468,8 @@ async def trigger_cycle():
         'cycle_count': kimera_system['system_state']['cycle_count'],
         'contradictions_detected': cycle_stats.get('contradictions_detected', 0),
         'scars_created': cycle_stats.get('scars_created', 0),
+        'entropy_before_diffusion': cycle_stats.get('entropy_before_diffusion', 0.0),
+        'entropy_after_diffusion': cycle_stats.get('entropy_after_diffusion', 0.0),
     }
 
 
