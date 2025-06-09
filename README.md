@@ -1,7 +1,7 @@
 # KIMERA SWM MVP
 
-This repository contains a minimal implementation of the KIMERA Semantic Working Memory (SWM) system.
-The authoritative implementation lives in the top-level `backend/` package. The `kimera_swm_mvp/` directory is an archived prototype kept for reference only.
+This repository contains a sophisticated prototype of the KIMERA Semantic Working Memory (SWM) system.
+The top-level `backend/` package provides the authoritative implementation with new modules like the cognitive cycle (KCCL) and diffusion engine. The older `kimera_swm_mvp/` directory is retained for historical reference.
 
 ## Requirements
 
