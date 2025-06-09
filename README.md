@@ -25,8 +25,10 @@ uvicorn backend.api.main:app --reload
 ```
 
 The API exposes endpoints for managing geoids and scars. Static images are served from `static/images`.
-Set the `ENABLE_JOBS` environment variable to `0` if you want to disable the
-recurring background jobs that run on startup (they are enabled by default).
+
+### Environment variables
+
+- `ENABLE_JOBS` controls whether periodic background jobs start on startup. Set this variable to `0` to disable them (default `1`).
 
 ## Testing
 
