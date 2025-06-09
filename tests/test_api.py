@@ -3,6 +3,7 @@ import sys
 
 # Use fresh database for tests
 os.environ["DATABASE_URL"] = "sqlite:///./test.db"
+os.environ["ENABLE_JOBS"] = "0"
 if os.path.exists("./test.db"):
     os.remove("./test.db")
 
