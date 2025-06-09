@@ -23,11 +23,21 @@ class KimeraCognitiveCycle:
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "contradictions_detected": 0,
             "scars_created": 0,
+            "entropy_before_diffusion": 0.0,
+            "entropy_after_diffusion": 0.0,
         }
 
         # --- Semantic Pressure Diffusion ---
+        entropy_before = sum(
+            g.calculate_entropy() for g in system["active_geoids"].values()
+        )
         for geoid in system["active_geoids"].values():
             geoid.semantic_state = spde.diffuse(geoid.semantic_state)
+        entropy_after = sum(
+            g.calculate_entropy() for g in system["active_geoids"].values()
+        )
+        cycle_stats["entropy_before_diffusion"] = entropy_before
+        cycle_stats["entropy_after_diffusion"] = entropy_after
 
         # --- Contradiction Detection ---
         geoids = list(system["active_geoids"].values())
