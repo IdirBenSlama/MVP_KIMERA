@@ -124,3 +124,4 @@ class ContradictionEngine:
 
     def _calculate_mutation_coherence(self, geoid_a: GeoidState, geoid_b: GeoidState) -> float:
         return 1.0
+

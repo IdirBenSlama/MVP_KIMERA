@@ -37,3 +37,4 @@ for ep in ENDPOINTS:
         print(f"  Min Response Time: {min(times):.4f}s")
         print(f"  Max Response Time: {max(times):.4f}s")
     print()
+

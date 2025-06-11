@@ -243,3 +243,4 @@ def test_vault_rebalance_endpoint(api_env):
         count_b = db.query(ScarDB).filter(ScarDB.vault_id == 'vault_b').count()
     assert count_a == 2 and count_b == 2
 
+

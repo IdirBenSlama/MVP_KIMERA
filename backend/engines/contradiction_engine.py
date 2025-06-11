@@ -106,3 +106,4 @@ class ContradictionEngine:
             decision = "collapse"
 
         return decision
+

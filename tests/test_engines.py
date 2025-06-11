@@ -133,3 +133,4 @@ def test_contradiction_engine_no_tension():
 
     tensions = eng.detect_tension_gradients([g1, g2])
     assert tensions == []
+

@@ -10,3 +10,4 @@ async def icw_middleware(request: Request, call_next):
     request.state.kimera_profile = profile
     response = await call_next(request)
     return response
+

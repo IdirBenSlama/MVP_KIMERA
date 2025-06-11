@@ -75,3 +75,4 @@ class SemanticThermodynamicsEngine:
         })
 
         return new_energy
+
