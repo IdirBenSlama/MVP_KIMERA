@@ -19,3 +19,4 @@ class ScarRecord:
     mutation_frequency: float
     weight: float = 1.0
     quarantined: bool = False
+

@@ -44,3 +44,4 @@ class CLIPService:
 
 
 clip_service = CLIPService()
+

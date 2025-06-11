@@ -25,3 +25,4 @@ class SPDE:
         diffused = (1 - self.diffusion_rate) * values + self.diffusion_rate * blurred
 
         return dict(zip(keys, diffused.tolist()))
+
