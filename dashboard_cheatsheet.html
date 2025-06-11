@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIMERA SWM - Quick Reference</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #2c3e50;
+            color: #ecf0f1;
+            margin: 0;
+            padding: 15px;
+            font-size: 14px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            background: rgba(52, 152, 219, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #3498db;
+        }
+        .section h3 {
+            margin: 0 0 10px 0;
+            color: #3498db;
+            font-size: 1.1em;
+        }
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .metric:last-child {
+            border-bottom: none;
+        }
+        .good { color: #2ecc71; }
+        .warning { color: #f39c12; }
+        .bad { color: #e74c3c; }
+        .actions {
+            background: rgba(155, 89, 182, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .btn-small {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin: 2px;
+        }
+        .status-indicators {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        .indicator {
+            text-align: center;
+            padding: 8px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>🧠 KIMERA Quick Ref</h2>
+            <p>Keep this open while using dashboard</p>
+        </div>
+
+        <div class="section">
+            <h3>📊 Key Metrics</h3>
+            <div class="metric">
+                <span>Active Geoids:</span>
+                <span>Concepts in memory</span>
+            </div>
+            <div class="metric">
+                <span>Total Scars:</span>
+                <span>Learned experiences</span>
+            </div>
+            <div class="metric">
+                <span>System Entropy:</span>
+                <span>Disorder level</span>
+            </div>
+            <div class="metric">
+                <span>Cycles:</span>
+                <span>Processing rounds</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🎯 Health Indicators</h3>
+            <div class="status-indicators">
+                <div class="indicator">
+                    <strong>Entropy</strong><br>
+                    <span class="good">↘ Good</span><br>
+                    <span class="warning">→ OK</span><br>
+                    <span class="bad">↗ Bad</span>
+                </div>
+                <div class="indicator">
+                    <strong>Balance</strong><br>
+                    <span class="good">&lt;15% Great</span><br>
+                    <span class="warning">15-30% OK</span><br>
+                    <span class="bad">&gt;30% Poor</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🔍 Stability Ranges</h3>
+            <div class="metric">
+                <span>Vault Pressure:</span>
+                <span><span class="good">0-0.3</span> <span class="warning">0.3-0.7</span> <span class="bad">0.7+</span></span>
+            </div>
+            <div class="metric">
+                <span>Cohesion:</span>
+                <span><span class="bad">0-0.4</span> <span class="warning">0.4-0.7</span> <span class="good">0.7+</span></span>
+            </div>
+            <div class="metric">
+                <span>Resonance:</span>
+                <span><span class="warning">0-0.3</span> <span class="good">0.3-0.6</span> <span class="good">0.6+</span></span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🎮 Quick Actions</h3>
+            <div class="actions">
+                <strong>Getting Started:</strong><br>
+                1. Create Test Geoid (3-5 times)<br>
+                2. Run Cycle<br>
+                3. Watch metrics change<br>
+                4. Detect Tensions<br>
+                5. Repeat!
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🚨 Troubleshooting</h3>
+            <div class="metric">
+                <span class="bad">No Scars Created:</span>
+                <span>Add more geoids</span>
+            </div>
+            <div class="metric">
+                <span class="bad">High Entropy:</span>
+                <span>Run more cycles</span>
+            </div>
+            <div class="metric">
+                <span class="bad">Poor Balance:</span>
+                <span>Click Rebalance</span>
+            </div>
+            <div class="metric">
+                <span class="bad">Connection Failed:</span>
+                <span>Check API on :8001</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>📖 Log Colors</h3>
+            <div class="metric">
+                <span style="color: #3498db;">Blue:</span>
+                <span>Information</span>
+            </div>
+            <div class="metric">
+                <span style="color: #2ecc71;">Green:</span>
+                <span>Success</span>
+            </div>
+            <div class="metric">
+                <span style="color: #f39c12;">Orange:</span>
+                <span>Warning</span>
+            </div>
+            <div class="metric">
+                <span style="color: #e74c3c;">Red:</span>
+                <span>Error</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn-small" onclick="window.open('real_time_dashboard.html')">📊 Dashboard</button>
+            <button class="btn-small" onclick="window.open('dashboard_guide.html')">📖 Full Guide</button>
+            <button class="btn-small" onclick="location.reload()">🔄 Refresh</button>
+        </div>
+    </div>
+
+    <script>
+        // Auto-refresh every 30 seconds to keep reference current
+        setTimeout(() => location.reload(), 30000);
+        
+        // Add timestamp
+        document.querySelector('.header p').innerHTML += `<br><small>Updated: ${new Date().toLocaleTimeString()}</small>`;
+    </script>
+</body>
+</html>

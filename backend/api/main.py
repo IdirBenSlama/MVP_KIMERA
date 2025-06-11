@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Dict, Any, List
 from fastapi import FastAPI, HTTPException, UploadFile, File, Request
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 import io
 from pydantic import BaseModel
@@ -24,12 +25,26 @@ from ..engines.background_jobs import start_background_jobs, stop_background_job
 from ..engines.clip_service import clip_service
 from ..linguistic.echoform import parse_echoform
 from .middleware import icw_middleware
+from .monitoring_routes import router as monitoring_router
 import numpy as np
 from scipy.spatial.distance import cosine
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, specify exact origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.mount("/images", StaticFiles(directory="static/images"), name="images")
 app.middleware("http")(icw_middleware)
+
+# Include monitoring routes
+app.include_router(monitoring_router)
 
 kimera_system = {
     'contradiction_engine': ContradictionEngine(tension_threshold=0.5),
