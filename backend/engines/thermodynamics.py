@@ -19,3 +19,4 @@ class SemanticThermodynamicsEngine:
             after.__post_init__()
 
         return True
+

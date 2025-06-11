@@ -76,3 +76,4 @@ def start_background_jobs(embedding_fn: Callable[[str], list[float]]) -> None:
 def stop_background_jobs() -> None:
     if scheduler.running:
         scheduler.shutdown(wait=False)
+

@@ -40,3 +40,4 @@ class GeoidState:
             'symbolic_state': self.symbolic_state,
             'metadata': self.metadata
         }
+

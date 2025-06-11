@@ -8,3 +8,4 @@ class LinguisticGeoid(BaseModel):
     supporting_scars: List[Dict] = []
     potential_ambiguities: List[str] = []
     explanation_lineage: str
+

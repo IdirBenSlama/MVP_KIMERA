@@ -63,3 +63,4 @@ class AxisStabilityMonitor:
             "vault_resonance": 1.0 - vault_pressure,
             "contradiction_lineage_ambiguity": vault_pressure,
         }
+

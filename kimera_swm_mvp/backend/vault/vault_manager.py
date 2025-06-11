@@ -104,3 +104,4 @@ class VaultManager:
 
     def _calculate_average_cls_angle(self, vault_type: VaultType) -> float:
         return 0.0
+

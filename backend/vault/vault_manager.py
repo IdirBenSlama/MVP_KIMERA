@@ -171,3 +171,4 @@ class VaultManager:
                 db.rollback()
                 raise
         return moved
+

@@ -43,3 +43,4 @@ def encode_text(text: str) -> List[float]:
     if hasattr(vector, "tolist"):
         return vector.tolist()
     return list(vector)
+

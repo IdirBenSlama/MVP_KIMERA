@@ -105,3 +105,4 @@ def test_rebalance_by_weight_moves_correct_scars(vault_env):
     assert weight_a == pytest.approx(5.0)
     assert weight_b == pytest.approx(5.0)
 
+

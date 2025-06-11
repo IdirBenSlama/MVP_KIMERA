@@ -2,3 +2,4 @@
 
 class Void:
     pass
+

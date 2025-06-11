@@ -112,3 +112,4 @@ if LOCUST_AVAILABLE:
         def process_contradictions(self):
             self.client.post("/process/contradictions", json={"trigger_geoid_id": "GEOID_1", "search_limit": 1})
 
+
