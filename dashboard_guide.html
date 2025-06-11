@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIMERA SWM Dashboard - Understanding Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: #ecf0f1;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+        }
+
+        .section h2 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .section h3 {
+            color: #f39c12;
+            margin: 20px 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        .metric-explanation {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 3px solid #3498db;
+        }
+
+        .metric-name {
+            font-weight: bold;
+            color: #3498db;
+            font-size: 1.1em;
+        }
+
+        .metric-description {
+            margin-top: 5px;
+            color: #bdc3c7;
+        }
+
+        .warning {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 3px solid #e74c3c;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .tip {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 3px solid #2ecc71;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .code {
+            background: #2c3e50;
+            color: #e74c3c;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .action-flow {
+            background: rgba(155, 89, 182, 0.1);
+            border-left: 3px solid #9b59b6;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .flow-step {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .flow-step::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #9b59b6;
+            font-weight: bold;
+        }
+
+        .dashboard-preview {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .interpretation-guide {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .interpretation-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 20px;
+            border-radius: 10px;
+            border-top: 3px solid #f39c12;
+        }
+
+        .value-range {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .range-low { color: #e74c3c; }
+        .range-medium { color: #f39c12; }
+        .range-high { color: #2ecc71; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 Understanding Your KIMERA SWM Dashboard</h1>
+            <p>A comprehensive guide to interpreting your Semantic Working Memory system</p>
+            <a href="real_time_dashboard.html" class="btn">🚀 Open Dashboard</a>
+            <a href="#quick-start" class="btn">📖 Quick Start</a>
+        </div>
+
+        <div class="section" id="quick-start">
+            <h2>🎯 What Am I Looking At?</h2>
+            <p>Your KIMERA SWM dashboard shows a <strong>cognitive architecture</strong> that mimics how human memory works with concepts, contradictions, and learning. Think of it as watching a brain process and store information in real-time.</p>
+            
+            <div class="tip">
+                <strong>🧠 Mental Model:</strong> Imagine your system as a digital brain that:
+                <ul style="margin-top: 10px;">
+                    <li>Creates <strong>concepts</strong> (Geoids) from information</li>
+                    <li>Finds <strong>contradictions</strong> between concepts</li>
+                    <li>Resolves conflicts by creating <strong>memories</strong> (Scars)</li>
+                    <li>Maintains <strong>balance</strong> and <strong>stability</strong> in its knowledge</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 System Overview - The Brain's Vital Signs</h2>
+            
+            <div class="metric-explanation">
+                <div class="metric-name">Active Geoids</div>
+                <div class="metric-description">
+                    <strong>What:</strong> Number of active concepts/ideas in working memory<br>
+                    <strong>Why Important:</strong> Shows how much your system is "thinking about" right now<br>
+                    <strong>Normal Range:</strong> 0-50 (higher = more active processing)
+                </div>
+            </div>
+
+            <div class="metric-explanation">
+                <div class="metric-name">Total Scars</div>
+                <div class="metric-description">
+                    <strong>What:</strong> Resolved contradictions stored as permanent memories<br>
+                    <strong>Why Important:</strong> Represents learned experiences and resolved conflicts<br>
+                    <strong>Growth Pattern:</strong> Should increase over time as system learns
+                </div>
+            </div>
+
+            <div class="metric-explanation">
+                <div class="metric-name">System Entropy</div>
+                <div class="metric-description">
+                    <strong>What:</strong> Measure of disorder/uncertainty in the system<br>
+                    <strong>Why Important:</strong> High entropy = confusion, Low entropy = clarity<br>
+                    <strong>Trend Arrows:</strong> ↗ (increasing chaos) ↘ (becoming organized) → (stable)
+                </div>
+            </div>
+
+            <div class="metric-explanation">
+                <div class="metric-name">Cognitive Cycles</div>
+                <div class="metric-description">
+                    <strong>What:</strong> Number of "thinking cycles" the system has completed<br>
+                    <strong>Why Important:</strong> Shows system activity and processing history<br>
+                    <strong>Each Cycle:</strong> Detects contradictions → Resolves conflicts → Updates memory
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🗄️ Vault Status - The Memory Banks</h2>
+            
+            <div class="dashboard-preview">
+                <h3>What You See:</h3>
+                <div style="display: flex; gap: 20px; margin: 15px 0;">
+                    <div style="flex: 1; text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                        <strong>Vault A: 12</strong><br>
+                        <div style="background: #e9ecef; height: 8px; border-radius: 4px; margin-top: 8px;">
+                            <div style="background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 60%; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                    <div style="flex: 1; text-align: center; background: #f8f9fa; padding: 15px; border-radius: 8px;">
+                        <strong>Vault B: 8</strong><br>
+                        <div style="background: #e9ecef; height: 8px; border-radius: 4px; margin-top: 8px;">
+                            <div style="background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 40%; border-radius: 4px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <strong>Balance Ratio: 20.0%</strong>
+                </div>
+            </div>
+
+            <div class="metric-explanation">
+                <div class="metric-name">Vault A & Vault B</div>
+                <div class="metric-description">
+                    <strong>What:</strong> Two memory storage areas that hold resolved contradictions (scars)<br>
+                    <strong>Why Two Vaults:</strong> Provides redundancy and allows for memory organization<br>
+                    <strong>Progress Bars:</strong> Show relative distribution of memories between vaults
+                </div>
+            </div>
+
+            <div class="metric-explanation">
+                <div class="metric-name">Balance Ratio</div>
+                <div class="metric-description">
+                    <strong>What:</strong> How evenly distributed memories are between vaults<br>
+                    <strong>Good Balance:</strong> 0-30% (memories fairly distributed)<br>
+                    <strong>Poor Balance:</strong> >30% (one vault much fuller than other)
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>💡 Interpretation:</strong>
+                <div class="value-range">
+                    <span class="range-high">0-15%: Excellent Balance</span>
+                    <span class="range-medium">15-30%: Good Balance</span>
+                    <span class="range-low">30%+: Needs Rebalancing</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📈 Stability Metrics - System Health</h2>
+            
+            <div class="interpretation-guide">
+                <div class="interpretation-card">
+                    <h3>Vault Pressure</h3>
+                    <p><strong>What:</strong> How "full" or stressed the memory system is</p>
+                    <div class="value-range">
+                        <span class="range-high">0.0-0.3: Relaxed</span>
+                        <span class="range-medium">0.3-0.7: Active</span>
+                        <span class="range-low">0.7-1.0: Stressed</span>
+                    </div>
+                </div>
+
+                <div class="interpretation-card">
+                    <h3>Semantic Cohesion</h3>
+                    <p><strong>What:</strong> How well concepts relate to each other</p>
+                    <div class="value-range">
+                        <span class="range-low">0.0-0.4: Fragmented</span>
+                        <span class="range-medium">0.4-0.7: Developing</span>
+                        <span class="range-high">0.7-1.0: Coherent</span>
+                    </div>
+                </div>
+
+                <div class="interpretation-card">
+                    <h3>Vault Resonance</h3>
+                    <p><strong>What:</strong> How well past experiences inform current decisions</p>
+                    <div class="value-range">
+                        <span class="range-low">0.0-0.3: Learning</span>
+                        <span class="range-medium">0.3-0.6: Experienced</span>
+                        <span class="range-high">0.6-1.0: Wise</span>
+                    </div>
+                </div>
+
+                <div class="interpretation-card">
+                    <h3>Entropy Gradient</h3>
+                    <p><strong>What:</strong> Rate of change in system disorder</p>
+                    <div class="value-range">
+                        <span class="range-high">Negative: Organizing</span>
+                        <span class="range-medium">Near Zero: Stable</span>
+                        <span class="range-low">Positive: Chaotic</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔮 Active Geoids - Current Thoughts</h2>
+            
+            <div class="metric-explanation">
+                <div class="metric-name">What Are Geoids?</div>
+                <div class="metric-description">
+                    Think of Geoids as <strong>active thoughts or concepts</strong> in the system's working memory. Each one represents:
+                    <ul style="margin-top: 10px;">
+                        <li><strong>Semantic Features:</strong> The "meaning" of the concept (numerical values)</li>
+                        <li><strong>Symbolic Content:</strong> The "label" or description</li>
+                        <li><strong>Metadata:</strong> Additional information about when/how it was created</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="dashboard-preview">
+                <h3>Example Geoid Display:</h3>
+                <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-radius: 6px; border-left: 4px solid #667eea;">
+                    <div style="font-weight: bold; color: #2c3e50;">GEOID_A1B2C3D4</div>
+                    <div style="font-size: 0.9em; color: #7f8c8d; margin-top: 5px;">
+                        Type: test_geoid | Created: dashboard
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>🔍 What This Tells You:</strong>
+                <ul>
+                    <li><strong>Many Geoids:</strong> System is actively processing lots of information</li>
+                    <li><strong>Few Geoids:</strong> System is quiet or focused</li>
+                    <li><strong>Geoid Types:</strong> Shows what kind of information is being processed</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>⚡ Contradiction Engine - The Learning Process</h2>
+            
+            <div class="action-flow">
+                <h3>How Contradictions Work:</h3>
+                <div class="flow-step">System finds two concepts that conflict with each other</div>
+                <div class="flow-step">Measures the "tension" between them</div>
+                <div class="flow-step">Decides whether to "collapse" (resolve) or "surge" (amplify)</div>
+                <div class="flow-step">If collapsed: Creates a "scar" (permanent memory of the resolution)</div>
+                <div class="flow-step">System learns and becomes more stable</div>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ When You See "No Contradictions Detected":</strong><br>
+                This could mean:
+                <ul>
+                    <li>System is very stable (good!)</li>
+                    <li>Not enough diverse concepts to create tensions</li>
+                    <li>Need to add more varied geoids to stimulate learning</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📝 Activity Log - What Just Happened?</h2>
+            
+            <div class="metric-explanation">
+                <div class="metric-name">Reading the Log</div>
+                <div class="metric-description">
+                    The activity log shows real-time events with color coding:
+                    <ul style="margin-top: 10px;">
+                        <li><span style="color: #3498db;">Blue:</span> Information/Status updates</li>
+                        <li><span style="color: #27ae60;">Green:</span> Successful operations</li>
+                        <li><span style="color: #f39c12;">Orange:</span> Warnings or important notices</li>
+                        <li><span style="color: #e74c3c;">Red:</span> Errors or failures</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tip">
+                <strong>📖 Common Log Messages:</strong>
+                <ul>
+                    <li><code>"Test geoid created: GEOID_X"</code> - New concept added</li>
+                    <li><code>"Cycle completed: X contradictions, Y scars"</code> - Learning cycle finished</li>
+                    <li><code>"Found X matching geoids"</code> - Search results</li>
+                    <li><code>"Connection established"</code> - API is working</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎮 What Should I Do?</h2>
+            
+            <div class="action-flow">
+                <h3>Recommended Workflow:</h3>
+                <div class="flow-step"><strong>Start:</strong> Click "Create Test Geoid" a few times to add concepts</div>
+                <div class="flow-step"><strong>Process:</strong> Click "Run Cycle" to let the system find contradictions</div>
+                <div class="flow-step"><strong>Observe:</strong> Watch metrics change and scars get created</div>
+                <div class="flow-step"><strong>Experiment:</strong> Try "Detect Tensions" to manually trigger analysis</div>
+                <div class="flow-step"><strong>Maintain:</strong> Use "Rebalance" if vault balance gets poor</div>
+            </div>
+
+            <div class="interpretation-guide">
+                <div class="interpretation-card">
+                    <h3>🎯 Healthy System Signs</h3>
+                    <ul>
+                        <li>Entropy trending down or stable</li>
+                        <li>Vault balance under 30%</li>
+                        <li>Semantic cohesion above 0.5</li>
+                        <li>Regular scar creation</li>
+                        <li>Active geoids being processed</li>
+                    </ul>
+                </div>
+
+                <div class="interpretation-card">
+                    <h3>⚠️ Warning Signs</h3>
+                    <ul>
+                        <li>Entropy constantly increasing</li>
+                        <li>No scars being created</li>
+                        <li>Vault pressure above 0.8</li>
+                        <li>Very low semantic cohesion</li>
+                        <li>Connection failures</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔬 Advanced Understanding</h2>
+            
+            <div class="tip">
+                <strong>🧠 The Big Picture:</strong><br>
+                Your KIMERA SWM system is implementing a theory of how semantic memory works in biological brains. It's not just storing data - it's actively organizing, relating, and learning from information through contradiction resolution, just like how humans form coherent understanding from conflicting experiences.
+            </div>
+
+            <div class="metric-explanation">
+                <div class="metric-name">Why This Matters</div>
+                <div class="metric-description">
+                    Unlike traditional databases or AI systems that just store information, KIMERA SWM:
+                    <ul style="margin-top: 10px;">
+                        <li><strong>Actively processes contradictions</strong> to build understanding</li>
+                        <li><strong>Maintains semantic relationships</strong> between concepts</li>
+                        <li><strong>Self-organizes</strong> its memory structure</li>
+                        <li><strong>Learns from experience</strong> through scar formation</li>
+                        <li><strong>Balances stability and plasticity</strong> like biological memory</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🚀 Quick Actions</h2>
+            <a href="real_time_dashboard.html" class="btn">📊 Open Dashboard</a>
+            <a href="javascript:window.print()" class="btn">🖨️ Print Guide</a>
+            <button class="btn" onclick="window.scrollTo(0,0)">⬆️ Back to Top</button>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add interactive tooltips for technical terms
+        const technicalTerms = {
+            'Geoid': 'A semantic concept with both numerical features and symbolic meaning',
+            'Scar': 'A permanent memory of a resolved contradiction',
+            'Entropy': 'A measure of disorder or uncertainty in the system',
+            'Vault': 'A storage area for resolved contradictions (scars)',
+            'Contradiction': 'A conflict between two concepts that needs resolution'
+        };
+
+        // Highlight technical terms and add tooltips
+        Object.keys(technicalTerms).forEach(term => {
+            const regex = new RegExp(`\\b${term}\\b`, 'gi');
+            document.body.innerHTML = document.body.innerHTML.replace(regex, 
+                `<span class="tech-term" title="${technicalTerms[term]}" style="border-bottom: 1px dotted #3498db; cursor: help;">${term}</span>`
+            );
+        });
+    </script>
+</body>
+</html>

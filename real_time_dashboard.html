@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIMERA SWM - Real-Time Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .status-online { background: #4CAF50; }
+        .status-offline { background: #f44336; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #2980b9;
+        }
+
+        .metric-trend {
+            font-size: 0.8em;
+            margin-left: 8px;
+        }
+
+        .trend-up { color: #27ae60; }
+        .trend-down { color: #e74c3c; }
+        .trend-stable { color: #95a5a6; }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+        }
+
+        .btn-warning {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s ease;
+        }
+
+        .log-container {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            padding: 4px 0;
+        }
+
+        .log-timestamp {
+            color: #95a5a6;
+            margin-right: 10px;
+        }
+
+        .log-level-info { color: #3498db; }
+        .log-level-success { color: #27ae60; }
+        .log-level-warning { color: #f39c12; }
+        .log-level-error { color: #e74c3c; }
+
+        .chart-container {
+            height: 200px;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .error-message {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .success-message {
+            background: #27ae60;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .vault-comparison {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .vault-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 0 5px;
+        }
+
+        .vault-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .geoid-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .geoid-item {
+            background: #f8f9fa;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .geoid-id {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .geoid-meta {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <h1>🧠 KIMERA SWM Real-Time Dashboard</h1>
+            <p>
+                <span id="connectionStatus" class="status-indicator status-offline"></span>
+                <span id="connectionText">Connecting to API...</span>
+                <span style="margin-left: 20px;">Last Updated: <span id="lastUpdate">Never</span></span>
+            </p>
+        </div>
+
+        <div class="grid">
+            <!-- System Overview -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📊</span>
+                    <span class="card-title">System Overview</span>
+                </div>
+                <div id="systemOverview">
+                    <div class="loading"></div> Loading system metrics...
+                </div>
+                <div class="actions">
+                    <button class="btn" onclick="refreshMetrics()">🔄 Refresh</button>
+                    <button class="btn btn-success" onclick="runCycle()">⚡ Run Cycle</button>
+                </div>
+            </div>
+
+            <!-- Vault Status -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🗄️</span>
+                    <span class="card-title">Vault Status</span>
+                </div>
+                <div id="vaultStatus">
+                    <div class="loading"></div> Loading vault data...
+                </div>
+                <div class="actions">
+                    <button class="btn btn-secondary" onclick="rebalanceVaults()">⚖️ Rebalance</button>
+                    <button class="btn btn-secondary" onclick="loadVaultDetails()">📋 Details</button>
+                </div>
+            </div>
+
+            <!-- Stability Metrics -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📈</span>
+                    <span class="card-title">Stability Metrics</span>
+                </div>
+                <div id="stabilityMetrics">
+                    <div class="loading"></div> Loading stability data...
+                </div>
+            </div>
+
+            <!-- Active Geoids -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">🔮</span>
+                    <span class="card-title">Active Geoids</span>
+                </div>
+                <div id="activeGeoids">
+                    <div class="loading"></div> Loading geoids...
+                </div>
+                <div class="actions">
+                    <button class="btn btn-success" onclick="createTestGeoid()">➕ Create Test</button>
+                    <button class="btn btn-secondary" onclick="searchGeoids()">🔍 Search</button>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">📝</span>
+                    <span class="card-title">Activity Log</span>
+                </div>
+                <div class="log-container" id="activityLog">
+                    <div class="log-entry">
+                        <span class="log-timestamp">[INIT]</span>
+                        <span class="log-level-info">Dashboard initialized</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contradiction Analysis -->
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-icon">⚡</span>
+                    <span class="card-title">Contradiction Engine</span>
+                </div>
+                <div id="contradictionStatus">
+                    <div class="loading"></div> Loading contradiction data...
+                </div>
+                <div class="actions">
+                    <button class="btn btn-warning" onclick="processContradictions()">🔍 Detect Tensions</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8001';
+        let systemData = {};
+        let isConnected = false;
+        let refreshInterval;
+
+        // Initialize dashboard
+        window.onload = function() {
+            logActivity('Dashboard started', 'info');
+            testConnection();
+            startAutoRefresh();
+        };
+
+        // Connection management
+        async function testConnection() {
+            const statusIndicator = document.getElementById('connectionStatus');
+            const statusText = document.getElementById('connectionText');
+            
+            try {
+                const response = await fetch(`${API_URL}/system/status`);
+                if (response.ok) {
+                    statusIndicator.className = 'status-indicator status-online';
+                    statusText.textContent = 'Connected to KIMERA API';
+                    isConnected = true;
+                    logActivity('API connection established', 'success');
+                    await loadAllMetrics();
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                statusIndicator.className = 'status-indicator status-offline';
+                statusText.textContent = `Connection failed: ${error.message}`;
+                isConnected = false;
+                logActivity(`Connection failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Load all metrics
+        async function loadAllMetrics() {
+            if (!isConnected) return;
+            
+            await Promise.all([
+                loadSystemOverview(),
+                loadVaultStatus(),
+                loadStabilityMetrics(),
+                loadActiveGeoids()
+            ]);
+            
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+        }
+
+        // System Overview
+        async function loadSystemOverview() {
+            const container = document.getElementById('systemOverview');
+            
+            try {
+                const response = await fetch(`${API_URL}/system/status`);
+                const data = await response.json();
+                systemData.status = data;
+                
+                const entropyTrend = data.system_entropy > (systemData.lastEntropy || 0) ? 'up' : 
+                                   data.system_entropy < (systemData.lastEntropy || 0) ? 'down' : 'stable';
+                systemData.lastEntropy = data.system_entropy;
+                
+                container.innerHTML = `
+                    <div class="metric">
+                        <span class="metric-label">Active Geoids</span>
+                        <span class="metric-value">${data.active_geoids || 0}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Total Scars</span>
+                        <span class="metric-value">${(data.vault_a_scars || 0) + (data.vault_b_scars || 0)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">System Entropy</span>
+                        <span class="metric-value">
+                            ${(data.system_entropy || 0).toFixed(4)}
+                            <span class="metric-trend trend-${entropyTrend}">
+                                ${entropyTrend === 'up' ? '↗' : entropyTrend === 'down' ? '↘' : '→'}
+                            </span>
+                        </span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Cognitive Cycles</span>
+                        <span class="metric-value">${data.cycle_count || 0}</span>
+                    </div>
+                `;
+            } catch (error) {
+                container.innerHTML = `<div class="error-message">Failed to load system overview: ${error.message}</div>`;
+            }
+        }
+
+        // Vault Status
+        async function loadVaultStatus() {
+            const container = document.getElementById('vaultStatus');
+            
+            try {
+                const statusData = systemData.status || await fetch(`${API_URL}/system/status`).then(r => r.json());
+                
+                const vaultA = statusData.vault_a_scars || 0;
+                const vaultB = statusData.vault_b_scars || 0;
+                const total = vaultA + vaultB;
+                const balanceRatio = total > 0 ? Math.abs(vaultA - vaultB) / total : 0;
+                
+                container.innerHTML = `
+                    <div class="vault-comparison">
+                        <div class="vault-item">
+                            <h4>Vault A</h4>
+                            <div class="metric-value">${vaultA}</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${total > 0 ? (vaultA / total) * 100 : 0}%"></div>
+                            </div>
+                        </div>
+                        <div class="vault-item">
+                            <h4>Vault B</h4>
+                            <div class="metric-value">${vaultB}</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${total > 0 ? (vaultB / total) * 100 : 0}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Balance Ratio</span>
+                        <span class="metric-value ${balanceRatio > 0.3 ? 'trend-down' : 'trend-up'}">
+                            ${(balanceRatio * 100).toFixed(1)}%
+                        </span>
+                    </div>
+                `;
+            } catch (error) {
+                container.innerHTML = `<div class="error-message">Failed to load vault status: ${error.message}</div>`;
+            }
+        }
+
+        // Stability Metrics
+        async function loadStabilityMetrics() {
+            const container = document.getElementById('stabilityMetrics');
+            
+            try {
+                const response = await fetch(`${API_URL}/system/stability`);
+                const data = await response.json();
+                
+                container.innerHTML = `
+                    <div class="metric">
+                        <span class="metric-label">Vault Pressure</span>
+                        <span class="metric-value">${(data.vault_pressure || 0).toFixed(3)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Semantic Cohesion</span>
+                        <span class="metric-value">${(data.semantic_cohesion || 0).toFixed(3)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Vault Resonance</span>
+                        <span class="metric-value">${(data.vault_resonance || 0).toFixed(3)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Entropy Gradient</span>
+                        <span class="metric-value">${(data.entropy_gradient || 0).toFixed(3)}</span>
+                    </div>
+                `;
+            } catch (error) {
+                container.innerHTML = `<div class="error-message">Stability metrics unavailable</div>`;
+            }
+        }
+
+        // Active Geoids
+        async function loadActiveGeoids() {
+            const container = document.getElementById('activeGeoids');
+            
+            try {
+                const response = await fetch(`${API_URL}/geoids/search?query=&limit=10`);
+                const data = await response.json();
+                
+                if (data.similar_geoids && data.similar_geoids.length > 0) {
+                    container.innerHTML = `
+                        <div class="geoid-list">
+                            ${data.similar_geoids.map(geoid => `
+                                <div class="geoid-item">
+                                    <div class="geoid-id">${geoid.geoid_id}</div>
+                                    <div class="geoid-meta">
+                                        Type: ${geoid.symbolic_state?.type || 'Unknown'} | 
+                                        Created: ${geoid.metadata?.created_by || 'System'}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = '<div class="metric"><span>No active geoids found</span></div>';
+                }
+            } catch (error) {
+                container.innerHTML = `<div class="error-message">Failed to load geoids: ${error.message}</div>`;
+            }
+        }
+
+        // Actions
+        async function refreshMetrics() {
+            logActivity('Manual refresh triggered', 'info');
+            await testConnection();
+        }
+
+        async function runCycle() {
+            logActivity('Running cognitive cycle...', 'info');
+            
+            try {
+                const response = await fetch(`${API_URL}/system/cycle`, { method: 'POST' });
+                const data = await response.json();
+                
+                logActivity(`Cycle completed: ${data.contradictions_detected || 0} contradictions, ${data.scars_created || 0} scars created`, 'success');
+                await loadAllMetrics();
+            } catch (error) {
+                logActivity(`Cycle failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function createTestGeoid() {
+            logActivity('Creating test geoid...', 'info');
+            
+            try {
+                const response = await fetch(`${API_URL}/geoids`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        semantic_features: {
+                            "creativity": Math.random(),
+                            "logic": Math.random(),
+                            "emotion": Math.random()
+                        },
+                        symbolic_content: { "type": "dashboard_test", "timestamp": Date.now() },
+                        metadata: { "created_by": "real_time_dashboard" }
+                    })
+                });
+                const data = await response.json();
+                
+                logActivity(`Test geoid created: ${data.geoid_id}`, 'success');
+                await loadAllMetrics();
+            } catch (error) {
+                logActivity(`Failed to create geoid: ${error.message}`, 'error');
+            }
+        }
+
+        async function searchGeoids() {
+            const query = prompt('Enter search query:') || 'test';
+            logActivity(`Searching geoids for: "${query}"`, 'info');
+            
+            try {
+                const response = await fetch(`${API_URL}/geoids/search?query=${encodeURIComponent(query)}&limit=5`);
+                const data = await response.json();
+                
+                logActivity(`Found ${data.similar_geoids?.length || 0} matching geoids`, 'info');
+                await loadActiveGeoids();
+            } catch (error) {
+                logActivity(`Search failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function rebalanceVaults() {
+            logActivity('Rebalancing vaults...', 'info');
+            
+            try {
+                const response = await fetch(`${API_URL}/vaults/rebalance`, { method: 'POST' });
+                const data = await response.json();
+                
+                logActivity(`Vault rebalance completed: ${data.moved_scars || 0} scars moved`, 'success');
+                await loadVaultStatus();
+            } catch (error) {
+                logActivity(`Rebalance failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function processContradictions() {
+            // First, get a geoid to use as trigger
+            try {
+                const geoidsResponse = await fetch(`${API_URL}/geoids/search?query=&limit=1`);
+                const geoidsData = await geoidsResponse.json();
+                
+                if (!geoidsData.similar_geoids || geoidsData.similar_geoids.length === 0) {
+                    logActivity('No geoids available for contradiction processing', 'warning');
+                    return;
+                }
+                
+                const triggerGeoid = geoidsData.similar_geoids[0].geoid_id;
+                logActivity(`Processing contradictions with trigger: ${triggerGeoid}`, 'info');
+                
+                const response = await fetch(`${API_URL}/process/contradictions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        trigger_geoid_id: triggerGeoid,
+                        search_limit: 5
+                    })
+                });
+                const data = await response.json();
+                
+                logActivity(`Contradiction processing: ${data.contradictions_detected || 0} detected, ${data.scars_created || 0} scars created`, 'success');
+                await loadAllMetrics();
+            } catch (error) {
+                logActivity(`Contradiction processing failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Utility functions
+        function logActivity(message, level = 'info') {
+            const logContainer = document.getElementById('activityLog');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <span class="log-timestamp">[${timestamp}]</span>
+                <span class="log-level-${level}">${message}</span>
+            `;
+            
+            logContainer.insertBefore(logEntry, logContainer.firstChild);
+            
+            // Keep only last 50 entries
+            while (logContainer.children.length > 50) {
+                logContainer.removeChild(logContainer.lastChild);
+            }
+        }
+
+        function startAutoRefresh() {
+            // Refresh every 5 seconds
+            refreshInterval = setInterval(async () => {
+                if (isConnected) {
+                    await loadAllMetrics();
+                }
+            }, 5000);
+        }
+
+        // Cleanup on page unload
+        window.onbeforeunload = function() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+        };
+    </script>
+</body>
+</html>

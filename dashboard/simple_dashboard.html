@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIMERA SWM Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        .card h2 {
+            margin-top: 0;
+            color: #fff;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+        .metric-label {
+            font-weight: bold;
+        }
+        .metric-value {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+        .button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-online { background: #4caf50; }
+        .status-offline { background: #f44336; }
+        .loading {
+            text-align: center;
+            font-style: italic;
+            opacity: 0.7;
+        }
+        .error {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+        .geoid-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .auto-refresh {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="auto-refresh">
+        <label>
+            <input type="checkbox" id="autoRefresh" checked> Auto-refresh (5s)
+        </label>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🧠 KIMERA SWM Dashboard</h1>
+            <p>Semantic Working Memory System Monitor</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- System Status Card -->
+            <div class="card">
+                <h2><span id="statusIndicator" class="status-indicator status-offline"></span>System Status</h2>
+                <div id="systemMetrics" class="loading">Loading system metrics...</div>
+                <button class="button" onclick="refreshData()">🔄 Refresh</button>
+                <button class="button" onclick="triggerCycle()">⚡ Run Cycle</button>
+            </div>
+
+            <!-- Stability Metrics Card -->
+            <div class="card">
+                <h2>📊 Stability Metrics</h2>
+                <div id="stabilityMetrics" class="loading">Loading stability data...</div>
+            </div>
+
+            <!-- Geoid Explorer Card -->
+            <div class="card">
+                <h2>🔍 Geoid Explorer</h2>
+                <input type="text" id="searchQuery" class="search-box" placeholder="Search geoids..." onkeypress="handleSearchKeypress(event)">
+                <button class="button" onclick="searchGeoids()">Search</button>
+                <div id="searchResults"></div>
+            </div>
+
+            <!-- Vault Inspector Card -->
+            <div class="card">
+                <h2>🗄️ Vault Inspector</h2>
+                <div id="vaultData" class="loading">Loading vault data...</div>
+                <button class="button" onclick="rebalanceVaults()">⚖️ Rebalance</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8001';
+        let autoRefreshInterval;
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshData();
+            setupAutoRefresh();
+        });
+
+        function setupAutoRefresh() {
+            const checkbox = document.getElementById('autoRefresh');
+            
+            function toggleAutoRefresh() {
+                if (checkbox.checked) {
+                    autoRefreshInterval = setInterval(refreshData, 5000);
+                } else {
+                    clearInterval(autoRefreshInterval);
+                }
+            }
+            
+            checkbox.addEventListener('change', toggleAutoRefresh);
+            toggleAutoRefresh(); // Start if checked
+        }
+
+        async function fetchWithErrorHandling(url, options = {}) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('Fetch error:', error);
+                throw error;
+            }
+        }
+
+        async function refreshData() {
+            await Promise.all([
+                loadSystemStatus(),
+                loadStabilityMetrics(),
+                loadVaultData()
+            ]);
+        }
+
+        async function loadSystemStatus() {
+            const container = document.getElementById('systemMetrics');
+            const indicator = document.getElementById('statusIndicator');
+            
+            try {
+                const data = await fetchWithErrorHandling(`${API_BASE}/system/status`);
+                
+                indicator.className = 'status-indicator status-online';
+                
+                container.innerHTML = `
+                    <div class="metric">
+                        <span class="metric-label">Active Geoids:</span>
+                        <span class="metric-value">${data.active_geoids || 0}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Vault A Scars:</span>
+                        <span class="metric-value">${data.vault_a_scars || 0}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Vault B Scars:</span>
+                        <span class="metric-value">${data.vault_b_scars || 0}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">System Entropy:</span>
+                        <span class="metric-value">${(data.system_entropy || 0).toFixed(3)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Cycle Count:</span>
+                        <span class="metric-value">${data.cycle_count || 0}</span>
+                    </div>
+                `;
+            } catch (error) {
+                indicator.className = 'status-indicator status-offline';
+                container.innerHTML = `<div class="error">❌ Failed to load system status: ${error.message}</div>`;
+            }
+        }
+
+        async function loadStabilityMetrics() {
+            const container = document.getElementById('stabilityMetrics');
+            
+            try {
+                const data = await fetchWithErrorHandling(`${API_BASE}/system/stability`);
+                
+                container.innerHTML = `
+                    <div class="metric">
+                        <span class="metric-label">Vault Pressure:</span>
+                        <span class="metric-value">${(data.vault_pressure || 0).toFixed(3)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Semantic Cohesion:</span>
+                        <span class="metric-value">${(data.semantic_cohesion || 0).toFixed(3)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Entropic Stability:</span>
+                        <span class="metric-value">${(data.entropic_stability || 0).toFixed(3)}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Axis Convergence:</span>
+                        <span class="metric-value">${(data.axis_convergence || 0).toFixed(3)}</span>
+                    </div>
+                `;
+            } catch (error) {
+                container.innerHTML = `<div class="error">❌ Failed to load stability metrics: ${error.message}</div>`;
+            }
+        }
+
+        async function loadVaultData() {
+            const container = document.getElementById('vaultData');
+            
+            try {
+                const [vaultA, vaultB] = await Promise.all([
+                    fetchWithErrorHandling(`${API_BASE}/vaults/vault_a?limit=5`),
+                    fetchWithErrorHandling(`${API_BASE}/vaults/vault_b?limit=5`)
+                ]);
+                
+                container.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <h4>Vault A (${vaultA.scars?.length || 0} recent)</h4>
+                            ${(vaultA.scars || []).map(scar => 
+                                `<div class="geoid-item">
+                                    <small>${scar.scar_id}</small>
+                                </div>`
+                            ).join('') || '<div class="loading">No scars</div>'}
+                        </div>
+                        <div>
+                            <h4>Vault B (${vaultB.scars?.length || 0} recent)</h4>
+                            ${(vaultB.scars || []).map(scar => 
+                                `<div class="geoid-item">
+                                    <small>${scar.scar_id}</small>
+                                </div>`
+                            ).join('') || '<div class="loading">No scars</div>'}
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                container.innerHTML = `<div class="error">❌ Failed to load vault data: ${error.message}</div>`;
+            }
+        }
+
+        async function triggerCycle() {
+            try {
+                const result = await fetchWithErrorHandling(`${API_BASE}/system/cycle`, {
+                    method: 'POST'
+                });
+                alert(`✅ Cycle completed!\nContradictions: ${result.contradictions_detected || 0}\nScars created: ${result.scars_created || 0}`);
+                refreshData();
+            } catch (error) {
+                alert(`❌ Failed to trigger cycle: ${error.message}`);
+            }
+        }
+
+        async function searchGeoids() {
+            const query = document.getElementById('searchQuery').value;
+            const container = document.getElementById('searchResults');
+            
+            if (!query.trim()) {
+                container.innerHTML = '<div class="loading">Enter a search query</div>';
+                return;
+            }
+            
+            container.innerHTML = '<div class="loading">Searching...</div>';
+            
+            try {
+                const data = await fetchWithErrorHandling(`${API_BASE}/geoids/search?query=${encodeURIComponent(query)}&limit=5`);
+                
+                if (data.similar_geoids && data.similar_geoids.length > 0) {
+                    container.innerHTML = data.similar_geoids.map(geoid => 
+                        `<div class="geoid-item">
+                            <div>
+                                <strong>${geoid.geoid_id}</strong><br>
+                                <small>${JSON.stringify(geoid.symbolic_state || {})}</small>
+                            </div>
+                            <button class="button" onclick="processGeoid('${geoid.geoid_id}')">Process</button>
+                        </div>`
+                    ).join('');
+                } else {
+                    container.innerHTML = '<div class="loading">No results found</div>';
+                }
+            } catch (error) {
+                container.innerHTML = `<div class="error">❌ Search failed: ${error.message}</div>`;
+            }
+        }
+
+        async function processGeoid(geoidId) {
+            try {
+                const result = await fetchWithErrorHandling(`${API_BASE}/process/contradictions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        trigger_geoid_id: geoidId, 
+                        search_limit: 5 
+                    })
+                });
+                alert(`✅ Processing completed for ${geoidId}!\nContradictions: ${result.contradictions_detected || 0}\nScars: ${result.scars_created || 0}`);
+                refreshData();
+            } catch (error) {
+                alert(`❌ Failed to process geoid: ${error.message}`);
+            }
+        }
+
+        async function rebalanceVaults() {
+            try {
+                const result = await fetchWithErrorHandling(`${API_BASE}/vaults/rebalance`, {
+                    method: 'POST'
+                });
+                alert(`✅ Vaults rebalanced!\nMoved scars: ${result.moved_scars || 0}`);
+                refreshData();
+            } catch (error) {
+                alert(`❌ Failed to rebalance vaults: ${error.message}`);
+            }
+        }
+
+        function handleSearchKeypress(event) {
+            if (event.key === 'Enter') {
+                searchGeoids();
+            }
+        }
+    </script>
+</body>
+</html>

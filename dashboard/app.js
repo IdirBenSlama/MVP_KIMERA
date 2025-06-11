@@ -1,6 +1,6 @@
 const { useState, useEffect } = React;
 
-const API_BASE = '';
+const API_BASE = 'http://localhost:8002';
 
 function SystemHealthDashboard() {
   const [metrics, setMetrics] = useState(null);
