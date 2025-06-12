@@ -1,9 +1,11 @@
 from __future__ import annotations
-from typing import List, Dict
+from typing import List, Dict, Optional
 from dataclasses import dataclass
 from scipy.spatial.distance import cosine
 
 from ..core.geoid import GeoidState
+from ..core.insight import InsightScar
+from ..governance import erl
 
 @dataclass
 class TensionGradient:
@@ -32,18 +34,15 @@ class ContradictionEngine:
         return tensions
 
     def _embedding_misalignment(self, a: GeoidState, b: GeoidState) -> float:
-        if not a.semantic_state or not b.semantic_state:
+        if not a.embedding_vector or not b.embedding_vector:
             return 0.0
-        keys = set(a.semantic_state) | set(b.semantic_state)
-        vec_a = [a.semantic_state.get(k, 0.0) for k in keys]
-        vec_b = [b.semantic_state.get(k, 0.0) for k in keys]
-        if not any(vec_a) or not any(vec_b):
-            return 0.0
+        
         # Extra guard against zero vectors for scipy cosine
         import numpy as np
-        if np.linalg.norm(vec_a) == 0 or np.linalg.norm(vec_b) == 0:
+        if np.linalg.norm(a.embedding_vector) == 0 or np.linalg.norm(b.embedding_vector) == 0:
             return 0.0
-        return float(cosine(vec_a, vec_b))
+            
+        return float(cosine(a.embedding_vector, b.embedding_vector))
 
     def _layer_conflict_intensity(self, a: GeoidState, b: GeoidState) -> float:
         """Simple proxy for semantic vs symbolic layer disagreement."""
@@ -106,4 +105,33 @@ class ContradictionEngine:
             decision = "collapse"
 
         return decision
+
+    def check_insight_conflict(self, insight: InsightScar, existing_insights: List[InsightScar]) -> Optional[InsightScar]:
+        """
+        Checks a new insight for conflicts against existing ones and validates it.
+
+        Args:
+            insight: The newly generated InsightScar.
+            existing_insights: A list of existing insights to check against.
+
+        Returns:
+            The validated insight if it's not a conflict, otherwise None.
+        """
+        # 1. Ethical Reflex Layer (ERL) Hook
+        if not erl.validate(insight.echoform_repr):
+            # logger.warning(f"Insight {insight.insight_id} rejected by ERL.")
+            insight.status = 'deprecated' # Or a new 'quarantined' status
+            return None # Fails validation
+
+        # 2. Check for semantic duplicates (simplified for MVP)
+        for old_insight in existing_insights:
+            # A more robust check would use embedding similarity
+            if old_insight.echoform_repr == insight.echoform_repr:
+                # logger.info(f"Insight {insight.insight_id} rejected as duplicate of {old_insight.insight_id}")
+                return None # It's a duplicate
+
+        # 3. Add more sophisticated contradiction logic here in the future
+        # (e.g., if one insight makes a claim that another refutes)
+
+        return insight
 

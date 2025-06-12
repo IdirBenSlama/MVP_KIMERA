@@ -1,0 +1,397 @@
+{
+  "benchmark_timestamp": "2025-06-11T18:10:09.891948",
+  "system_info": {
+    "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+    "platform": "win32",
+    "thread_count": 1
+  },
+  "results": {
+    "database_operations": {
+      "Simple Count": {
+        "avg_time_ms": 0.113,
+        "min_time_ms": 0.005,
+        "max_time_ms": 1.076,
+        "result_count": 1
+      },
+      "Vault Filter": {
+        "avg_time_ms": 0.012,
+        "min_time_ms": 0.005,
+        "max_time_ms": 0.07,
+        "result_count": 1
+      },
+      "Weight Sum": {
+        "avg_time_ms": 0.012,
+        "min_time_ms": 0.006,
+        "max_time_ms": 0.059,
+        "result_count": 1
+      },
+      "Recent Scars": {
+        "avg_time_ms": 0.037,
+        "min_time_ms": 0.029,
+        "max_time_ms": 0.089,
+        "result_count": 3
+      },
+      "Heavy Scars": {
+        "avg_time_ms": 0.023,
+        "min_time_ms": 0.017,
+        "max_time_ms": 0.065,
+        "result_count": 1
+      },
+      "Join Query": {
+        "avg_time_ms": 0.011,
+        "min_time_ms": 0.008,
+        "max_time_ms": 0.04,
+        "result_count": 3
+      }
+    },
+    "vector_operations": {
+      "vectors_100d_batch_10": {
+        "avg_time_ms": 0.146,
+        "throughput_vectors_per_sec": 68646.5,
+        "vector_size": 100,
+        "batch_size": 10
+      },
+      "vectors_100d_batch_50": {
+        "avg_time_ms": 0.476,
+        "throughput_vectors_per_sec": 105015.1,
+        "vector_size": 100,
+        "batch_size": 50
+      },
+      "vectors_100d_batch_100": {
+        "avg_time_ms": 0.963,
+        "throughput_vectors_per_sec": 103850.3,
+        "vector_size": 100,
+        "batch_size": 100
+      },
+      "vectors_100d_batch_500": {
+        "avg_time_ms": 4.919,
+        "throughput_vectors_per_sec": 101641.7,
+        "vector_size": 100,
+        "batch_size": 500
+      },
+      "vectors_384d_batch_10": {
+        "avg_time_ms": 0.098,
+        "throughput_vectors_per_sec": 101704.8,
+        "vector_size": 384,
+        "batch_size": 10
+      },
+      "vectors_384d_batch_50": {
+        "avg_time_ms": 0.475,
+        "throughput_vectors_per_sec": 105373.9,
+        "vector_size": 384,
+        "batch_size": 50
+      },
+      "vectors_384d_batch_100": {
+        "avg_time_ms": 0.95,
+        "throughput_vectors_per_sec": 105236.5,
+        "vector_size": 384,
+        "batch_size": 100
+      },
+      "vectors_384d_batch_500": {
+        "avg_time_ms": 4.724,
+        "throughput_vectors_per_sec": 105832.3,
+        "vector_size": 384,
+        "batch_size": 500
+      },
+      "vectors_768d_batch_10": {
+        "avg_time_ms": 0.114,
+        "throughput_vectors_per_sec": 87820.4,
+        "vector_size": 768,
+        "batch_size": 10
+      },
+      "vectors_768d_batch_50": {
+        "avg_time_ms": 0.474,
+        "throughput_vectors_per_sec": 105554.3,
+        "vector_size": 768,
+        "batch_size": 50
+      },
+      "vectors_768d_batch_100": {
+        "avg_time_ms": 0.964,
+        "throughput_vectors_per_sec": 103778.3,
+        "vector_size": 768,
+        "batch_size": 100
+      },
+      "vectors_768d_batch_500": {
+        "avg_time_ms": 4.783,
+        "throughput_vectors_per_sec": 104530.4,
+        "vector_size": 768,
+        "batch_size": 500
+      },
+      "vectors_1024d_batch_10": {
+        "avg_time_ms": 0.1,
+        "throughput_vectors_per_sec": 100486.4,
+        "vector_size": 1024,
+        "batch_size": 10
+      },
+      "vectors_1024d_batch_50": {
+        "avg_time_ms": 0.487,
+        "throughput_vectors_per_sec": 102630.5,
+        "vector_size": 1024,
+        "batch_size": 50
+      },
+      "vectors_1024d_batch_100": {
+        "avg_time_ms": 0.97,
+        "throughput_vectors_per_sec": 103140.3,
+        "vector_size": 1024,
+        "batch_size": 100
+      },
+      "vectors_1024d_batch_500": {
+        "avg_time_ms": 4.736,
+        "throughput_vectors_per_sec": 105580.8,
+        "vector_size": 1024,
+        "batch_size": 500
+      }
+    },
+    "entropy_calculations": {
+      "entropy_5features_batch_10": {
+        "avg_time_ms": 0.229,
+        "throughput_calc_per_sec": 43699.8,
+        "feature_count": 5,
+        "batch_size": 10
+      },
+      "entropy_5features_batch_50": {
+        "avg_time_ms": 0.995,
+        "throughput_calc_per_sec": 50260.1,
+        "feature_count": 5,
+        "batch_size": 50
+      },
+      "entropy_5features_batch_100": {
+        "avg_time_ms": 1.96,
+        "throughput_calc_per_sec": 51015.7,
+        "feature_count": 5,
+        "batch_size": 100
+      },
+      "entropy_10features_batch_10": {
+        "avg_time_ms": 0.202,
+        "throughput_calc_per_sec": 49519.5,
+        "feature_count": 10,
+        "batch_size": 10
+      },
+      "entropy_10features_batch_50": {
+        "avg_time_ms": 1.014,
+        "throughput_calc_per_sec": 49298.4,
+        "feature_count": 10,
+        "batch_size": 50
+      },
+      "entropy_10features_batch_100": {
+        "avg_time_ms": 1.997,
+        "throughput_calc_per_sec": 50063.3,
+        "feature_count": 10,
+        "batch_size": 100
+      },
+      "entropy_25features_batch_10": {
+        "avg_time_ms": 0.22,
+        "throughput_calc_per_sec": 45383.1,
+        "feature_count": 25,
+        "batch_size": 10
+      },
+      "entropy_25features_batch_50": {
+        "avg_time_ms": 1.073,
+        "throughput_calc_per_sec": 46584.7,
+        "feature_count": 25,
+        "batch_size": 50
+      },
+      "entropy_25features_batch_100": {
+        "avg_time_ms": 2.106,
+        "throughput_calc_per_sec": 47477.0,
+        "feature_count": 25,
+        "batch_size": 100
+      },
+      "entropy_50features_batch_10": {
+        "avg_time_ms": 0.244,
+        "throughput_calc_per_sec": 40968.0,
+        "feature_count": 50,
+        "batch_size": 10
+      },
+      "entropy_50features_batch_50": {
+        "avg_time_ms": 1.152,
+        "throughput_calc_per_sec": 43397.7,
+        "feature_count": 50,
+        "batch_size": 50
+      },
+      "entropy_50features_batch_100": {
+        "avg_time_ms": 2.368,
+        "throughput_calc_per_sec": 42227.7,
+        "feature_count": 50,
+        "batch_size": 100
+      },
+      "entropy_100features_batch_10": {
+        "avg_time_ms": 0.278,
+        "throughput_calc_per_sec": 35977.9,
+        "feature_count": 100,
+        "batch_size": 10
+      },
+      "entropy_100features_batch_50": {
+        "avg_time_ms": 1.371,
+        "throughput_calc_per_sec": 36462.1,
+        "feature_count": 100,
+        "batch_size": 50
+      },
+      "entropy_100features_batch_100": {
+        "avg_time_ms": 2.662,
+        "throughput_calc_per_sec": 37564.5,
+        "feature_count": 100,
+        "batch_size": 100
+      }
+    },
+    "concurrent_operations": {
+      "concurrent_1threads_100tasks": {
+        "avg_time_sec": 0.155,
+        "throughput_tasks_per_sec": 646.2,
+        "thread_count": 1,
+        "task_count": 100,
+        "speedup": 1.0
+      },
+      "concurrent_1threads_500tasks": {
+        "avg_time_sec": 0.748,
+        "throughput_tasks_per_sec": 668.4,
+        "thread_count": 1,
+        "task_count": 500,
+        "speedup": 1.0
+      },
+      "concurrent_1threads_1000tasks": {
+        "avg_time_sec": 1.487,
+        "throughput_tasks_per_sec": 672.3,
+        "thread_count": 1,
+        "task_count": 1000,
+        "speedup": 1.0
+      },
+      "concurrent_2threads_100tasks": {
+        "avg_time_sec": 0.151,
+        "throughput_tasks_per_sec": 663.2,
+        "thread_count": 2,
+        "task_count": 100,
+        "speedup": 1.04
+      },
+      "concurrent_2threads_500tasks": {
+        "avg_time_sec": 0.737,
+        "throughput_tasks_per_sec": 678.4,
+        "thread_count": 2,
+        "task_count": 500,
+        "speedup": 1.01
+      },
+      "concurrent_2threads_1000tasks": {
+        "avg_time_sec": 1.477,
+        "throughput_tasks_per_sec": 677.2,
+        "thread_count": 2,
+        "task_count": 1000,
+        "speedup": 1.01
+      },
+      "concurrent_4threads_100tasks": {
+        "avg_time_sec": 0.149,
+        "throughput_tasks_per_sec": 671.3,
+        "thread_count": 4,
+        "task_count": 100,
+        "speedup": 1.02
+      },
+      "concurrent_4threads_500tasks": {
+        "avg_time_sec": 0.746,
+        "throughput_tasks_per_sec": 670.6,
+        "thread_count": 4,
+        "task_count": 500,
+        "speedup": 1.0
+      },
+      "concurrent_4threads_1000tasks": {
+        "avg_time_sec": 1.481,
+        "throughput_tasks_per_sec": 675.0,
+        "thread_count": 4,
+        "task_count": 1000,
+        "speedup": 1.01
+      },
+      "concurrent_8threads_100tasks": {
+        "avg_time_sec": 0.154,
+        "throughput_tasks_per_sec": 648.4,
+        "thread_count": 8,
+        "task_count": 100,
+        "speedup": 1.02
+      },
+      "concurrent_8threads_500tasks": {
+        "avg_time_sec": 0.753,
+        "throughput_tasks_per_sec": 664.3,
+        "thread_count": 8,
+        "task_count": 500,
+        "speedup": 1.0
+      },
+      "concurrent_8threads_1000tasks": {
+        "avg_time_sec": 1.496,
+        "throughput_tasks_per_sec": 668.5,
+        "thread_count": 8,
+        "task_count": 1000,
+        "speedup": 1.0
+      },
+      "concurrent_13threads_100tasks": {
+        "avg_time_sec": 0.155,
+        "throughput_tasks_per_sec": 644.7,
+        "thread_count": 13,
+        "task_count": 100,
+        "speedup": 1.0
+      },
+      "concurrent_13threads_500tasks": {
+        "avg_time_sec": 0.765,
+        "throughput_tasks_per_sec": 653.5,
+        "thread_count": 13,
+        "task_count": 500,
+        "speedup": 0.99
+      },
+      "concurrent_13threads_1000tasks": {
+        "avg_time_sec": 1.503,
+        "throughput_tasks_per_sec": 665.3,
+        "thread_count": 13,
+        "task_count": 1000,
+        "speedup": 1.0
+      },
+      "concurrent_16threads_100tasks": {
+        "avg_time_sec": 0.155,
+        "throughput_tasks_per_sec": 643.9,
+        "thread_count": 16,
+        "task_count": 100,
+        "speedup": 1.02
+      },
+      "concurrent_16threads_500tasks": {
+        "avg_time_sec": 0.76,
+        "throughput_tasks_per_sec": 657.8,
+        "thread_count": 16,
+        "task_count": 500,
+        "speedup": 1.0
+      },
+      "concurrent_16threads_1000tasks": {
+        "avg_time_sec": 1.499,
+        "throughput_tasks_per_sec": 666.9,
+        "thread_count": 16,
+        "task_count": 1000,
+        "speedup": 1.0
+      }
+    },
+    "memory_usage": {
+      "initial_memory_mb": 37.93,
+      "test_size_1000": {
+        "start_memory_mb": 37.93,
+        "peak_memory_mb": 41.94,
+        "end_memory_mb": 38.53,
+        "memory_increase_mb": 4.01,
+        "memory_per_item_kb": 4.108
+      },
+      "test_size_5000": {
+        "start_memory_mb": 38.53,
+        "peak_memory_mb": 73.14,
+        "end_memory_mb": 38.35,
+        "memory_increase_mb": 34.62,
+        "memory_per_item_kb": 7.09
+      },
+      "test_size_10000": {
+        "start_memory_mb": 38.35,
+        "peak_memory_mb": 112.19,
+        "end_memory_mb": 38.34,
+        "memory_increase_mb": 73.84,
+        "memory_per_item_kb": 7.562
+      },
+      "test_size_50000": {
+        "start_memory_mb": 38.34,
+        "peak_memory_mb": 423.98,
+        "end_memory_mb": 39.79,
+        "memory_increase_mb": 385.64,
+        "memory_per_item_kb": 7.898
+      }
+    }
+  }
+}

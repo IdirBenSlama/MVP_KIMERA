@@ -1,0 +1,33 @@
+# Financial API Integration Requirements for KIMERA SWM
+# Install with: pip install -r requirements_financial.txt
+
+# Core financial data libraries
+yfinance>=0.2.18          # Yahoo Finance data
+requests>=2.31.0          # HTTP requests for APIs
+pandas>=2.0.0             # Data manipulation
+numpy>=1.24.0             # Numerical computing
+
+# Optional: Advanced financial analysis
+# ta-lib>=0.4.25          # Technical analysis (requires separate installation)
+# pandas-ta>=0.3.14b      # Technical analysis indicators
+
+# Optional: Async support for high-frequency data
+aiohttp>=3.8.0            # Async HTTP requests
+asyncio                   # Async programming (built-in)
+
+# Optional: Email alerts
+# smtplib                 # Email sending (built-in)
+
+# Optional: Database enhancements
+# psycopg2-binary>=2.9.0  # PostgreSQL support (already in main requirements)
+
+# Optional: Plotting and visualization
+# matplotlib>=3.7.0       # Plotting
+# plotly>=5.15.0          # Interactive plots
+
+# Optional: Machine learning for pattern detection
+# scikit-learn>=1.3.0     # ML algorithms (already in main requirements)
+
+# Development and testing
+pytest>=7.4.0            # Testing framework
+pytest-asyncio>=0.21.0   # Async testing

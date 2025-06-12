@@ -69,5 +69,27 @@ class KimeraCognitiveCycle:
         state["cycle_count"] = state.get("cycle_count", 0) + 1
         state["last_cycle"] = cycle_stats
 
+        # --- Meta-Insight Hook (Phase 3.5) ---
+        meta_engine = system.get("meta_insight_engine")
+        recent_insights = system.get("recent_insights", [])
+
+        META_INTERVAL = 5  # trigger every N cycles
+        try:
+            if meta_engine and state["cycle_count"] % META_INTERVAL == 0:
+                meta_insights = meta_engine.scan_recent_insights(recent_insights)
+                if meta_insights:
+                    # Append generated meta-insights to recent insights list
+                    recent_insights.extend(meta_insights)
+                    # Keep list size reasonable (latest 100)
+                    if len(recent_insights) > 100:
+                        del recent_insights[: len(recent_insights) - 100]
+        except Exception as exc:
+            # Log but never crash the cognitive cycle
+            import logging
+
+            logging.getLogger(__name__).warning(
+                "Meta-Insight Engine failed: %s", exc, exc_info=True
+            )
+
         return "cycle complete"
 

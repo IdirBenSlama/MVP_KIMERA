@@ -13,12 +13,13 @@ import os
 from ..core.geoid import GeoidState
 from ..core.scar import ScarRecord
 from ..core.models import LinguisticGeoid
-from ..core.embedding_utils import encode_text
+from ..core.embedding_utils import encode_text, extract_semantic_features, initialize_embedding_model, get_embedding_model
 from ..engines.contradiction_engine import ContradictionEngine, TensionGradient
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..engines.asm import AxisStabilityMonitor
 from ..engines.spde import SPDE
 from ..engines.kccl import KimeraCognitiveCycle
+from ..engines.meta_insight import MetaInsightEngine
 from ..vault.vault_manager import VaultManager
 from ..vault.database import SessionLocal, GeoidDB, ScarDB, engine
 from ..engines.background_jobs import start_background_jobs, stop_background_jobs
@@ -28,6 +29,18 @@ from .middleware import icw_middleware
 from .monitoring_routes import router as monitoring_router
 import numpy as np
 from scipy.spatial.distance import cosine
+from ..engines.activation_synthesis import (
+    trigger_activation_cascade,
+    synthesize_patterns,
+    ResonanceEvent,
+    Geoid as ASGeoid,
+)
+from ..engines.output_generator import generate_insight_scar
+from ..engines.insight_lifecycle import (
+    update_utility_score,
+    manage_insight_lifecycle,
+    FeedbackEvent,
+)
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
 
@@ -52,13 +65,19 @@ kimera_system = {
     'vault_manager': VaultManager(),
     'spde_engine': SPDE(),
     'cognitive_cycle': KimeraCognitiveCycle(),
+    'meta_insight_engine': MetaInsightEngine(),
     'active_geoids': {},
-    'system_state': {'cycle_count': 0}
+    'system_state': {'cycle_count': 0},
+    'insights': {},  # insight_id -> InsightScar
+    'recent_insights': [],  # rolling list to feed MetaInsightEngine
+    'embedding_model': None
 }
 
 
 @app.on_event("startup")
-def _startup_background_jobs() -> None:
+def startup_event():
+    """Initializes the embedding model and background jobs on startup."""
+    kimera_system['embedding_model'] = initialize_embedding_model()
     if os.getenv("ENABLE_JOBS", "1") != "0":
         start_background_jobs(encode_text)
 
@@ -105,12 +124,13 @@ def create_scar_from_tension(
         f"Contradiction between '{geoid_a_summary}' and '{geoid_b_summary}'"
     )
 
-    vector = encode_text(scar_summary_text)
+    embedding_model = get_embedding_model()
+    vector = embedding_model.encode(scar_summary_text).tolist()
     return scar, vector
 
 
 class CreateGeoidRequest(BaseModel):
-    semantic_features: Dict[str, float]
+    semantic_features: Dict[str, float] | None = None
     symbolic_content: Dict[str, Any] = {}
     metadata: Dict[str, Any] = {}
     echoform_text: str | None = None
@@ -125,37 +145,55 @@ class ProcessContradictionRequest(BaseModel):
 @app.post("/geoids")
 async def create_geoid(request: CreateGeoidRequest):
     geoid_id = f"GEOID_{uuid.uuid4().hex[:8]}"
-    try:
-        for v in request.semantic_features.values():
-            if not isinstance(v, (int, float)):
-                raise ValueError("Semantic features must be numeric")
-    except Exception as exc:
-        raise HTTPException(status_code=400, detail=f"Invalid semantic features: {exc}")
+    
+    semantic_state = {}
+    embedding_vector = []
+    symbolic_state = dict(request.symbolic_content)
 
-    symbolic = dict(request.symbolic_content)
     if request.echoform_text:
+        # Path 1: Geoid created from raw text
+        text = request.echoform_text
         try:
-            symbolic["echoform"] = parse_echoform(request.echoform_text)
+            symbolic_state["echoform"] = parse_echoform(text)
+            semantic_state = extract_semantic_features(text)
+            embedding_model = get_embedding_model()
+            embedding_vector = embedding_model.encode(text).tolist()
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=f"Invalid EchoForm: {exc}")
+    
+    elif request.semantic_features:
+        # Path 2: Geoid created from pre-defined features
+        try:
+            for v in request.semantic_features.values():
+                if not isinstance(v, (int, float)):
+                    raise ValueError("Semantic features must be numeric")
+            semantic_state = request.semantic_features
+            # Create a text representation for embedding
+            semantic_text = " ".join([f"{k}:{v:.2f}" for k, v in semantic_state.items()])
+            embedding_model = get_embedding_model()
+            embedding_vector = embedding_model.encode(semantic_text).tolist()
+        except Exception as exc:
+            raise HTTPException(status_code=400, detail=f"Invalid semantic features: {exc}")
+    
+    else:
+        raise HTTPException(status_code=400, detail="Either 'echoform_text' or 'semantic_features' must be provided.")
 
     geoid = GeoidState(
         geoid_id=geoid_id,
-        semantic_state=request.semantic_features,
-        symbolic_state=symbolic,
+        semantic_state=semantic_state,
+        symbolic_state=symbolic_state,
+        embedding_vector=embedding_vector,
         metadata=request.metadata,
     )
 
     # --- VECTOR PERSISTENCE ---
-    semantic_text = " ".join([f"{k}:{v:.2f}" for k, v in request.semantic_features.items()])
-    vector = encode_text(semantic_text)
     with SessionLocal() as db:
         geoid_db = GeoidDB(
             geoid_id=geoid.geoid_id,
             symbolic_state=geoid.symbolic_state,
             metadata_json=geoid.metadata,
             semantic_state_json=geoid.semantic_state,
-            semantic_vector=vector,
+            semantic_vector=geoid.embedding_vector,
         )
         db.add(geoid_db)
         db.commit()
@@ -261,6 +299,7 @@ async def process_contradictions(body: ProcessContradictionRequest, request: Req
             geoid_id=row.geoid_id,
             semantic_state=row.semantic_state_json or {},
             symbolic_state=row.symbolic_state or {},
+            embedding_vector=row.semantic_vector or [],
             metadata=row.metadata_json or {},
         )
 
@@ -496,6 +535,106 @@ async def get_system_stability():
         asm = AxisStabilityMonitor(db)
         metrics = asm.get_stability_metrics()
     return metrics
+
+
+# -----------------------------
+# Insight API Models (Phase 4)
+# -----------------------------
+
+
+class GenerateInsightRequest(BaseModel):
+    source_geoid: str
+    target_domain: str | None = None
+    focus: str | None = None
+
+
+class InsightFeedbackRequest(BaseModel):
+    feedback_event: FeedbackEvent
+
+
+# -----------------------------
+# Insight API Endpoints
+# -----------------------------
+
+
+@app.post("/insights/generate")
+async def generate_insight(request: GenerateInsightRequest):
+    """Generates an insight from a source geoid using activation synthesis pipeline."""
+
+    if request.source_geoid not in kimera_system["active_geoids"]:
+        raise HTTPException(status_code=404, detail="Source geoid not found")
+
+    # Build a minimal knowledge graph view (neighbors mocked for now)
+    knowledge_graph: dict[str, ASGeoid] = {}
+    for gid, g in kimera_system["active_geoids"].items():
+        knowledge_graph[gid] = ASGeoid(geoid_id=gid, neighbors=list(g.metadata.get("neighbors", [])))
+
+    resonance = ResonanceEvent(source_geoids=[request.source_geoid])
+    activated_ids = trigger_activation_cascade(resonance, knowledge_graph)
+    activated_geoids = [knowledge_graph[g] for g in activated_ids]
+
+    mosaic = synthesize_patterns(activated_geoids)
+
+    # Placeholder entropy reduction calculation
+    entropy_reduction = 0.1 * len(activated_geoids)
+
+    insight = generate_insight_scar(mosaic, resonance_id=request.source_geoid, entropy_reduction=entropy_reduction)
+
+    # Store insight
+    kimera_system["insights"][insight.insight_id] = insight
+    kimera_system["recent_insights"].append(insight)
+    if len(kimera_system["recent_insights"]) > 100:
+        del kimera_system["recent_insights"][0]
+
+    return {"insight": insight.to_dict()}
+
+
+@app.get("/insights/{insight_id}")
+async def get_insight(insight_id: str):
+    insight = kimera_system["insights"].get(insight_id)
+    if not insight:
+        raise HTTPException(status_code=404, detail="Insight not found")
+    return insight.to_dict()
+
+
+@app.get("/insights")
+async def list_insights(type: str | None = None, domain: str | None = None):
+    results = kimera_system["insights"].values()
+    if type:
+        results = filter(lambda i: i.insight_type.lower() == type.lower(), results)
+    if domain:
+        results = filter(lambda i: domain.lower() in (d.lower() for d in i.application_domains), results)
+    return [i.to_dict() for i in results]
+
+
+@app.post("/insights/{insight_id}/feedback")
+async def feedback_insight(insight_id: str, request: InsightFeedbackRequest):
+    insight = kimera_system["insights"].get(insight_id)
+    if not insight:
+        raise HTTPException(status_code=404, detail="Insight not found")
+
+    state = kimera_system["system_state"]
+    current_cycle = state.get("cycle_count", 0)
+
+    insight = update_utility_score(insight, request.feedback_event, current_cycle)
+    insight = manage_insight_lifecycle(insight)
+
+    # Update stored object
+    kimera_system["insights"][insight_id] = insight
+
+    return {"insight": insight.to_dict()}
+
+
+# Lineage tracer endpoint
+@app.get("/insights/{insight_id}/lineage")
+async def get_insight_lineage(insight_id: str):
+    try:
+        from ..tools.lineage_tracer import trace as trace_lineage
+        lineage = trace_lineage(insight_id, kimera_system)
+        return lineage
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
+
 
 if __name__ == "__main__":
     import uvicorn

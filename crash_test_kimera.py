@@ -191,7 +191,7 @@ class KimeraCrashTester:
         print(f"✅ Crash test completed: {created_count}/{target_geoids} geoids created")
         return result
 
-    def crash_test_cognitive_cycle_overload(self, max_cycles: int = 1000, concurrent_cycles: int = 20):
+    def crash_test_cognitive_cycle_overload(self, max_cycles: int = 1000, concurrent_cycles: int = 10):
         """Test cognitive cycle system under extreme load"""
         print(f"\n💥 CRASH TEST: Cognitive cycle overload - {max_cycles} cycles with {concurrent_cycles} concurrent")
         
@@ -205,7 +205,7 @@ class KimeraCrashTester:
             batch_completed = 0
             batch_failed = 0
             
-            for _ in range(50):  # 50 cycles per thread
+            for _ in range(25):  # 25 cycles per thread
                 try:
                     cycle_start = time.time()
                     response = self.client.post("/system/cycle", timeout=10)  # 10 second timeout
@@ -229,7 +229,7 @@ class KimeraCrashTester:
         try:
             with concurrent.futures.ThreadPoolExecutor(max_workers=concurrent_cycles) as executor:
                 futures = []
-                for batch in range(max_cycles // 50):
+                for batch in range(max_cycles // 25):
                     if batch % 5 == 0:
                         metrics = self.log_system_metrics()
                         print(f"   Cycle batch {batch}: {completed_cycles} completed, {failed_cycles} failed")

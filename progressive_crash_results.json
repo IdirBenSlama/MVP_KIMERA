@@ -1,6 +1,6 @@
 {
-  "timestamp": "2025-06-10T22:38:32.696683",
-  "breaking_point": 19,
+  "timestamp": "2025-06-12T20:12:47.507317",
+  "breaking_point": 16,
   "load_test_results": [
     {
       "threads": 1,
@@ -8,8 +8,8 @@
       "successful": 20,
       "failed": 0,
       "success_rate": 100.0,
-      "duration": 45.23,
-      "ops_per_second": 0.44
+      "duration": 41.38,
+      "ops_per_second": 0.48
     },
     {
       "threads": 4,
@@ -17,8 +17,8 @@
       "successful": 80,
       "failed": 0,
       "success_rate": 100.0,
-      "duration": 41.74,
-      "ops_per_second": 1.92
+      "duration": 41.38,
+      "ops_per_second": 1.93
     },
     {
       "threads": 7,
@@ -26,8 +26,8 @@
       "successful": 140,
       "failed": 0,
       "success_rate": 100.0,
-      "duration": 42.17,
-      "ops_per_second": 3.32
+      "duration": 45.13,
+      "ops_per_second": 3.1
     },
     {
       "threads": 10,
@@ -35,46 +35,33 @@
       "successful": 200,
       "failed": 0,
       "success_rate": 100.0,
-      "duration": 46.54,
-      "ops_per_second": 4.3
+      "duration": 66.7,
+      "ops_per_second": 3.0
     },
     {
       "threads": 13,
       "operations": 260,
-      "successful": 260,
-      "failed": 0,
-      "success_rate": 100.0,
-      "duration": 65.43,
-      "ops_per_second": 3.97
+      "successful": 238,
+      "failed": 22,
+      "success_rate": 91.54,
+      "duration": 165.54,
+      "ops_per_second": 1.57
     },
     {
       "threads": 16,
       "operations": 320,
-      "successful": 318,
-      "failed": 2,
-      "success_rate": 99.38,
-      "duration": 131.52,
-      "ops_per_second": 2.43
-    },
-    {
-      "threads": 19,
-      "operations": 380,
-      "successful": 72,
-      "failed": 308,
-      "success_rate": 18.95,
-      "duration": 278.45,
-      "ops_per_second": 1.36
+      "successful": 18,
+      "failed": 302,
+      "success_rate": 5.62,
+      "duration": 283.3,
+      "ops_per_second": 1.13
     }
   ],
   "memory_test": {
     "error": "System unresponsive"
   },
   "rapid_fire_test": {
-    "target_rate": 50,
-    "actual_rate": 0.48,
-    "operations": 10,
-    "errors": 0,
-    "duration": 20.81
+    "error": "System unresponsive"
   },
-  "system_survived": true
+  "system_survived": false
 }

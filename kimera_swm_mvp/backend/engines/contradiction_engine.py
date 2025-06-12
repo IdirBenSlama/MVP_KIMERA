@@ -1,3 +1,4 @@
+import torch
 from typing import List, Dict
 import numpy as np
 from scipy.spatial.distance import cosine
@@ -15,8 +16,9 @@ class TensionGradient:
 class ContradictionEngine:
     """Implementation of DOC-205a Contradiction Engine specification"""
 
-    def __init__(self, tension_threshold: float = 0.75):
+    def __init__(self, tension_threshold: float = 0.4, device: str = 'cpu'):
         self.tension_threshold = tension_threshold
+        self.device = device
         self.active_tensions = {}
 
     def detect_tension_gradients(self, geoids: List[GeoidState]) -> List[TensionGradient]:
@@ -59,24 +61,36 @@ class ContradictionEngine:
         )
 
     def _embedding_misalignment(self, geoid_a: GeoidState, geoid_b: GeoidState) -> float:
-        """Calculate semantic embedding distance"""
+        """Calculate semantic embedding distance using torch on GPU or numpy on CPU."""
         if not geoid_a.semantic_state or not geoid_b.semantic_state:
             return 0.0
 
-        # Create aligned feature vectors
-        all_features = set(geoid_a.semantic_state.keys()) | set(geoid_b.semantic_state.keys())
-
+        all_features = sorted(list(set(geoid_a.semantic_state.keys()) | set(geoid_b.semantic_state.keys())))
+        
         vec_a = [geoid_a.semantic_state.get(f, 0.0) for f in all_features]
         vec_b = [geoid_b.semantic_state.get(f, 0.0) for f in all_features]
 
         if not any(vec_a) or not any(vec_b):
             return 0.0
 
-        import numpy as np
-        if np.linalg.norm(vec_a) == 0 or np.linalg.norm(vec_b) == 0:
-            return 0.0
+        if self.device == 'cuda':
+            # Use torch for GPU-accelerated cosine similarity
+            vec_a_gpu = torch.tensor(vec_a, device=self.device, dtype=torch.float32)
+            vec_b_gpu = torch.tensor(vec_b, device=self.device, dtype=torch.float32)
+            
+            # Normalize vectors
+            vec_a_gpu = torch.nn.functional.normalize(vec_a_gpu, p=2, dim=0)
+            vec_b_gpu = torch.nn.functional.normalize(vec_b_gpu, p=2, dim=0)
 
-        return cosine(vec_a, vec_b)
+            # Cosine similarity is dot product of normalized vectors
+            # Cosine distance is 1 - similarity
+            similarity = torch.dot(vec_a_gpu, vec_b_gpu)
+            return (1 - similarity).item()
+        else:
+            # Fallback to scipy for CPU
+            if np.linalg.norm(vec_a) == 0 or np.linalg.norm(vec_b) == 0:
+                return 0.0
+            return cosine(vec_a, vec_b)
 
     def calculate_pulse_strength(self, tension: TensionGradient,
                                 geoids_dict: Dict[str, GeoidState]) -> float:
@@ -96,7 +110,7 @@ class ContradictionEngine:
         """Determine whether to collapse or surge based on pulse analysis"""
 
         # Collapse conditions (from DOC-205a)
-        if (pulse_strength > 0.8 and
+        if (pulse_strength >= 0.8 and
             stability_metrics.get('axis_convergence', 0) > 0.75 and
             stability_metrics.get('vault_resonance', 0) > 0.6):
             return 'collapse'
