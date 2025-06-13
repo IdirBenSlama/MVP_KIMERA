@@ -1,0 +1,306 @@
+# Repository Cleanup Report (Phase 5 – Step 1)
+
+Generated 2025-06-12 21:48:03 UTC
+
+## Duplicate files
+- kimera_swm_mvp.egg-info/dependency_links.txt, .venv/Lib/site-packages/uvicorn/py.typed, .venv/Lib/site-packages/pkg_resources/tests/data/my-test-package_unpacked-egg/my_test_package-1.0-py3.7.egg/EGG-INFO/dependency_links.txt, .venv/Lib/site-packages/pkg_resources/tests/data/my-test-package_unpacked-egg/my_test_package-1.0-py3.7.egg/EGG-INFO/top_level.txt, .venv/Lib/site-packages/pkg_resources/tests/data/my-test-package_unpacked-egg/my_test_package-1.0-py3.7.egg/EGG-INFO/zip-safe
+- kimera_swm_mvp/backend/__init__.py, kimera_swm_mvp/backend/api/__init__.py, kimera_swm_mvp/backend/core/__init__.py, kimera_swm_mvp/backend/engines/__init__.py, kimera_swm_mvp/backend/linguistic/__init__.py, kimera_swm_mvp/backend/tests/__init__.py, backend/api/__init__.py, backend/core/__init__.py, backend/engines/__init__.py, backend/linguistic/__init__.py, backend/vault/__init__.py, .venv/Lib/site-packages/pillow-11.2.1.dist-info/zip-safe
+- .venv/Scripts/pip.exe, .venv/Scripts/pip3.13.exe, .venv/Scripts/pip3.exe
+- .venv/Lib/site-packages/annotated_types-0.7.0.dist-info/INSTALLER, .venv/Lib/site-packages/anyio-4.9.0.dist-info/INSTALLER, .venv/Lib/site-packages/APScheduler-3.11.0.dist-info/INSTALLER, .venv/Lib/site-packages/certifi-2025.4.26.dist-info/INSTALLER, .venv/Lib/site-packages/charset_normalizer-3.4.2.dist-info/INSTALLER, .venv/Lib/site-packages/click-8.2.1.dist-info/INSTALLER, .venv/Lib/site-packages/colorama-0.4.6.dist-info/INSTALLER, .venv/Lib/site-packages/fastapi-0.115.12.dist-info/INSTALLER, .venv/Lib/site-packages/filelock-3.18.0.dist-info/INSTALLER, .venv/Lib/site-packages/fsspec-2025.5.1.dist-info/INSTALLER, .venv/Lib/site-packages/greenlet-3.2.3.dist-info/INSTALLER, .venv/Lib/site-packages/h11-0.16.0.dist-info/INSTALLER, .venv/Lib/site-packages/httpcore-1.0.9.dist-info/INSTALLER, .venv/Lib/site-packages/httpx-0.28.1.dist-info/INSTALLER, .venv/Lib/site-packages/huggingface_hub-0.33.0.dist-info/INSTALLER, .venv/Lib/site-packages/idna-3.10.dist-info/INSTALLER, .venv/Lib/site-packages/jinja2-3.1.6.dist-info/INSTALLER, .venv/Lib/site-packages/joblib-1.5.1.dist-info/INSTALLER, .venv/Lib/site-packages/MarkupSafe-3.0.2.dist-info/INSTALLER, .venv/Lib/site-packages/mpmath-1.3.0.dist-info/INSTALLER, .venv/Lib/site-packages/networkx-3.5.dist-info/INSTALLER, .venv/Lib/site-packages/numpy-2.3.0.dist-info/INSTALLER, .venv/Lib/site-packages/packaging-25.0.dist-info/INSTALLER, .venv/Lib/site-packages/pgvector-0.4.1.dist-info/INSTALLER, .venv/Lib/site-packages/pillow-11.2.1.dist-info/INSTALLER, .venv/Lib/site-packages/pip-25.0.1.dist-info/INSTALLER, .venv/Lib/site-packages/pip-25.0.1.dist-info/top_level.txt, .venv/Lib/site-packages/psycopg2_binary-2.9.10.dist-info/INSTALLER, .venv/Lib/site-packages/pydantic-2.11.5.dist-info/INSTALLER, .venv/Lib/site-packages/pydantic_core-2.33.2.dist-info/INSTALLER, .venv/Lib/site-packages/python_multipart-0.0.20.dist-info/INSTALLER, .venv/Lib/site-packages/PyYAML-6.0.2.dist-info/INSTALLER, .venv/Lib/site-packages/regex-2024.11.6.dist-info/INSTALLER, .venv/Lib/site-packages/requests-2.32.4.dist-info/INSTALLER, .venv/Lib/site-packages/safetensors-0.5.3.dist-info/INSTALLER, .venv/Lib/site-packages/scikit_learn-1.7.0.dist-info/INSTALLER, .venv/Lib/site-packages/scipy-1.15.3.dist-info/INSTALLER, .venv/Lib/site-packages/sentence_transformers-4.1.0.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools-80.9.0.dist-info/INSTALLER, .venv/Lib/site-packages/sniffio-1.3.1.dist-info/INSTALLER, .venv/Lib/site-packages/sqlalchemy-2.0.41.dist-info/INSTALLER, .venv/Lib/site-packages/starlette-0.46.2.dist-info/INSTALLER, .venv/Lib/site-packages/sympy-1.14.0.dist-info/INSTALLER, .venv/Lib/site-packages/threadpoolctl-3.6.0.dist-info/INSTALLER, .venv/Lib/site-packages/tokenizers-0.21.1.dist-info/INSTALLER, .venv/Lib/site-packages/torch-2.7.1.dist-info/INSTALLER, .venv/Lib/site-packages/tqdm-4.67.1.dist-info/INSTALLER, .venv/Lib/site-packages/transformers-4.52.4.dist-info/INSTALLER, .venv/Lib/site-packages/typing_extensions-4.14.0.dist-info/INSTALLER, .venv/Lib/site-packages/typing_inspection-0.4.1.dist-info/INSTALLER, .venv/Lib/site-packages/tzdata-2025.2.dist-info/INSTALLER, .venv/Lib/site-packages/tzlocal-5.3.1.dist-info/INSTALLER, .venv/Lib/site-packages/urllib3-2.4.0.dist-info/INSTALLER, .venv/Lib/site-packages/uvicorn-0.34.3.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/autocommand-2.2.2.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/backports.tarfile-1.2.0.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/inflect-7.3.1.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/jaraco.collections-5.1.0.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/jaraco.context-5.3.0.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/jaraco.functools-4.0.1.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/jaraco.text-3.12.1.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/more_itertools-10.3.0.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/platformdirs-4.2.2.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/tomli-2.0.1.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/typeguard-4.3.0.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/typing_extensions-4.12.2.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/INSTALLER, .venv/Lib/site-packages/setuptools/_vendor/zipp-3.19.2.dist-info/INSTALLER
+- .venv/Lib/site-packages/annotated_types-0.7.0.dist-info/WHEEL, .venv/Lib/site-packages/setuptools/_vendor/platformdirs-4.2.2.dist-info/WHEEL
+- .venv/Lib/site-packages/APScheduler-3.11.0.dist-info/LICENSE.txt, .venv/Lib/site-packages/setuptools/_vendor/typeguard-4.3.0.dist-info/LICENSE
+- .venv/Lib/site-packages/APScheduler-3.11.0.dist-info/WHEEL, .venv/Lib/site-packages/tqdm-4.67.1.dist-info/WHEEL
+- .venv/Lib/site-packages/certifi-2025.4.26.dist-info/WHEEL, .venv/Lib/site-packages/pgvector-0.4.1.dist-info/WHEEL, .venv/Lib/site-packages/sympy-1.14.0.dist-info/WHEEL
+- .venv/Lib/site-packages/click-8.2.1.dist-info/WHEEL, .venv/Lib/site-packages/packaging-25.0.dist-info/WHEEL, .venv/Lib/site-packages/typing_extensions-4.14.0.dist-info/WHEEL
+- .venv/Lib/site-packages/filelock-3.18.0.dist-info/WHEEL, .venv/Lib/site-packages/fsspec-2025.5.1.dist-info/WHEEL, .venv/Lib/site-packages/httpcore-1.0.9.dist-info/WHEEL, .venv/Lib/site-packages/pydantic-2.11.5.dist-info/WHEEL, .venv/Lib/site-packages/python_multipart-0.0.20.dist-info/WHEEL, .venv/Lib/site-packages/starlette-0.46.2.dist-info/WHEEL, .venv/Lib/site-packages/typing_inspection-0.4.1.dist-info/WHEEL, .venv/Lib/site-packages/urllib3-2.4.0.dist-info/WHEEL, .venv/Lib/site-packages/uvicorn-0.34.3.dist-info/WHEEL
+- .venv/Lib/site-packages/greenlet/greenlet.h, .venv/Include/site/python3.13/greenlet/greenlet.h
+- .venv/Lib/site-packages/h11-0.16.0.dist-info/WHEEL, .venv/Lib/site-packages/sentence_transformers-4.1.0.dist-info/WHEEL
+- .venv/Lib/site-packages/huggingface_hub-0.33.0.dist-info/LICENSE, .venv/Lib/site-packages/tzdata-2025.2.dist-info/licenses/licenses/LICENSE_APACHE
+- .venv/Lib/site-packages/huggingface_hub-0.33.0.dist-info/WHEEL, .venv/Lib/site-packages/transformers-4.52.4.dist-info/WHEEL
+- .venv/Lib/site-packages/idna/codec.py, .venv/Lib/site-packages/pip/_vendor/idna/codec.py
+- .venv/Lib/site-packages/idna/compat.py, .venv/Lib/site-packages/pip/_vendor/idna/compat.py
+- .venv/Lib/site-packages/idna/core.py, .venv/Lib/site-packages/pip/_vendor/idna/core.py
+- .venv/Lib/site-packages/idna/idnadata.py, .venv/Lib/site-packages/pip/_vendor/idna/idnadata.py
+- .venv/Lib/site-packages/idna/intranges.py, .venv/Lib/site-packages/pip/_vendor/idna/intranges.py
+- .venv/Lib/site-packages/idna/package_data.py, .venv/Lib/site-packages/pip/_vendor/idna/package_data.py
+- .venv/Lib/site-packages/idna/uts46data.py, .venv/Lib/site-packages/pip/_vendor/idna/uts46data.py
+- .venv/Lib/site-packages/idna/__init__.py, .venv/Lib/site-packages/pip/_vendor/idna/__init__.py
+- .venv/Lib/site-packages/idna-3.10.dist-info/WHEEL, .venv/Lib/site-packages/setuptools/_vendor/typing_extensions-4.12.2.dist-info/WHEEL
+- .venv/Lib/site-packages/jinja2-3.1.6.dist-info/WHEEL, .venv/Lib/site-packages/threadpoolctl-3.6.0.dist-info/WHEEL
+- .venv/Lib/site-packages/mpmath-1.3.0.dist-info/WHEEL, .venv/Lib/site-packages/setuptools/_vendor/autocommand-2.2.2.dist-info/WHEEL
+- .venv/Lib/site-packages/networkx-3.5.dist-info/WHEEL, .venv/Lib/site-packages/requests-2.32.4.dist-info/WHEEL, .venv/Lib/site-packages/setuptools-80.9.0.dist-info/WHEEL
+- .venv/Lib/site-packages/numpy-2.3.0.dist-info/WHEEL, .venv/Lib/site-packages/scikit_learn-1.7.0.dist-info/WHEEL, .venv/Lib/site-packages/scipy-1.15.3.dist-info/WHEEL
+- .venv/Lib/site-packages/packaging/requirements.py, .venv/Lib/site-packages/setuptools/_vendor/packaging/requirements.py, .venv/Lib/site-packages/pip/_vendor/packaging/requirements.py
+- .venv/Lib/site-packages/packaging/utils.py, .venv/Lib/site-packages/setuptools/_vendor/packaging/utils.py, .venv/Lib/site-packages/pip/_vendor/packaging/utils.py
+- .venv/Lib/site-packages/packaging/version.py, .venv/Lib/site-packages/setuptools/_vendor/packaging/version.py
+- .venv/Lib/site-packages/packaging/_musllinux.py, .venv/Lib/site-packages/setuptools/_vendor/packaging/_musllinux.py, .venv/Lib/site-packages/pip/_vendor/packaging/_musllinux.py
+- .venv/Lib/site-packages/packaging/_structures.py, .venv/Lib/site-packages/setuptools/_vendor/packaging/_structures.py, .venv/Lib/site-packages/setuptools/_vendor/wheel/vendored/packaging/_structures.py, .venv/Lib/site-packages/pip/_vendor/packaging/_structures.py
+- .venv/Lib/site-packages/PIL/_avif.pyi, .venv/Lib/site-packages/PIL/_imagingmath.pyi, .venv/Lib/site-packages/PIL/_imagingmorph.pyi, .venv/Lib/site-packages/PIL/_imagingtk.pyi, .venv/Lib/site-packages/PIL/_webp.pyi
+- .venv/Lib/site-packages/requests/api.py, .venv/Lib/site-packages/pip/_vendor/requests/api.py
+- .venv/Lib/site-packages/requests/auth.py, .venv/Lib/site-packages/pip/_vendor/requests/auth.py
+- .venv/Lib/site-packages/requests/cookies.py, .venv/Lib/site-packages/pip/_vendor/requests/cookies.py
+- .venv/Lib/site-packages/requests/hooks.py, .venv/Lib/site-packages/pip/_vendor/requests/hooks.py
+- .venv/Lib/site-packages/requests/sessions.py, .venv/Lib/site-packages/pip/_vendor/requests/sessions.py
+- .venv/Lib/site-packages/requests/status_codes.py, .venv/Lib/site-packages/pip/_vendor/requests/status_codes.py
+- .venv/Lib/site-packages/requests/structures.py, .venv/Lib/site-packages/pip/_vendor/requests/structures.py
+- .venv/Lib/site-packages/requests/_internal_utils.py, .venv/Lib/site-packages/pip/_vendor/requests/_internal_utils.py
+- .venv/Lib/site-packages/setuptools/cli-32.exe, .venv/Lib/site-packages/setuptools/cli.exe
+- .venv/Lib/site-packages/setuptools/gui-32.exe, .venv/Lib/site-packages/setuptools/gui.exe
+- .venv/Lib/site-packages/sniffio-1.3.1.dist-info/LICENSE.APACHE2, .venv/Lib/site-packages/setuptools/_vendor/importlib_metadata-8.0.0.dist-info/LICENSE
+- .venv/Lib/site-packages/torch/_VF.pyi, .venv/Lib/site-packages/torch/_C/_VariableFunctions.pyi
+- .venv/Lib/site-packages/tzdata/zoneinfo/CET, .venv/Lib/site-packages/tzdata/zoneinfo/MET, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Amsterdam, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Brussels, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Luxembourg
+- .venv/Lib/site-packages/tzdata/zoneinfo/CST6CDT, .venv/Lib/site-packages/tzdata/zoneinfo/America/Chicago, .venv/Lib/site-packages/tzdata/zoneinfo/US/Central
+- .venv/Lib/site-packages/tzdata/zoneinfo/Cuba, .venv/Lib/site-packages/tzdata/zoneinfo/America/Havana
+- .venv/Lib/site-packages/tzdata/zoneinfo/EET, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Athens
+- .venv/Lib/site-packages/tzdata/zoneinfo/Egypt, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Cairo
+- .venv/Lib/site-packages/tzdata/zoneinfo/Eire, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Dublin
+- .venv/Lib/site-packages/tzdata/zoneinfo/EST, .venv/Lib/site-packages/tzdata/zoneinfo/America/Atikokan, .venv/Lib/site-packages/tzdata/zoneinfo/America/Cayman, .venv/Lib/site-packages/tzdata/zoneinfo/America/Coral_Harbour, .venv/Lib/site-packages/tzdata/zoneinfo/America/Panama
+- .venv/Lib/site-packages/tzdata/zoneinfo/EST5EDT, .venv/Lib/site-packages/tzdata/zoneinfo/America/New_York, .venv/Lib/site-packages/tzdata/zoneinfo/US/Eastern
+- .venv/Lib/site-packages/tzdata/zoneinfo/GB, .venv/Lib/site-packages/tzdata/zoneinfo/GB-Eire, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Belfast, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Guernsey, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Isle_of_Man, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Jersey, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/London
+- .venv/Lib/site-packages/tzdata/zoneinfo/GMT, .venv/Lib/site-packages/tzdata/zoneinfo/GMT+0, .venv/Lib/site-packages/tzdata/zoneinfo/GMT-0, .venv/Lib/site-packages/tzdata/zoneinfo/GMT0, .venv/Lib/site-packages/tzdata/zoneinfo/Greenwich, .venv/Lib/site-packages/tzdata/zoneinfo/Etc/GMT, .venv/Lib/site-packages/tzdata/zoneinfo/Etc/GMT+0, .venv/Lib/site-packages/tzdata/zoneinfo/Etc/GMT-0, .venv/Lib/site-packages/tzdata/zoneinfo/Etc/GMT0, .venv/Lib/site-packages/tzdata/zoneinfo/Etc/Greenwich
+- .venv/Lib/site-packages/tzdata/zoneinfo/Hongkong, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Hong_Kong
+- .venv/Lib/site-packages/tzdata/zoneinfo/HST, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Honolulu, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Johnston, .venv/Lib/site-packages/tzdata/zoneinfo/US/Hawaii
+- .venv/Lib/site-packages/tzdata/zoneinfo/Iceland, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Abidjan, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Accra, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Bamako, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Banjul, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Conakry, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Dakar, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Freetown, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Lome, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Nouakchott, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Ouagadougou, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Timbuktu, .venv/Lib/site-packages/tzdata/zoneinfo/Atlantic/Reykjavik, .venv/Lib/site-packages/tzdata/zoneinfo/Atlantic/St_Helena
+- .venv/Lib/site-packages/tzdata/zoneinfo/Iran, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Tehran
+- .venv/Lib/site-packages/tzdata/zoneinfo/Israel, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Jerusalem, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Tel_Aviv
+- .venv/Lib/site-packages/tzdata/zoneinfo/Jamaica, .venv/Lib/site-packages/tzdata/zoneinfo/America/Jamaica
+- .venv/Lib/site-packages/tzdata/zoneinfo/Japan, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Tokyo
+- .venv/Lib/site-packages/tzdata/zoneinfo/Kwajalein, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Kwajalein
+- .venv/Lib/site-packages/tzdata/zoneinfo/Libya, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Tripoli
+- .venv/Lib/site-packages/tzdata/zoneinfo/MST, .venv/Lib/site-packages/tzdata/zoneinfo/America/Creston, .venv/Lib/site-packages/tzdata/zoneinfo/America/Phoenix, .venv/Lib/site-packages/tzdata/zoneinfo/US/Arizona
+- .venv/Lib/site-packages/tzdata/zoneinfo/MST7MDT, .venv/Lib/site-packages/tzdata/zoneinfo/Navajo, .venv/Lib/site-packages/tzdata/zoneinfo/America/Denver, .venv/Lib/site-packages/tzdata/zoneinfo/America/Shiprock, .venv/Lib/site-packages/tzdata/zoneinfo/US/Mountain
+- .venv/Lib/site-packages/tzdata/zoneinfo/NZ, .venv/Lib/site-packages/tzdata/zoneinfo/Antarctica/McMurdo, .venv/Lib/site-packages/tzdata/zoneinfo/Antarctica/South_Pole, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Auckland
+- .venv/Lib/site-packages/tzdata/zoneinfo/NZ-CHAT, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Chatham
+- .venv/Lib/site-packages/tzdata/zoneinfo/Poland, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Warsaw
+- .venv/Lib/site-packages/tzdata/zoneinfo/Portugal, .venv/Lib/site-packages/tzdata/zoneinfo/WET, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Lisbon
+- .venv/Lib/site-packages/tzdata/zoneinfo/PRC, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Chongqing, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Chungking, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Harbin, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Shanghai
+- .venv/Lib/site-packages/tzdata/zoneinfo/PST8PDT, .venv/Lib/site-packages/tzdata/zoneinfo/America/Los_Angeles, .venv/Lib/site-packages/tzdata/zoneinfo/US/Pacific
+- .venv/Lib/site-packages/tzdata/zoneinfo/ROC, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Taipei
+- .venv/Lib/site-packages/tzdata/zoneinfo/ROK, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Seoul
+- .venv/Lib/site-packages/tzdata/zoneinfo/Singapore, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Kuala_Lumpur, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Singapore
+- .venv/Lib/site-packages/tzdata/zoneinfo/Turkey, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Istanbul, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Istanbul
+- .venv/Lib/site-packages/tzdata/zoneinfo/UCT, .venv/Lib/site-packages/tzdata/zoneinfo/Universal, .venv/Lib/site-packages/tzdata/zoneinfo/UTC, .venv/Lib/site-packages/tzdata/zoneinfo/Zulu, .venv/Lib/site-packages/tzdata/zoneinfo/Etc/UCT, .venv/Lib/site-packages/tzdata/zoneinfo/Etc/Universal, .venv/Lib/site-packages/tzdata/zoneinfo/Etc/UTC, .venv/Lib/site-packages/tzdata/zoneinfo/Etc/Zulu
+- .venv/Lib/site-packages/tzdata/zoneinfo/W-SU, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Moscow
+- .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Addis_Ababa, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Asmara, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Asmera, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Dar_es_Salaam, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Djibouti, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Kampala, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Mogadishu, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Nairobi, .venv/Lib/site-packages/tzdata/zoneinfo/Indian/Antananarivo, .venv/Lib/site-packages/tzdata/zoneinfo/Indian/Comoro, .venv/Lib/site-packages/tzdata/zoneinfo/Indian/Mayotte
+- .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Bangui, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Brazzaville, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Douala, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Kinshasa, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Lagos, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Libreville, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Luanda, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Malabo, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Niamey, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Porto-Novo
+- .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Blantyre, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Bujumbura, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Gaborone, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Harare, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Kigali, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Lubumbashi, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Lusaka, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Maputo
+- .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Johannesburg, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Maseru, .venv/Lib/site-packages/tzdata/zoneinfo/Africa/Mbabane
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Adak, .venv/Lib/site-packages/tzdata/zoneinfo/America/Atka, .venv/Lib/site-packages/tzdata/zoneinfo/US/Aleutian
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Anchorage, .venv/Lib/site-packages/tzdata/zoneinfo/US/Alaska
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Anguilla, .venv/Lib/site-packages/tzdata/zoneinfo/America/Antigua, .venv/Lib/site-packages/tzdata/zoneinfo/America/Aruba, .venv/Lib/site-packages/tzdata/zoneinfo/America/Blanc-Sablon, .venv/Lib/site-packages/tzdata/zoneinfo/America/Curacao, .venv/Lib/site-packages/tzdata/zoneinfo/America/Dominica, .venv/Lib/site-packages/tzdata/zoneinfo/America/Grenada, .venv/Lib/site-packages/tzdata/zoneinfo/America/Guadeloupe, .venv/Lib/site-packages/tzdata/zoneinfo/America/Kralendijk, .venv/Lib/site-packages/tzdata/zoneinfo/America/Lower_Princes, .venv/Lib/site-packages/tzdata/zoneinfo/America/Marigot, .venv/Lib/site-packages/tzdata/zoneinfo/America/Montserrat, .venv/Lib/site-packages/tzdata/zoneinfo/America/Port_of_Spain, .venv/Lib/site-packages/tzdata/zoneinfo/America/Puerto_Rico, .venv/Lib/site-packages/tzdata/zoneinfo/America/St_Barthelemy, .venv/Lib/site-packages/tzdata/zoneinfo/America/St_Kitts, .venv/Lib/site-packages/tzdata/zoneinfo/America/St_Lucia, .venv/Lib/site-packages/tzdata/zoneinfo/America/St_Thomas, .venv/Lib/site-packages/tzdata/zoneinfo/America/St_Vincent, .venv/Lib/site-packages/tzdata/zoneinfo/America/Tortola, .venv/Lib/site-packages/tzdata/zoneinfo/America/Virgin
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Buenos_Aires, .venv/Lib/site-packages/tzdata/zoneinfo/America/Argentina/Buenos_Aires
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Catamarca, .venv/Lib/site-packages/tzdata/zoneinfo/America/Argentina/Catamarca, .venv/Lib/site-packages/tzdata/zoneinfo/America/Argentina/ComodRivadavia
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Cordoba, .venv/Lib/site-packages/tzdata/zoneinfo/America/Rosario, .venv/Lib/site-packages/tzdata/zoneinfo/America/Argentina/Cordoba
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Detroit, .venv/Lib/site-packages/tzdata/zoneinfo/US/Michigan
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Edmonton, .venv/Lib/site-packages/tzdata/zoneinfo/America/Yellowknife, .venv/Lib/site-packages/tzdata/zoneinfo/Canada/Mountain
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Ensenada, .venv/Lib/site-packages/tzdata/zoneinfo/America/Santa_Isabel, .venv/Lib/site-packages/tzdata/zoneinfo/America/Tijuana, .venv/Lib/site-packages/tzdata/zoneinfo/Mexico/BajaNorte
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Fort_Wayne, .venv/Lib/site-packages/tzdata/zoneinfo/America/Indianapolis, .venv/Lib/site-packages/tzdata/zoneinfo/US/East-Indiana, .venv/Lib/site-packages/tzdata/zoneinfo/America/Indiana/Indianapolis
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Godthab, .venv/Lib/site-packages/tzdata/zoneinfo/America/Nuuk
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Halifax, .venv/Lib/site-packages/tzdata/zoneinfo/Canada/Atlantic
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Iqaluit, .venv/Lib/site-packages/tzdata/zoneinfo/America/Pangnirtung
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Jujuy, .venv/Lib/site-packages/tzdata/zoneinfo/America/Argentina/Jujuy
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Knox_IN, .venv/Lib/site-packages/tzdata/zoneinfo/US/Indiana-Starke, .venv/Lib/site-packages/tzdata/zoneinfo/America/Indiana/Knox
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Louisville, .venv/Lib/site-packages/tzdata/zoneinfo/America/Kentucky/Louisville
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Manaus, .venv/Lib/site-packages/tzdata/zoneinfo/Brazil/West
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Mazatlan, .venv/Lib/site-packages/tzdata/zoneinfo/Mexico/BajaSur
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Mendoza, .venv/Lib/site-packages/tzdata/zoneinfo/America/Argentina/Mendoza
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Mexico_City, .venv/Lib/site-packages/tzdata/zoneinfo/Mexico/General
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Montreal, .venv/Lib/site-packages/tzdata/zoneinfo/America/Nassau, .venv/Lib/site-packages/tzdata/zoneinfo/America/Nipigon, .venv/Lib/site-packages/tzdata/zoneinfo/America/Thunder_Bay, .venv/Lib/site-packages/tzdata/zoneinfo/America/Toronto, .venv/Lib/site-packages/tzdata/zoneinfo/Canada/Eastern
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Noronha, .venv/Lib/site-packages/tzdata/zoneinfo/Brazil/DeNoronha
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Porto_Acre, .venv/Lib/site-packages/tzdata/zoneinfo/America/Rio_Branco, .venv/Lib/site-packages/tzdata/zoneinfo/Brazil/Acre
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Rainy_River, .venv/Lib/site-packages/tzdata/zoneinfo/America/Winnipeg, .venv/Lib/site-packages/tzdata/zoneinfo/Canada/Central
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Regina, .venv/Lib/site-packages/tzdata/zoneinfo/Canada/Saskatchewan
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Santiago, .venv/Lib/site-packages/tzdata/zoneinfo/Chile/Continental
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Sao_Paulo, .venv/Lib/site-packages/tzdata/zoneinfo/Brazil/East
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/St_Johns, .venv/Lib/site-packages/tzdata/zoneinfo/Canada/Newfoundland
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Vancouver, .venv/Lib/site-packages/tzdata/zoneinfo/Canada/Pacific
+- .venv/Lib/site-packages/tzdata/zoneinfo/America/Whitehorse, .venv/Lib/site-packages/tzdata/zoneinfo/Canada/Yukon
+- .venv/Lib/site-packages/tzdata/zoneinfo/Antarctica/DumontDUrville, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Chuuk, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Port_Moresby, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Truk, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Yap
+- .venv/Lib/site-packages/tzdata/zoneinfo/Antarctica/Syowa, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Aden, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Kuwait, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Riyadh
+- .venv/Lib/site-packages/tzdata/zoneinfo/Arctic/Longyearbyen, .venv/Lib/site-packages/tzdata/zoneinfo/Atlantic/Jan_Mayen, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Berlin, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Copenhagen, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Oslo, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Stockholm
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Ashgabat, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Ashkhabad
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Bahrain, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Qatar
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Bangkok, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Phnom_Penh, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Vientiane, .venv/Lib/site-packages/tzdata/zoneinfo/Indian/Christmas
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Brunei, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Kuching
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Calcutta, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Kolkata
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Choibalsan, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Ulaanbaatar, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Ulan_Bator
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Dacca, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Dhaka
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Dubai, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Muscat, .venv/Lib/site-packages/tzdata/zoneinfo/Indian/Mahe, .venv/Lib/site-packages/tzdata/zoneinfo/Indian/Reunion
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Ho_Chi_Minh, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Saigon
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Kashgar, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Urumqi
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Kathmandu, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Katmandu
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Macao, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Macau
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Makassar, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Ujung_Pandang
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Nicosia, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Nicosia
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Rangoon, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Yangon, .venv/Lib/site-packages/tzdata/zoneinfo/Indian/Cocos
+- .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Thimbu, .venv/Lib/site-packages/tzdata/zoneinfo/Asia/Thimphu
+- .venv/Lib/site-packages/tzdata/zoneinfo/Atlantic/Faeroe, .venv/Lib/site-packages/tzdata/zoneinfo/Atlantic/Faroe
+- .venv/Lib/site-packages/tzdata/zoneinfo/Australia/ACT, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Canberra, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/NSW, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Sydney
+- .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Adelaide, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/South
+- .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Brisbane, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Queensland
+- .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Broken_Hill, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Yancowinna
+- .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Currie, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Hobart, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Tasmania
+- .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Darwin, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/North
+- .venv/Lib/site-packages/tzdata/zoneinfo/Australia/LHI, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Lord_Howe
+- .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Melbourne, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Victoria
+- .venv/Lib/site-packages/tzdata/zoneinfo/Australia/Perth, .venv/Lib/site-packages/tzdata/zoneinfo/Australia/West
+- .venv/Lib/site-packages/tzdata/zoneinfo/Chile/EasterIsland, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Easter
+- .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Belgrade, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Ljubljana, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Podgorica, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Sarajevo, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Skopje, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Zagreb
+- .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Bratislava, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Prague
+- .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Busingen, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Vaduz, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Zurich
+- .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Chisinau, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Tiraspol
+- .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Helsinki, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Mariehamn
+- .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Kiev, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Kyiv, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Uzhgorod, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Zaporozhye
+- .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Monaco, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Paris
+- .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Rome, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/San_Marino, .venv/Lib/site-packages/tzdata/zoneinfo/Europe/Vatican
+- .venv/Lib/site-packages/tzdata/zoneinfo/Indian/Kerguelen, .venv/Lib/site-packages/tzdata/zoneinfo/Indian/Maldives
+- .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Enderbury, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Kanton
+- .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Funafuti, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Majuro, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Tarawa, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Wake, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Wallis
+- .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Guadalcanal, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Pohnpei, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Ponape
+- .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Guam, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Saipan
+- .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Midway, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Pago_Pago, .venv/Lib/site-packages/tzdata/zoneinfo/Pacific/Samoa, .venv/Lib/site-packages/tzdata/zoneinfo/US/Samoa
+- .venv/Lib/site-packages/typing_extensions-4.14.0.dist-info/licenses/LICENSE, .venv/Lib/site-packages/setuptools/_vendor/typing_extensions-4.12.2.dist-info/LICENSE
+- .venv/Lib/site-packages/torch/bin/asmjit.dll, .venv/Lib/site-packages/torch/lib/asmjit.dll
+- .venv/Lib/site-packages/torch/bin/fbgemm.dll, .venv/Lib/site-packages/torch/lib/fbgemm.dll
+- .venv/Lib/site-packages/torch/distributed/logging_handlers.py, .venv/Lib/site-packages/torch/distributed/_shard/sharded_tensor/logging_handlers.py
+- .venv/Lib/site-packages/torch/_functorch/__init__.py, .venv/Lib/site-packages/torch/_functorch/_activation_checkpointing/__init__.py, .venv/Lib/site-packages/torch/_functorch/_aot_autograd/__init__.py, .venv/Lib/site-packages/torch/_export/db/__init__.py
+- .venv/Lib/site-packages/torch/_refs/nn/__init__.py, .venv/Lib/site-packages/numpy/random/_bounded_integers.pyi
+- .venv/Lib/site-packages/torch/testing/_internal/codegen/__init__.py, .venv/Lib/site-packages/torch/testing/_internal/data/__init__.py
+- .venv/Lib/site-packages/torch/include/torch/csrc/utils/python_stub.h, .venv/Lib/site-packages/torch/include/c10/util/python_stub.h
+- .venv/Lib/site-packages/torch/include/ATen/ops/_nested_from_padded_tensor_native.h, .venv/Lib/site-packages/torch/include/ATen/ops/_nested_get_jagged_dummy_native.h, .venv/Lib/site-packages/torch/include/ATen/ops/_nested_get_lengths_native.h, .venv/Lib/site-packages/torch/include/ATen/ops/_nested_get_max_seqlen_native.h, .venv/Lib/site-packages/torch/include/ATen/ops/_nested_get_min_seqlen_native.h, .venv/Lib/site-packages/torch/include/ATen/ops/_nested_get_offsets_native.h, .venv/Lib/site-packages/torch/include/ATen/ops/_nested_get_ragged_idx_native.h, .venv/Lib/site-packages/torch/include/ATen/ops/_nested_get_values_native.h, .venv/Lib/site-packages/torch/include/ATen/ops/_nested_view_from_jagged_native.h, .venv/Lib/site-packages/torch/include/ATen/ops/_scaled_dot_product_attention_math_for_mps_native.h
+- .venv/Lib/site-packages/torch/ao/nn/qat/__init__.py, .venv/Lib/site-packages/torch/ao/nn/quantizable/__init__.py, .venv/Lib/site-packages/torch/ao/nn/quantized/dynamic/__init__.py, .venv/Lib/site-packages/torch/ao/nn/qat/dynamic/__init__.py, .venv/Lib/site-packages/torch/ao/nn/intrinsic/qat/__init__.py, .venv/Lib/site-packages/torch/ao/nn/intrinsic/quantized/dynamic/__init__.py
+- .venv/Lib/site-packages/sklearn/ensemble/_gradient_boosting.cp313-win_amd64.lib, .venv/Lib/site-packages/sklearn/ensemble/_hist_gradient_boosting/_gradient_boosting.cp313-win_amd64.lib
+- .venv/Lib/site-packages/sklearn/manifold/_utils.cp313-win_amd64.lib, .venv/Lib/site-packages/sklearn/tree/_utils.cp313-win_amd64.lib
+- .venv/Lib/site-packages/sklearn/tree/_tree.cp313-win_amd64.lib, .venv/Lib/site-packages/sklearn/cluster/_hdbscan/_tree.cp313-win_amd64.lib
+- .venv/Lib/site-packages/sklearn/utils/_repr_html/__init__.py, .venv/Lib/site-packages/sklearn/utils/_test_common/__init__.py, .venv/Lib/site-packages/sklearn/metrics/_plot/__init__.py, .venv/Lib/site-packages/sklearn/linear_model/_glm/tests/__init__.py, .venv/Lib/site-packages/sklearn/inspection/_plot/__init__.py, .venv/Lib/site-packages/sklearn/datasets/data/__init__.py, .venv/Lib/site-packages/sklearn/datasets/descr/__init__.py, .venv/Lib/site-packages/sklearn/datasets/images/__init__.py, .venv/Lib/site-packages/sklearn/cluster/_hdbscan/__init__.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/_internal.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/_internal.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/common/_linalg.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/common/_linalg.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/common/__init__.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/common/__init__.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/cupy/fft.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/cupy/fft.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/cupy/linalg.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/cupy/linalg.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/cupy/_typing.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/cupy/_typing.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/numpy/fft.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/numpy/fft.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/numpy/linalg.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/numpy/linalg.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/numpy/_typing.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/numpy/_typing.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/torch/fft.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/torch/fft.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/torch/linalg.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/torch/linalg.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/dask/array/fft.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/dask/array/fft.py
+- .venv/Lib/site-packages/sklearn/externals/array_api_compat/dask/array/linalg.py, .venv/Lib/site-packages/scipy/_lib/array_api_compat/dask/array/linalg.py
+- .venv/Lib/site-packages/sklearn/datasets/tests/data/openml/id_292/api-v1-jdf-292.json.gz, .venv/Lib/site-packages/sklearn/datasets/tests/data/openml/id_292/api-v1-jdf-40981.json.gz
+- .venv/Lib/site-packages/setuptools-80.9.0.dist-info/licenses/LICENSE, .venv/Lib/site-packages/setuptools/_vendor/backports.tarfile-1.2.0.dist-info/LICENSE, .venv/Lib/site-packages/setuptools/_vendor/inflect-7.3.1.dist-info/LICENSE, .venv/Lib/site-packages/setuptools/_vendor/jaraco.collections-5.1.0.dist-info/LICENSE, .venv/Lib/site-packages/setuptools/_vendor/jaraco.context-5.3.0.dist-info/LICENSE, .venv/Lib/site-packages/setuptools/_vendor/jaraco.functools-4.0.1.dist-info/LICENSE, .venv/Lib/site-packages/setuptools/_vendor/jaraco.text-3.12.1.dist-info/LICENSE, .venv/Lib/site-packages/setuptools/_vendor/zipp-3.19.2.dist-info/LICENSE
+- .venv/Lib/site-packages/setuptools/_vendor/backports.tarfile-1.2.0.dist-info/WHEEL, .venv/Lib/site-packages/setuptools/_vendor/jaraco.context-5.3.0.dist-info/WHEEL, .venv/Lib/site-packages/setuptools/_vendor/jaraco.functools-4.0.1.dist-info/WHEEL, .venv/Lib/site-packages/setuptools/_vendor/jaraco.text-3.12.1.dist-info/WHEEL, .venv/Lib/site-packages/setuptools/_vendor/typeguard-4.3.0.dist-info/WHEEL, .venv/Lib/site-packages/setuptools/_vendor/zipp-3.19.2.dist-info/WHEEL
+- .venv/Lib/site-packages/setuptools/_vendor/jaraco.collections-5.1.0.dist-info/top_level.txt, .venv/Lib/site-packages/setuptools/_vendor/jaraco.context-5.3.0.dist-info/top_level.txt, .venv/Lib/site-packages/setuptools/_vendor/jaraco.functools-4.0.1.dist-info/top_level.txt, .venv/Lib/site-packages/setuptools/_vendor/jaraco.text-3.12.1.dist-info/top_level.txt
+- .venv/Lib/site-packages/setuptools/_vendor/packaging/markers.py, .venv/Lib/site-packages/pip/_vendor/packaging/markers.py
+- .venv/Lib/site-packages/setuptools/_vendor/packaging/metadata.py, .venv/Lib/site-packages/pip/_vendor/packaging/metadata.py
+- .venv/Lib/site-packages/setuptools/_vendor/packaging/tags.py, .venv/Lib/site-packages/pip/_vendor/packaging/tags.py
+- .venv/Lib/site-packages/setuptools/_vendor/packaging/_elffile.py, .venv/Lib/site-packages/pip/_vendor/packaging/_elffile.py
+- .venv/Lib/site-packages/setuptools/_vendor/packaging/_manylinux.py, .venv/Lib/site-packages/pip/_vendor/packaging/_manylinux.py
+- .venv/Lib/site-packages/setuptools/_vendor/packaging/_parser.py, .venv/Lib/site-packages/pip/_vendor/packaging/_parser.py
+- .venv/Lib/site-packages/setuptools/_vendor/packaging/_tokenizer.py, .venv/Lib/site-packages/pip/_vendor/packaging/_tokenizer.py
+- .venv/Lib/site-packages/setuptools/_vendor/packaging/__init__.py, .venv/Lib/site-packages/pip/_vendor/packaging/__init__.py
+- .venv/Lib/site-packages/setuptools/_vendor/packaging-24.2.dist-info/LICENSE, .venv/Lib/site-packages/setuptools/_vendor/wheel/vendored/packaging/LICENSE, .venv/Lib/site-packages/packaging-25.0.dist-info/licenses/LICENSE
+- .venv/Lib/site-packages/setuptools/_vendor/packaging-24.2.dist-info/LICENSE.APACHE, .venv/Lib/site-packages/setuptools/_vendor/wheel/vendored/packaging/LICENSE.APACHE, .venv/Lib/site-packages/packaging-25.0.dist-info/licenses/LICENSE.APACHE
+- .venv/Lib/site-packages/setuptools/_vendor/packaging-24.2.dist-info/LICENSE.BSD, .venv/Lib/site-packages/setuptools/_vendor/wheel/vendored/packaging/LICENSE.BSD, .venv/Lib/site-packages/packaging-25.0.dist-info/licenses/LICENSE.BSD
+- .venv/Lib/site-packages/setuptools/_vendor/packaging-24.2.dist-info/WHEEL, .venv/Lib/site-packages/setuptools/_vendor/wheel-0.45.1.dist-info/WHEEL
+- .venv/Lib/site-packages/setuptools/_vendor/platformdirs/windows.py, .venv/Lib/site-packages/pip/_vendor/platformdirs/windows.py
+- .venv/Lib/site-packages/setuptools/_vendor/tomli/py.typed, .venv/Lib/site-packages/pip/_vendor/tomli/py.typed
+- .venv/Lib/site-packages/setuptools/_vendor/tomli/_types.py, .venv/Lib/site-packages/pip/_vendor/tomli/_types.py
+- .venv/Lib/site-packages/setuptools/_vendor/packaging/licenses/_spdx.py, .venv/Lib/site-packages/pip/_vendor/packaging/licenses/_spdx.py, .venv/Lib/site-packages/packaging/licenses/_spdx.py
+- .venv/Lib/site-packages/numpy/_core/_exceptions.pyi, .venv/Lib/site-packages/numpy/_core/_machar.pyi
+- .venv/Lib/site-packages/numpy/_pyinstaller/tests/__init__.py, .venv/Lib/site-packages/numpy/f2py/tests/__init__.py
+- .venv/Lib/site-packages/joblib/test/data/joblib_0.11.0_compressed_pickle_py36_np111.gz, .venv/Lib/site-packages/joblib/test/data/joblib_0.11.0_pickle_py36_np111.pkl.gzip
+- .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_compressed_pickle_py27_np16.gz, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_compressed_pickle_py27_np17.gz
+- .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_compressed_pickle_py34_np19.gz, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_compressed_pickle_py35_np19.gz
+- .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py27_np16.pkl_01.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py27_np17.pkl_01.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py33_np18.pkl_01.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py34_np19.pkl_01.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py35_np19.pkl_01.npy
+- .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py27_np16.pkl_02.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py27_np17.pkl_02.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py33_np18.pkl_02.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py34_np19.pkl_02.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py35_np19.pkl_02.npy
+- .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py27_np16.pkl_03.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py27_np17.pkl_03.npy
+- .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py27_np16.pkl_04.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py27_np17.pkl_04.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py33_np18.pkl_04.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py34_np19.pkl_04.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py35_np19.pkl_04.npy
+- .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py33_np18.pkl_03.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py34_np19.pkl_03.npy, .venv/Lib/site-packages/joblib/test/data/joblib_0.9.2_pickle_py35_np19.pkl_03.npy
+- .git/refs/remotes/origin/cleanup/remove-pdf-documentation, .git/refs/heads/cleanup/remove-pdf-documentation
+- .git/refs/remotes/origin/codex/append-trailing-newline-to-python-files, .git/refs/heads/codex/append-trailing-newline-to-python-files
+- .git/refs/remotes/origin/feature/recontextualization-engine, .git/refs/heads/feature/recontextualization-engine
+
+## Orphan temp DB files
+- kimera_swm.db-shm
+- kimera_swm.db-wal
+
+## Large files (>1MB)
+- crash_test_55c60b3d.db (2040.47 MB)
+- crash_test_76fe2f8a.db (1084.75 MB)
+- crash_test_8e8d3794.db (13.39 MB)
+- crash_test_a9f59eb4.db (52.56 MB)
+- kimera_swm.db (58.60 MB)
+- kimera_swm.db-wal (3.96 MB)
+- stress_test.db (4301.39 MB)
+- stress_test_e555aad1.db (4.40 MB)
+- stress_test_vault.db (15.52 MB)
+- Resources/Kimera ARCHITECTURE.pdf (2.65 MB)
+- Resources/Spherical Word Methodology (SWM) Theory.pdf (1.08 MB)
+- Resources/Spherical Word Methodology (SWM)- Complete Documentation.pdf (2.19 MB)
+- Resources/The Complete KIMERA SWM Documentation Suite.pdf (1.36 MB)
+- .venv/Lib/site-packages/numpy.libs/libscipy_openblas64_-13e2df515630b4a41f92893938845698.dll (19.45 MB)
+- .venv/Lib/site-packages/PIL/_imaging.cp313-win_amd64.pyd (2.38 MB)
+- .venv/Lib/site-packages/PIL/_imagingft.cp313-win_amd64.pyd (1.91 MB)
+- .venv/Lib/site-packages/psycopg2_binary.libs/libcrypto-3-x64-e57e1a41cc5d7f9b741c935f04fe4f2f.dll (4.62 MB)
+- .venv/Lib/site-packages/pydantic_core/_pydantic_core.cp313-win_amd64.pyd (5.06 MB)
+- .venv/Lib/site-packages/scipy.libs/libscipy_openblas-f07f5a5d207a3a47104dca54d6d0c86a.dll (19.22 MB)
+- .venv/Lib/site-packages/tokenizers/tokenizers.pyd (6.51 MB)
+- .venv/Lib/site-packages/torch/_VF.pyi (1.13 MB)
+- .venv/Lib/site-packages/torch-2.7.1.dist-info/RECORD (1.25 MB)
+- .venv/Lib/site-packages/torch/bin/fbgemm.dll (4.73 MB)
+- .venv/Lib/site-packages/torch/bin/protoc.exe (2.68 MB)
+- .venv/Lib/site-packages/torch/lib/c10.dll (0.96 MB)
+- .venv/Lib/site-packages/torch/lib/dnnl.lib (675.84 MB)
+- .venv/Lib/site-packages/torch/lib/fbgemm.dll (4.73 MB)
+- .venv/Lib/site-packages/torch/lib/fbgemm.lib (1.34 MB)
+- .venv/Lib/site-packages/torch/lib/fmt.lib (1.26 MB)
+- .venv/Lib/site-packages/torch/lib/kineto.lib (19.95 MB)
+- .venv/Lib/site-packages/torch/lib/libiomp5md.dll (1.53 MB)
+- .venv/Lib/site-packages/torch/lib/libprotobuf-lite.lib (4.93 MB)
+- .venv/Lib/site-packages/torch/lib/libprotobuf.lib (36.04 MB)
+- .venv/Lib/site-packages/torch/lib/libprotoc.lib (37.80 MB)
+- .venv/Lib/site-packages/torch/lib/microkernels-prod.lib (2.76 MB)
+- .venv/Lib/site-packages/torch/lib/sleef.lib (8.45 MB)
+- .venv/Lib/site-packages/torch/lib/torch_cpu.dll (240.50 MB)
+- .venv/Lib/site-packages/torch/lib/torch_cpu.lib (27.48 MB)
+- .venv/Lib/site-packages/torch/lib/torch_python.dll (16.17 MB)
+- .venv/Lib/site-packages/torch/lib/XNNPACK.lib (2.59 MB)
+- .venv/Lib/site-packages/torch/_C/_VariableFunctions.pyi (1.13 MB)
+- .venv/Lib/site-packages/torch/testing/_internal/common_methods_invocations.py (1.16 MB)
+- .venv/Lib/site-packages/torch/include/ATen/RedispatchFunctions.h (2.14 MB)
+- .venv/Lib/site-packages/torch/include/ATen/VmapGeneratedPlumbing.h (1.68 MB)
+- .venv/Lib/site-packages/sympy/polys/benchmarks/__pycache__/bench_solvers.cpython-313.pyc (1.36 MB)
+- .venv/Lib/site-packages/sklearn/_loss/_loss.cp313-win_amd64.pyd (1.88 MB)
+- .venv/Lib/site-packages/scipy/interpolate/_bspl.cp313-win_amd64.pyd (1.12 MB)
+- .venv/Lib/site-packages/scipy/interpolate/_rbfinterp_pythran.cp313-win_amd64.pyd (1.11 MB)
+- .venv/Lib/site-packages/scipy/linalg/_flapack.cp313-win_amd64.pyd (1.96 MB)
+- .venv/Lib/site-packages/scipy/linalg/_linalg_pythran.cp313-win_amd64.pyd (1.01 MB)
+- .venv/Lib/site-packages/scipy/optimize/_group_columns.cp313-win_amd64.pyd (0.99 MB)
+- .venv/Lib/site-packages/scipy/signal/_max_len_seq_inner.cp313-win_amd64.pyd (0.96 MB)
+- .venv/Lib/site-packages/scipy/sparse/_sparsetools.cp313-win_amd64.pyd (4.08 MB)
+- .venv/Lib/site-packages/scipy/spatial/_ckdtree.cp313-win_amd64.pyd (1.61 MB)
+- .venv/Lib/site-packages/scipy/spatial/_distance_pybind.cp313-win_amd64.pyd (1.33 MB)
+- .venv/Lib/site-packages/scipy/spatial/_qhull.cp313-win_amd64.pyd (1.03 MB)
+- .venv/Lib/site-packages/scipy/special/cython_special.cp313-win_amd64.pyd (2.97 MB)
+- .venv/Lib/site-packages/scipy/special/_gufuncs.cp313-win_amd64.pyd (1.45 MB)
+- .venv/Lib/site-packages/scipy/special/_special_ufuncs.cp313-win_amd64.pyd (2.09 MB)
+- .venv/Lib/site-packages/scipy/special/_ufuncs.cp313-win_amd64.pyd (1.41 MB)
+- .venv/Lib/site-packages/scipy/special/_ufuncs_cxx.cp313-win_amd64.pyd (2.27 MB)
+- .venv/Lib/site-packages/scipy/stats/_stats_pythran.cp313-win_amd64.pyd (1.04 MB)
+- .venv/Lib/site-packages/scipy/stats/_unuran/unuran_wrapper.cp313-win_amd64.pyd (1.38 MB)
+- .venv/Lib/site-packages/scipy/special/tests/data/boost.npz (1.21 MB)
+- .venv/Lib/site-packages/scipy/optimize/_highspy/_core.cp313-win_amd64.pyd (5.51 MB)
+- .venv/Lib/site-packages/scipy/optimize/_highspy/_highs_options.cp313-win_amd64.pyd (1.16 MB)
+- .venv/Lib/site-packages/scipy/io/_fast_matrix_market/_fmm_core.cp313-win_amd64.pyd (2.63 MB)
+- .venv/Lib/site-packages/scipy/fft/_pocketfft/pypocketfft.cp313-win_amd64.pyd (1.03 MB)
+- .venv/Lib/site-packages/numpy/_core/_multiarray_umath.cp313-win_amd64.pyd (4.27 MB)
+- .venv/Lib/site-packages/numpy/_core/_simd.cp313-win_amd64.pyd (2.30 MB)
+- .git/objects/12/12ec8754f35d7d3600f8b3be54c618ea7b0273 (1.20 MB)
+- .git/objects/pack/pack-6c7fc717cf40dc8e11320b6629e629753813879c.pack (9.56 MB)
+
+
+---
+Suggested Actions:
+- Delete *.db-wal and *.db-shm files
+- Move large JSON result files to docs/reports/ or archive/
+- Consolidate markdown reports under docs/reports/

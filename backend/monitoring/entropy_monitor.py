@@ -144,11 +144,15 @@ class EntropyMonitor:
     def calculate_system_entropy(self, geoids: List[GeoidState], 
                                 vault_info: Dict[str, Any]) -> EntropyMeasurement:
         """
-        Calculate comprehensive entropy measures for the current system state
+        Calculate various entropy measures for the current system state.
+
+        If the provided list of geoids is empty, this function returns a zero-filled
+        EntropyMeasurement object to ensure downstream stability.
         """
         timestamp = datetime.now()
         
         if not geoids:
+            # Return a zero-value measurement if there are no geoids
             return EntropyMeasurement(
                 timestamp=timestamp,
                 shannon_entropy=0.0,
@@ -158,26 +162,25 @@ class EntropyMonitor:
                 mutual_information=0.0,
                 system_complexity=0.0,
                 geoid_count=0,
-                vault_distribution={}
+                vault_distribution={'vault_a': 0, 'vault_b': 0, 'total_scars': 0}
             )
         
         # Update internal state
         self.geoid_states = {g.geoid_id: g for g in geoids}
         
-        # Aggregate semantic features
-        feature_aggregation = defaultdict(list)
+        # Aggregate all semantic features and their activations
+        feature_aggregation = defaultdict(float)
         for geoid in geoids:
             for feature, value in geoid.semantic_state.items():
-                feature_aggregation[feature].append(value)
+                feature_aggregation[feature] += value
         
         # Calculate probability distributions
-        feature_means = {k: np.mean(v) for k, v in feature_aggregation.items()}
-        total_activation = sum(feature_means.values())
+        total_activation = sum(feature_aggregation.values())
         
         if total_activation == 0:
             probabilities = np.array([1.0])  # Uniform distribution for empty state
         else:
-            probabilities = np.array(list(feature_means.values())) / total_activation
+            probabilities = np.array(list(feature_aggregation.values())) / total_activation
         
         # Shannon entropy using selected estimator
         if self.estimation_method == 'mle':
@@ -187,7 +190,7 @@ class EntropyMonitor:
             shannon_entropy = EntropyEstimator.miller_madow_entropy(probabilities, sample_size)
         elif self.estimation_method == 'chao_shen':
             # Convert probabilities back to counts for Chao-Shen
-            counts = np.array([len(v) for v in feature_aggregation.values()])
+            counts = np.array([v for v in feature_aggregation.values()])
             shannon_entropy = EntropyEstimator.chao_shen_entropy(counts)
         else:
             shannon_entropy = EntropyEstimator.shannon_entropy_mle(probabilities)
@@ -232,8 +235,11 @@ class EntropyMonitor:
     
     def _calculate_thermodynamic_entropy(self, geoids: List[GeoidState]) -> float:
         """
-        Calculate thermodynamic entropy using statistical mechanics principles
-        Following the Gibbs formulation: S = -k_B * sum(p_i * ln(p_i))
+        Calculate thermodynamic entropy using statistical mechanics principles.
+        
+        This method follows the Gibbs formulation: S = -k_B * sum(p_i * ln(p_i)).
+        It uses the total semantic activation of a geoid as a proxy for its "energy"
+        and filters out any geoids with non-positive energy to prevent log(0) errors.
         """
         if not geoids:
             return 0.0
@@ -243,7 +249,8 @@ class EntropyMonitor:
         for geoid in geoids:
             # Use total semantic activation as proxy for "energy"
             energy = sum(geoid.semantic_state.values())
-            energies.append(energy)
+            if energy > 0:  # Ensure we only consider positive energy states
+                energies.append(energy)
         
         if not energies or sum(energies) == 0:
             return 0.0

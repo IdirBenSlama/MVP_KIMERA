@@ -318,6 +318,41 @@ KIMERA SWM is suitable for:
 
 ---
 
+## 🧐 Troubleshooting
+
+### Python Virtual Environment Issues
+
+The system is designed to run in an isolated Python virtual environment (`.venv`). If you encounter `ModuleNotFoundError` errors for packages that you have already installed, it is likely that your shell is using your system's global Python interpreter instead of the one in the virtual environment.
+
+**Solution:**
+1.  **Activate the environment:** Always activate the virtual environment in your shell before running any commands.
+    ```bash
+    # For Windows (Git Bash or similar)
+    source .venv/Scripts/activate
+    
+    # For macOS/Linux
+    source .venv/bin/activate
+    ```
+2.  **Verify the interpreter:** After activating, confirm that you are using the correct Python and pip executables. They should point to the `.venv` directory.
+    ```bash
+    # These commands should point to a path inside your project's .venv directory
+    which python
+    which pip
+    ```
+
+### Dependency Import Errors (`torchvision`, etc.)
+
+If the server fails to start with an error related to importing a dependency (e.g., `cannot import name 'InterpolationMode' from 'torchvision.transforms'`), it usually indicates a version mismatch between libraries.
+
+**Solution:**
+1.  Ensure your virtual environment is active.
+2.  Force a re-installation of the problematic library and its direct dependencies. For example, for the `torchvision` error, reinstalling both `torch` and `torchvision` ensures they are compatible versions.
+    ```bash
+    pip install --upgrade --force-reinstall torch torchvision
+    ```
+
+---
+
 ## 🤝 Contributing
 
 ### Development Workflow

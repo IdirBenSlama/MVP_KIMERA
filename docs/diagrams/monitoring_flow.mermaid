@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant User
+    participant API as "/monitoring/observe"
+    participant VaultManager
+    participant EntropyMonitor
+
+    User->>+API: POST request
+    API->>+VaultManager: get_all_geoids()
+    VaultManager-->>-API: List[GeoidState]
+    API->>+EntropyMonitor: calculate_system_entropy(geoids)
+    EntropyMonitor-->>-API: EntropyMeasurement
+    API-->>-User: 200 OK (JSON Payload) 

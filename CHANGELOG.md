@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Fixed
+- Resolved a critical startup failure caused by a version mismatch between `torch` and `torchvision` dependencies.
+- Corrected a `ValueError` in the entropy monitor that produced `NaN` values when processing geoids with non-positive semantic energy, preventing API crashes.
+- Removed a duplicate, outdated `kimera_swm_mvp` module that was causing `AttributeError` crashes due to Python import path conflicts.
+- Ensured all API endpoint dependencies (e.g., `prometheus-client`) are included in `requirements.txt`.
+
+### Changed
+- Improved `VaultManager` by adding a `get_all_geoids` method to centralize database access for geoid objects, which was required by the monitoring system.
+- Updated `README.md` with a new "Troubleshooting" section for common environment and dependency issues.
+
+---
+
 ## [1.0.0] - 2025-06-10 - Production Release
 
 ### 🎉 Major Release - Production Ready

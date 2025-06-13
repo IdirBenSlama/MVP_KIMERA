@@ -6,12 +6,18 @@ import math
 
 from ..core.scar import ScarRecord
 from ..core.geoid import GeoidState
-from .database import SessionLocal, ScarDB
+from .database import SessionLocal, ScarDB, GeoidDB
 import uuid
 
 
 class VaultManager:
-    """Manage persistence of Scar records across multiple vaults."""
+    """
+    Manages the persistence of core system objects, including Geoids and Scars.
+    
+    This class abstracts all database interactions for reading and writing these
+    critical data structures. It also contains the logic for maintaining
+    balance between the dual scar vaults.
+    """
 
     def __init__(self) -> None:
         """Initialize the vault manager."""
@@ -23,6 +29,30 @@ class VaultManager:
         a_count = self.get_total_scar_count("vault_a")
         b_count = self.get_total_scar_count("vault_b")
         return "vault_a" if a_count <= b_count else "vault_b"
+
+    def get_all_geoids(self) -> List[GeoidState]:
+        """
+        Fetches all geoids from the database and reconstitutes them into GeoidState objects.
+
+        This method queries the GeoidDB table and reconstructs the full, in-memory
+        representation of each geoid, including its semantic and symbolic states.
+
+        :raises sqlalchemy.exc.SQLAlchemyError: If there is an issue with the database
+                                                query or connection.
+        :return: A list of all GeoidState objects currently in the system.
+        """
+        with SessionLocal() as db:
+            geoid_db_records = db.query(GeoidDB).all()
+            return [
+                GeoidState(
+                    geoid_id=g.geoid_id,
+                    semantic_state=g.semantic_state_json,
+                    symbolic_state=g.symbolic_state,
+                    embedding_vector=g.semantic_vector,
+                    metadata=g.metadata_json,
+                )
+                for g in geoid_db_records
+            ]
 
     def insert_scar(self, scar: ScarRecord | GeoidState, vector: list[float]) -> ScarDB:
         """Insert a ScarRecord and its vector into the persistent store."""
