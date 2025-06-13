@@ -3,3 +3,5 @@ __pycache__/
 *.db
 *.db-journal
 =0.27
+kimera_swm.db-shm
+kimera_swm.db-wal
