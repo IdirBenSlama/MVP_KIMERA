@@ -1,6 +1,6 @@
 const { useState, useEffect } = React;
 
-const API_BASE = 'http://localhost:8002';
+const API_BASE = 'http://localhost:8002'; // Adjust if backend port differs
 
 function SystemHealthDashboard() {
   const [metrics, setMetrics] = useState(null);
@@ -121,6 +121,68 @@ function VaultInspector() {
   );
 }
 
+// ----------------------
+// Insights Dashboard
+// ----------------------
+
+function InsightsDashboard() {
+  const [insights, setInsights] = useState([]);
+  const [filter, setFilter] = useState('');
+
+  const fetchInsights = async () => {
+    const url = filter ? `${API_BASE}/insights?type=${encodeURIComponent(filter)}` : `${API_BASE}/insights`;
+    const data = await fetch(url).then(r => r.json());
+    setInsights(data);
+  };
+
+  useEffect(() => { fetchInsights(); }, [filter]);
+
+  const renderLifecycle = (status) => {
+    const colors = {
+      provisional: '#e0e0e0',
+      active: '#a0d468',
+      strengthened: '#4caf50',
+      deprecated: '#ff9800'
+    };
+    return <span style={{ background: colors[status] || '#fff', padding: '2px 6px', borderRadius: '4px' }}>{status}</span>;
+  };
+
+  return (
+    <div className="section">
+      <h2>Insights</h2>
+      <label>
+        Filter by Type:
+        <input value={filter} onChange={e => setFilter(e.target.value)} placeholder="ANALOGY" />
+      </label>
+      <button onClick={fetchInsights}>Refresh</button>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Domains</th>
+            <th>Entropy Δ</th>
+            <th>Utility</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {insights.map(i => (
+            <tr key={i.insight_id}>
+              <td>{i.insight_id}</td>
+              <td>{i.insight_type}</td>
+              <td>{(i.application_domains || []).join(', ')}</td>
+              <td>{i.entropy_reduction?.toFixed?.(3)}</td>
+              <td>{i.utility_score?.toFixed?.(2)}</td>
+              <td>{renderLifecycle(i.status)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function App() {
   return (
     <div>
@@ -128,6 +190,7 @@ function App() {
       <SystemHealthDashboard />
       <GeoidExplorer />
       <VaultInspector />
+      <InsightsDashboard />
     </div>
   );
 }
