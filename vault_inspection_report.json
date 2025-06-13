@@ -1,0 +1,50 @@
+{
+  "inspection_timestamp": "2025-06-11T18:00:04.619854",
+  "database_info": {
+    "error": "Database inspection failed: no such column: created_at"
+  },
+  "vault_manager_info": {
+    "vault_a": {
+      "scar_count": 3,
+      "total_weight": 1531.0
+    },
+    "vault_b": {
+      "scar_count": 0,
+      "total_weight": 0.0
+    },
+    "balance_metrics": {
+      "total_scars": 3,
+      "total_weight": 1531.0,
+      "scar_imbalance": 3,
+      "weight_imbalance": 1531.0,
+      "scar_balance_percentage": 0.0,
+      "weight_balance_percentage": 0.0,
+      "quality": "GOOD"
+    }
+  },
+  "scar_analysis": {
+    "vault_statistics": {
+      "vault_a": {
+        "count": 3,
+        "avg_weight": 510.3333,
+        "min_weight": 0.0,
+        "max_weight": 1530.0,
+        "total_weight": 1531.0
+      }
+    },
+    "reason_distribution": {
+      "auto-generated": 1,
+      "auto-cycle": 1,
+      "Resolved 'composite' tension.": 1
+    },
+    "daily_patterns": {
+      "2025-06-11": 1,
+      "2025-06-10": 2
+    }
+  },
+  "health_assessment": {
+    "status": "UNKNOWN",
+    "issues": [],
+    "recommendations": []
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "timestamp": "2025-06-12T17:32:45.887117",
+  "results": {
+    "Entropy Cascade Test": {
+      "target_pairs": 30,
+      "created_pairs": 23,
+      "failed_pairs": 7,
+      "initial_entropy": 144.14479718991294,
+      "final_entropy": 303.2683530173736,
+      "entropy_delta": 159.12355582746068,
+      "total_contradictions": 1150,
+      "total_scars": 1150,
+      "total_time": 251.38,
+      "pairs_per_second": 0.09
+    }
+  },
+  "entropy_history": [
+    {
+      "timestamp": 1749774437.2491589,
+      "entropy": 144.14479718991294,
+      "active_geoids": 52,
+      "vault_a_scars": 552,
+      "vault_b_scars": 551
+    },
+    {
+      "timestamp": 1749774439.2920444,
+      "entropy": 144.14479718991294,
+      "active_geoids": 52,
+      "vault_a_scars": 552,
+      "vault_b_scars": 551
+    },
+    {
+      "timestamp": 1749774450.4210293,
+      "entropy": 152.32723743150805,
+      "active_geoids": 54,
+      "vault_a_scars": 577,
+      "vault_b_scars": 576
+    },
+    {
+      "timestamp": 1749774539.5061789,
+      "entropy": 200.75971902820248,
+      "active_geoids": 73,
+      "vault_a_scars": 802,
+      "vault_b_scars": 801
+    },
+    {
+      "timestamp": 1749774623.4434779,
+      "entropy": 256.1657610575612,
+      "active_geoids": 91,
+      "vault_a_scars": 1002,
+      "vault_b_scars": 1001
+    },
+    {
+      "timestamp": 1749774688.6284087,
+      "entropy": 303.2683530173736,
+      "active_geoids": 105,
+      "vault_a_scars": 1127,
+      "vault_b_scars": 1126
+    },
+    {
+      "timestamp": 1749774690.6618583,
+      "entropy": 303.2683530173736,
+      "active_geoids": 105,
+      "vault_a_scars": 1127,
+      "vault_b_scars": 1126
+    },
+    {
+      "timestamp": 1749774692.703342,
+      "entropy": 303.2683530173736,
+      "active_geoids": 105,
+      "vault_a_scars": 1127,
+      "vault_b_scars": 1126
+    }
+  ],
+  "total_contradictions": 1150,
+  "total_scars": 1150
+}

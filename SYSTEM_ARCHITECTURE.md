@@ -82,16 +82,14 @@ class VaultManager:
     Key Methods:
     - insert_scar(scar, vector) -> str
     - get_scars_from_vault(vault_id, limit) -> List[ScarRecord]
-    - get_all_geoids() -> List[GeoidState]
     - rebalance_vaults(by_weight=False) -> int
     - get_total_scar_count(vault_id) -> int
 ```
 
 **Functionality:**
-- Manages persistence for both Geoids and Scars.
 - Maintains balanced dual vault storage (vault_a, vault_b)
 - Distributes scars across vaults for load balancing
-- Provides object retrieval and management (scars and geoids)
+- Provides scar retrieval and management
 - Achieves 99.9% vault balance accuracy
 
 ### 3. Data Persistence Layer
@@ -195,16 +193,6 @@ Trigger Geoid → Similarity Search → Tension Detection → Pulse Calculation 
 ### 3. Cognitive Cycle Flow
 ```
 System State Assessment → Contradiction Detection → Processing → Entropy Management → Vault Balancing → Metrics Update
-```
-
-### 4. Data Flow Diagrams
-
-#### Monitoring Observation Flow
-
-This diagram illustrates the sequence of operations for the `/monitoring/observe` endpoint, showing how it interacts with various system components to generate a health snapshot.
-
-```mermaid
---8<-- "docs/diagrams/monitoring_flow.mermaid"
 ```
 
 ## 📊 Performance Characteristics

@@ -1,0 +1,304 @@
+{
+  "analysis_timestamp": "2025-06-12T00:14:22.718515",
+  "system_metrics": {
+    "active_geoids": 588,
+    "vault_a_scars": 718,
+    "vault_b_scars": 718,
+    "system_entropy": 138.0679649248827,
+    "cycle_count": 560
+  },
+  "analysis_results": {
+    "evolution_analysis": {
+      "total_scars": 1436,
+      "learning_progression": {
+        "early_avg_delta": 0.09958158995815908,
+        "middle_avg_delta": 0.10000000000000009,
+        "late_avg_delta": 0.10000000000000009,
+        "trend": "\ud83d\udcc8 INCREASING - System learning accelerating"
+      },
+      "complexity_evolution": {
+        "early_avg_angle": 56.75873323690033,
+        "late_avg_angle": 56.75213616170729,
+        "trend": "\ud83d\udcc9 DECREASING - Simpler contradictions"
+      },
+      "vault_balance_evolution": {
+        "early_balance": 100.0,
+        "late_balance": 99.79123173277662,
+        "trend": "\ud83d\udcc9 DEGRADING - Vault imbalance increasing"
+      }
+    },
+    "contradiction_patterns": {
+      "top_reasons": [
+        [
+          "Resolved 'composite' tension.",
+          1434
+        ],
+        [
+          "auto-cycle",
+          1
+        ],
+        [
+          "auto-generated",
+          1
+        ]
+      ],
+      "intensity_distribution": {
+        "Medium": 1430,
+        "Low": 6
+      },
+      "polarity_patterns": [
+        [
+          "Negative",
+          830,
+          0.10000000000000009
+        ],
+        [
+          "Neutral",
+          606,
+          0.09966996699669976
+        ]
+      ]
+    },
+    "semantic_intelligence": {
+      "feature_count": 24,
+      "combination_count": 7,
+      "complexity_score": 255.8447450795088,
+      "complexity_level": "\ud83d\udfe2 VERY HIGH - Rich semantic representation",
+      "feature_stats": {
+        "temperature": {
+          "mean": 0.12404181184668991,
+          "std": 0.1350155108328321,
+          "range": [
+            0.028571428571428574,
+            0.21951219512195125
+          ]
+        },
+        "liquid": {
+          "mean": 0.19512195121951223,
+          "std": 0,
+          "range": [
+            0.19512195121951223,
+            0.19512195121951223
+          ]
+        },
+        "beverage": {
+          "mean": 0.21951219512195125,
+          "std": 0,
+          "range": [
+            0.21951219512195125,
+            0.21951219512195125
+          ]
+        },
+        "comfort": {
+          "mean": 0.19965156794425087,
+          "std": 0.040898859120894394,
+          "range": [
+            0.17073170731707318,
+            0.2285714285714286
+          ]
+        },
+        "energy": {
+          "mean": 0.19512195121951223,
+          "std": 0,
+          "range": [
+            0.19512195121951223,
+            0.19512195121951223
+          ]
+        },
+        "sweet": {
+          "mean": 0.2571428571428572,
+          "std": 0,
+          "range": [
+            0.2571428571428572,
+            0.2571428571428572
+          ]
+        },
+        "dessert": {
+          "mean": 0.2285714285714286,
+          "std": 0,
+          "range": [
+            0.2285714285714286,
+            0.2285714285714286
+          ]
+        },
+        "cold": {
+          "mean": 0.2571428571428572,
+          "std": 0,
+          "range": [
+            0.2571428571428572,
+            0.2571428571428572
+          ]
+        },
+        "healthy": {
+          "mean": 0.13916786226685798,
+          "std": 0.11362404518349116,
+          "range": [
+            0.05882352941176471,
+            0.21951219512195125
+          ]
+        },
+        "natural": {
+          "mean": 0.19512195121951223,
+          "std": 0,
+          "range": [
+            0.19512195121951223,
+            0.19512195121951223
+          ]
+        },
+        "nutritious": {
+          "mean": 0.21951219512195125,
+          "std": 0,
+          "range": [
+            0.21951219512195125,
+            0.21951219512195125
+          ]
+        },
+        "green": {
+          "mean": 0.17073170731707318,
+          "std": 0,
+          "range": [
+            0.17073170731707318,
+            0.17073170731707318
+          ]
+        },
+        "vitamins": {
+          "mean": 0.19512195121951223,
+          "std": 0,
+          "range": [
+            0.19512195121951223,
+            0.19512195121951223
+          ]
+        },
+        "processed": {
+          "mean": 0.23529411764705885,
+          "std": 0,
+          "range": [
+            0.23529411764705885,
+            0.23529411764705885
+          ]
+        },
+        "tasty": {
+          "mean": 0.20588235294117646,
+          "std": 0,
+          "range": [
+            0.20588235294117646,
+            0.20588235294117646
+          ]
+        },
+        "convenient": {
+          "mean": 0.23529411764705885,
+          "std": 0,
+          "range": [
+            0.23529411764705885,
+            0.23529411764705885
+          ]
+        },
+        "calories": {
+          "mean": 0.2647058823529412,
+          "std": 0,
+          "range": [
+            0.2647058823529412,
+            0.2647058823529412
+          ]
+        },
+        "test": {
+          "mean": 0.3478260869565218,
+          "std": 0.0,
+          "range": [
+            0.3478260869565218,
+            0.3478260869565218
+          ]
+        },
+        "example": {
+          "mean": 0.2608695652173913,
+          "std": 0.0,
+          "range": [
+            0.2608695652173913,
+            0.2608695652173913
+          ]
+        },
+        "demo": {
+          "mean": 0.391304347826087,
+          "std": 0.0,
+          "range": [
+            0.391304347826087,
+            0.391304347826087
+          ]
+        },
+        "creativity": {
+          "mean": 0.4022180451696389,
+          "std": 0.0766002019724501,
+          "range": [
+            0.34805352291466024,
+            0.45638256742461747
+          ]
+        },
+        "logic": {
+          "mean": 0.4068899593730646,
+          "std": 0.03087216965935231,
+          "range": [
+            0.38506003885699497,
+            0.4287198798891342
+          ]
+        },
+        "emotion": {
+          "mean": 0.19089199545729651,
+          "std": 0.04572803231309786,
+          "range": [
+            0.15855739371838745,
+            0.22322659719620558
+          ]
+        },
+        "feature_A": {
+          "mean": 1.0,
+          "std": 0.0,
+          "range": [
+            1.0,
+            1.0
+          ]
+        }
+      }
+    },
+    "performance_metrics": {
+      "current_metrics": {
+        "active_geoids": 588,
+        "vault_a_scars": 718,
+        "vault_b_scars": 718,
+        "system_entropy": 138.0679649248827,
+        "cycle_count": 560
+      },
+      "calculated_ratios": {
+        "scar_density": 2.442176870748299,
+        "vault_balance": 100.0,
+        "scars_per_cycle": 2.5642857142857145
+      },
+      "health_score": 68.28117913832199,
+      "assessments": {
+        "density": "\ud83d\udfe1 HIGH - Good contradiction detection",
+        "balance": "\ud83d\udfe2 EXCELLENT - Perfect balance",
+        "entropy": "\ud83d\udfe2 VERY HIGH - Complex semantic state",
+        "overall_health": "\ud83d\udfe0 FAIR - System needs attention"
+      }
+    },
+    "comprehensive_insights": {
+      "insights": [
+        "\ud83e\udde0 System shows accelerating learning - contradiction detection improving",
+        "\ud83e\udde0 Rich semantic representation achieved"
+      ],
+      "recommendations": [
+        "\ud83d\udcca Monitor learning rate to prevent overfitting",
+        "\ud83d\udd27 Implement vault rebalancing mechanisms"
+      ],
+      "critical_issues": [
+        "\ud83c\udfdb\ufe0f  Vault balance degrading over time"
+      ],
+      "overall_status": "\ud83d\udd34 REQUIRES ATTENTION",
+      "priority": "HIGH"
+    }
+  },
+  "report_metadata": {
+    "analyzer_version": "1.0",
+    "analysis_type": "comprehensive_deep_analysis",
+    "database_path": "kimera_swm.db"
+  }
+}

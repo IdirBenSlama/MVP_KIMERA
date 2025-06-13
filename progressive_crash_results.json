@@ -1,0 +1,67 @@
+{
+  "timestamp": "2025-06-12T20:12:47.507317",
+  "breaking_point": 16,
+  "load_test_results": [
+    {
+      "threads": 1,
+      "operations": 20,
+      "successful": 20,
+      "failed": 0,
+      "success_rate": 100.0,
+      "duration": 41.38,
+      "ops_per_second": 0.48
+    },
+    {
+      "threads": 4,
+      "operations": 80,
+      "successful": 80,
+      "failed": 0,
+      "success_rate": 100.0,
+      "duration": 41.38,
+      "ops_per_second": 1.93
+    },
+    {
+      "threads": 7,
+      "operations": 140,
+      "successful": 140,
+      "failed": 0,
+      "success_rate": 100.0,
+      "duration": 45.13,
+      "ops_per_second": 3.1
+    },
+    {
+      "threads": 10,
+      "operations": 200,
+      "successful": 200,
+      "failed": 0,
+      "success_rate": 100.0,
+      "duration": 66.7,
+      "ops_per_second": 3.0
+    },
+    {
+      "threads": 13,
+      "operations": 260,
+      "successful": 238,
+      "failed": 22,
+      "success_rate": 91.54,
+      "duration": 165.54,
+      "ops_per_second": 1.57
+    },
+    {
+      "threads": 16,
+      "operations": 320,
+      "successful": 18,
+      "failed": 302,
+      "success_rate": 5.62,
+      "duration": 283.3,
+      "ops_per_second": 1.13
+    }
+  ],
+  "memory_test": {
+    "error": "System unresponsive"
+  },
+  "rapid_fire_test": {
+    "error": "System unresponsive"
+  },
+  "system_survived": false
+}
