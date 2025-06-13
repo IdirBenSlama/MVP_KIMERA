@@ -57,6 +57,22 @@ class GeoidDB(Base):
         semantic_vector = Column(JSON)
 
 
+class InsightDB(Base):
+    __tablename__ = "insights"
+
+    insight_id = Column(String, primary_key=True, index=True)
+    insight_type = Column(String, index=True)
+    source_resonance_id = Column(String, index=True)
+    echoform_repr = Column(JSON)
+    application_domains = Column(JSON, index=True)
+    confidence = Column(Float)
+    entropy_reduction = Column(Float)
+    utility_score = Column(Float, default=0.0)
+    status = Column(String, default='provisional')
+    created_at = Column(DateTime, default=datetime.utcnow)
+    last_reinforced_cycle = Column(String)
+
+
 # Create tables if they don't exist
 Base.metadata.create_all(bind=engine)
 

@@ -92,6 +92,10 @@ def test_entropy_monitor():
     anomalies = entropy_monitor.detect_entropy_anomalies()
     print(f"  ✅ Anomalies detected: {len(anomalies)}")
     
+    assert measurement.shannon_entropy > 0
+    assert len(trends.get('shannon_entropy', [])) == 5
+    assert len(anomalies) == 0
+    
     return True
 
 def test_semantic_metrics():
@@ -125,6 +129,10 @@ def test_semantic_metrics():
     # Test anomaly detection
     anomalies = semantic_collector.detect_semantic_anomalies()
     print(f"  ✅ Anomalies detected: {len(anomalies)}")
+    
+    assert measurement.semantic_entropy > 0
+    assert len(trends.get('semantic_entropy', [])) == 3
+    assert len(anomalies) == 0
     
     return True
 
@@ -172,6 +180,10 @@ def test_thermodynamic_analyzer():
     violations = thermodynamic_analyzer.check_thermodynamic_constraints(state)
     print(f"  ✅ Constraint violations: {len(violations)}")
     
+    assert state.total_energy > 0
+    assert len(efficiency) > 0
+    assert len(violations) == 0
+    
     return True
 
 def test_system_observer():
@@ -206,6 +218,9 @@ def test_system_observer():
     for report_type in ['comprehensive', 'executive', 'technical']:
         report = system_observer.generate_report(report_type)
         print(f"  ✅ {report_type.capitalize()} report generated ({len(report)} chars)")
+    
+    assert summary.get('observation_count', 0) == 4
+    assert len(system_observer.generate_report('comprehensive')) > 0
     
     return True
 
@@ -246,6 +261,8 @@ def test_benchmarking_suite():
         passed = sum(1 for r in suite_results.values() if r.success)
         total = len(suite_results)
         print(f"  ✅ Entropy suite: {passed}/{total} tests passed")
+        
+        assert all(r.success for r in suite_results.values())
         
         return True
         

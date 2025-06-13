@@ -1,0 +1,23 @@
+{
+  "database": {
+    "connection_pool_size": 20,
+    "query_timeout": 30,
+    "batch_size": 100,
+    "cache_size": 10000
+  },
+  "memory": {
+    "similarity_cache_size": 1000,
+    "entropy_cache_size": 500,
+    "vector_batch_size": 100
+  },
+  "concurrency": {
+    "max_workers": 13,
+    "chunk_size": 50,
+    "timeout": 30
+  },
+  "algorithms": {
+    "similarity_threshold": 0.75,
+    "entropy_precision": 1e-10,
+    "top_k_default": 5
+  }
+}

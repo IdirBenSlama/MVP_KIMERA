@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-06-12T00:12:20.787156",
+  "system_metrics": {
+    "active_geoids": 588,
+    "vault_a_scars": 718,
+    "vault_b_scars": 718,
+    "system_entropy": 138.0679649248827,
+    "cycle_count": 560
+  },
+  "analysis_results": {
+    "database_overview": {
+      "total_geoids": 2147,
+      "total_scars": 1436,
+      "total_insights": 0,
+      "test_geoids": 84,
+      "recent_scars": 0
+    },
+    "geoid_analysis": {
+      "total_analyzed": 84,
+      "type_distribution": {
+        "volatility_state": 4,
+        "crypto_state": 4,
+        "market_state": 8,
+        "high_volatility_stream": 68
+      },
+      "scenario_distribution": {
+        "vix_explosion": 4,
+        "crypto_manipulation": 4,
+        "short_squeeze": 4,
+        "flash_crash": 4
+      },
+      "semantic_features_count": 84
+    },
+    "performance_assessment": {
+      "scores": {
+        "processing_capability": 40
+      },
+      "overall_score": 40,
+      "grade": "D (Poor)",
+      "insights": [
+        "\ud83e\udde0 High contradiction density - complex semantic space"
+      ]
+    }
+  }
+}

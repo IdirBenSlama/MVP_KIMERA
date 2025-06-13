@@ -3,14 +3,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Any
 import uuid
+import logging
 
 from ..core.geoid import GeoidState
 from ..engines.contradiction_engine import ContradictionEngine
 from ..engines.thermodynamics import SemanticThermodynamicsEngine
 from ..vault.vault_manager import VaultManager
 from ..engines.kccl import KimeraCognitiveCycle
+from ..utils.gpu_utils import get_compute_device
 
 app = FastAPI(title="KIMERA SWM MVP API", version="1.0.0")
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Add CORS middleware
 app.add_middleware(
@@ -22,8 +28,10 @@ app.add_middleware(
 )
 
 # Initialize core systems
+compute_device = get_compute_device()
+
 kimera_system = {
-    'contradiction_engine': ContradictionEngine(),
+    'contradiction_engine': ContradictionEngine(device=compute_device),
     'thermodynamics_engine': SemanticThermodynamicsEngine(),
     'vault_manager': VaultManager(),
     'cognitive_cycle': KimeraCognitiveCycle(),
@@ -136,7 +144,8 @@ async def get_system_status():
         'vault_a_scars': len(kimera_system['vault_manager'].vault_a),
         'vault_b_scars': len(kimera_system['vault_manager'].vault_b),
         'cycle_count': kimera_system['system_state']['cycle_count'],
-        'system_entropy': sum(g.calculate_entropy() for g in kimera_system['active_geoids'].values())
+        'system_entropy': sum(g.calculate_entropy() for g in kimera_system['active_geoids'].values()),
+        'compute_device': compute_device
     }
 
 if __name__ == "__main__":

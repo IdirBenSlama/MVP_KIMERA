@@ -1,0 +1,23 @@
+# resources/archetypes.json
+{
+  "growth": {
+    "keywords": ["develop", "expand", "increase", "evolve"],
+    "archetype": "The Sovereign",
+    "paradox": "Growth without limit is the ideology of the cancer cell."
+  },
+  "collapse": {
+    "keywords": ["break", "fail", "shatter", "decline"],
+    "archetype": "The Tower",
+    "paradox": "That which is falling is still, for a moment, flying."
+  },
+  "connection": {
+    "keywords": ["link", "join", "relate", "unite"],
+    "archetype": "The Lover",
+    "paradox": "To be truly connected, one must first be separate."
+  },
+  "journey": {
+    "keywords": ["travel", "path", "quest", "explore"],
+    "archetype": "The Seeker",
+    "paradox": "The destination is not a place, but a new way of seeing."
+  }
+} 
