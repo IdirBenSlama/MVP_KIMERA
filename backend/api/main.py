@@ -29,6 +29,18 @@ from .middleware import icw_middleware
 from .monitoring_routes import router as monitoring_router
 import numpy as np
 from scipy.spatial.distance import cosine
+from ..engines.activation_synthesis import (
+    trigger_activation_cascade,
+    synthesize_patterns,
+    ResonanceEvent,
+    Geoid as ASGeoid,
+)
+from ..engines.output_generator import generate_insight_scar
+from ..engines.insight_lifecycle import (
+    update_utility_score,
+    manage_insight_lifecycle,
+    FeedbackEvent,
+)
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
 
@@ -56,6 +68,7 @@ kimera_system = {
     'meta_insight_engine': MetaInsightEngine(),
     'active_geoids': {},
     'system_state': {'cycle_count': 0},
+    'insights': {},  # insight_id -> InsightScar
     'recent_insights': [],  # rolling list to feed MetaInsightEngine
     'embedding_model': None
 }
@@ -522,6 +535,106 @@ async def get_system_stability():
         asm = AxisStabilityMonitor(db)
         metrics = asm.get_stability_metrics()
     return metrics
+
+
+# -----------------------------
+# Insight API Models (Phase 4)
+# -----------------------------
+
+
+class GenerateInsightRequest(BaseModel):
+    source_geoid: str
+    target_domain: str | None = None
+    focus: str | None = None
+
+
+class InsightFeedbackRequest(BaseModel):
+    feedback_event: FeedbackEvent
+
+
+# -----------------------------
+# Insight API Endpoints
+# -----------------------------
+
+
+@app.post("/insights/generate")
+async def generate_insight(request: GenerateInsightRequest):
+    """Generates an insight from a source geoid using activation synthesis pipeline."""
+
+    if request.source_geoid not in kimera_system["active_geoids"]:
+        raise HTTPException(status_code=404, detail="Source geoid not found")
+
+    # Build a minimal knowledge graph view (neighbors mocked for now)
+    knowledge_graph: dict[str, ASGeoid] = {}
+    for gid, g in kimera_system["active_geoids"].items():
+        knowledge_graph[gid] = ASGeoid(geoid_id=gid, neighbors=list(g.metadata.get("neighbors", [])))
+
+    resonance = ResonanceEvent(source_geoids=[request.source_geoid])
+    activated_ids = trigger_activation_cascade(resonance, knowledge_graph)
+    activated_geoids = [knowledge_graph[g] for g in activated_ids]
+
+    mosaic = synthesize_patterns(activated_geoids)
+
+    # Placeholder entropy reduction calculation
+    entropy_reduction = 0.1 * len(activated_geoids)
+
+    insight = generate_insight_scar(mosaic, resonance_id=request.source_geoid, entropy_reduction=entropy_reduction)
+
+    # Store insight
+    kimera_system["insights"][insight.insight_id] = insight
+    kimera_system["recent_insights"].append(insight)
+    if len(kimera_system["recent_insights"]) > 100:
+        del kimera_system["recent_insights"][0]
+
+    return {"insight": insight.to_dict()}
+
+
+@app.get("/insights/{insight_id}")
+async def get_insight(insight_id: str):
+    insight = kimera_system["insights"].get(insight_id)
+    if not insight:
+        raise HTTPException(status_code=404, detail="Insight not found")
+    return insight.to_dict()
+
+
+@app.get("/insights")
+async def list_insights(type: str | None = None, domain: str | None = None):
+    results = kimera_system["insights"].values()
+    if type:
+        results = filter(lambda i: i.insight_type.lower() == type.lower(), results)
+    if domain:
+        results = filter(lambda i: domain.lower() in (d.lower() for d in i.application_domains), results)
+    return [i.to_dict() for i in results]
+
+
+@app.post("/insights/{insight_id}/feedback")
+async def feedback_insight(insight_id: str, request: InsightFeedbackRequest):
+    insight = kimera_system["insights"].get(insight_id)
+    if not insight:
+        raise HTTPException(status_code=404, detail="Insight not found")
+
+    state = kimera_system["system_state"]
+    current_cycle = state.get("cycle_count", 0)
+
+    insight = update_utility_score(insight, request.feedback_event, current_cycle)
+    insight = manage_insight_lifecycle(insight)
+
+    # Update stored object
+    kimera_system["insights"][insight_id] = insight
+
+    return {"insight": insight.to_dict()}
+
+
+# Lineage tracer endpoint
+@app.get("/insights/{insight_id}/lineage")
+async def get_insight_lineage(insight_id: str):
+    try:
+        from ..tools.lineage_tracer import trace as trace_lineage
+        lineage = trace_lineage(insight_id, kimera_system)
+        return lineage
+    except ValueError as exc:
+        raise HTTPException(status_code=404, detail=str(exc))
+
 
 if __name__ == "__main__":
     import uvicorn
