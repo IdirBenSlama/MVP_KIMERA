@@ -27,6 +27,7 @@ from ..engines.clip_service import clip_service
 from ..linguistic.echoform import parse_echoform
 from .middleware import icw_middleware
 from .monitoring_routes import router as monitoring_router
+from ..monitoring.telemetry import router as telemetry_router
 import numpy as np
 from scipy.spatial.distance import cosine
 from ..engines.activation_synthesis import (
@@ -58,6 +59,7 @@ app.middleware("http")(icw_middleware)
 
 # Include monitoring routes
 app.include_router(monitoring_router)
+app.include_router(telemetry_router)
 
 kimera_system = {
     'contradiction_engine': ContradictionEngine(tension_threshold=0.5),
