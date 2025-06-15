@@ -9,6 +9,7 @@ from pydantic import BaseModel
 import uuid
 from datetime import datetime
 import os
+import time
 
 from ..core.geoid import GeoidState
 from ..core.scar import ScarRecord
@@ -42,6 +43,7 @@ from ..engines.insight_lifecycle import (
     manage_insight_lifecycle,
     FeedbackEvent,
 )
+from ..engines.proactive_contradiction_detector import ProactiveContradictionDetector
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
 
@@ -62,12 +64,13 @@ app.include_router(monitoring_router)
 app.include_router(telemetry_router)
 
 kimera_system = {
-    'contradiction_engine': ContradictionEngine(tension_threshold=0.5),
+    'contradiction_engine': ContradictionEngine(tension_threshold=0.3),
     'thermodynamics_engine': SemanticThermodynamicsEngine(),
     'vault_manager': VaultManager(),
     'spde_engine': SPDE(),
     'cognitive_cycle': KimeraCognitiveCycle(),
     'meta_insight_engine': MetaInsightEngine(),
+    'proactive_detector': ProactiveContradictionDetector(),
     'active_geoids': {},
     'system_state': {'cycle_count': 0},
     'insights': {},  # insight_id -> InsightScar
@@ -91,7 +94,8 @@ def _shutdown_background_jobs() -> None:
 
 def create_scar_from_tension(
     tension: TensionGradient,
-    geoids_dict: Dict[str, GeoidState]
+    geoids_dict: Dict[str, GeoidState],
+    decision: str = "collapse"
 ) -> tuple[ScarRecord, list[float]]:
     """Create a ScarRecord from a resolved tension with real metrics."""
 
@@ -99,19 +103,39 @@ def create_scar_from_tension(
     geoid_b = geoids_dict[tension.geoid_b]
 
     pre_entropy = (geoid_a.calculate_entropy() + geoid_b.calculate_entropy()) / 2
-    post_entropy = pre_entropy + 0.1
+    
+    # Adjust post_entropy based on decision type
+    if decision == "collapse":
+        post_entropy = pre_entropy + 0.1
+    elif decision == "surge":
+        post_entropy = pre_entropy - 0.05  # Surge reduces entropy slightly
+    else:  # buffer
+        post_entropy = pre_entropy + 0.02  # Buffer maintains near-equilibrium
 
     all_features = set(geoid_a.semantic_state.keys()) | set(geoid_b.semantic_state.keys())
     vec_a = [geoid_a.semantic_state.get(f, 0.0) for f in all_features]
     vec_b = [geoid_b.semantic_state.get(f, 0.0) for f in all_features]
     cls_angle_proxy = cosine(vec_a, vec_b) if any(vec_a) and any(vec_b) else 0.0
 
+    # Adjust reason and resolved_by based on decision
+    reason_map = {
+        "collapse": f"Collapsed '{tension.gradient_type}' tension.",
+        "surge": f"Surged through '{tension.gradient_type}' tension.",
+        "buffer": f"Buffered '{tension.gradient_type}' tension."
+    }
+    
+    resolved_by_map = {
+        "collapse": "ContradictionEngine:Collapse",
+        "surge": "ContradictionEngine:Surge", 
+        "buffer": "ContradictionEngine:Buffer"
+    }
+
     scar = ScarRecord(
         scar_id=f"SCAR_{uuid.uuid4().hex[:8]}",
         geoids=[tension.geoid_a, tension.geoid_b],
-        reason=f"Resolved '{tension.gradient_type}' tension.",
+        reason=reason_map.get(decision, f"Processed '{tension.gradient_type}' tension."),
         timestamp=datetime.now().isoformat(),
-        resolved_by="ContradictionEngine:Collapse",
+        resolved_by=resolved_by_map.get(decision, "ContradictionEngine:Unknown"),
         pre_entropy=pre_entropy,
         post_entropy=post_entropy,
         delta_entropy=post_entropy - pre_entropy,
@@ -123,7 +147,7 @@ def create_scar_from_tension(
     geoid_a_summary = " ".join(geoid_a.semantic_state.keys())
     geoid_b_summary = " ".join(geoid_b.semantic_state.keys())
     scar_summary_text = (
-        f"Contradiction between '{geoid_a_summary}' and '{geoid_b_summary}'"
+        f"{decision.capitalize()} contradiction between '{geoid_a_summary}' and '{geoid_b_summary}'"
     )
 
     embedding_model = get_embedding_model()
@@ -351,8 +375,8 @@ async def process_contradictions(body: ProcessContradictionRequest, request: Req
         )
 
         scar_created = False
-        if decision == 'collapse':
-            scar, vector = create_scar_from_tension(tension, geoids_dict)
+        if decision in ['collapse', 'surge', 'buffer']:
+            scar, vector = create_scar_from_tension(tension, geoids_dict, decision)
             kimera_system['vault_manager'].insert_scar(scar, vector)
             scars_created += 1
             scar_created = True
@@ -504,14 +528,106 @@ async def search_scars(query: str, limit: int = 3):
 
 @app.get("/system/status")
 async def get_system_status():
+    """Get comprehensive system status including performance metrics."""
     vault_manager = kimera_system['vault_manager']
+    
+    # Get embedding performance stats
+    try:
+        from ..core.embedding_utils import get_performance_stats
+        embedding_stats = get_performance_stats()
+    except:
+        embedding_stats = {}
+    
+    # Get system metrics
+    try:
+        import psutil
+        system_metrics = {
+            "cpu_percent": psutil.cpu_percent(),
+            "memory_percent": psutil.virtual_memory().percent,
+            "disk_usage": psutil.disk_usage('.').percent
+        }
+    except:
+        system_metrics = {}
+    
+    # Get GPU info if available
+    gpu_info = {}
+    try:
+        import torch
+        if torch.cuda.is_available():
+            gpu_info = {
+                "gpu_available": True,
+                "gpu_count": torch.cuda.device_count(),
+                "current_device": torch.cuda.current_device(),
+                "gpu_name": torch.cuda.get_device_name(),
+                "gpu_memory_allocated": torch.cuda.memory_allocated(),
+                "gpu_memory_reserved": torch.cuda.memory_reserved()
+            }
+        else:
+            gpu_info = {"gpu_available": False}
+    except:
+        gpu_info = {"gpu_available": False}
+    
     return {
-        'active_geoids': len(kimera_system['active_geoids']),
-        'vault_a_scars': vault_manager.get_total_scar_count("vault_a"),
-        'vault_b_scars': vault_manager.get_total_scar_count("vault_b"),
-        'system_entropy': sum(g.calculate_entropy() for g in kimera_system['active_geoids'].values()),
-        'cycle_count': kimera_system['system_state']['cycle_count']
+        'timestamp': time.time(),
+        'system_info': {
+            'active_geoids': len(kimera_system['active_geoids']),
+            'vault_a_scars': vault_manager.get_total_scar_count("vault_a"),
+            'vault_b_scars': vault_manager.get_total_scar_count("vault_b"),
+            'system_entropy': sum(g.calculate_entropy() for g in kimera_system['active_geoids'].values()),
+            'cycle_count': kimera_system['system_state']['cycle_count']
+        },
+        'embedding_performance': embedding_stats,
+        'system_metrics': system_metrics,
+        'gpu_info': gpu_info,
+        'model_info': {
+            'embedding_model': "BAAI/bge-m3",
+            'embedding_dimension': 1024,
+            'model_type': getattr(kimera_system.get('embedding_model', {}), 'get', lambda x: 'unknown')('type')
+        }
     }
+
+
+@app.get("/system/health")
+async def get_system_health():
+    """Comprehensive system health check."""
+    health_status = {
+        "status": "healthy",
+        "timestamp": time.time(),
+        "checks": {}
+    }
+    
+    # Check database connection
+    try:
+        with SessionLocal() as db:
+            db.execute("SELECT 1").fetchone()
+        health_status["checks"]["database"] = {"status": "healthy", "message": "Database connection OK"}
+    except Exception as e:
+        health_status["checks"]["database"] = {"status": "unhealthy", "message": str(e)}
+        health_status["status"] = "degraded"
+    
+    # Check embedding model
+    try:
+        from ..core.embedding_utils import encode_text
+        test_embedding = encode_text("health check")
+        if len(test_embedding) == 1024:
+            health_status["checks"]["embedding_model"] = {"status": "healthy", "message": "BGE-M3 model working"}
+        else:
+            health_status["checks"]["embedding_model"] = {"status": "degraded", "message": f"Unexpected dimension: {len(test_embedding)}"}
+            health_status["status"] = "degraded"
+    except Exception as e:
+        health_status["checks"]["embedding_model"] = {"status": "unhealthy", "message": str(e)}
+        health_status["status"] = "unhealthy"
+    
+    # Check vault system
+    try:
+        vault_manager = kimera_system['vault_manager']
+        total_scars = vault_manager.get_total_scar_count("vault_a") + vault_manager.get_total_scar_count("vault_b")
+        health_status["checks"]["vault_system"] = {"status": "healthy", "message": f"Vault system OK, {total_scars} total scars"}
+    except Exception as e:
+        health_status["checks"]["vault_system"] = {"status": "unhealthy", "message": str(e)}
+        health_status["status"] = "degraded"
+    
+    return health_status
 
 
 @app.post("/system/cycle")
@@ -537,6 +653,82 @@ async def get_system_stability():
         asm = AxisStabilityMonitor(db)
         metrics = asm.get_stability_metrics()
     return metrics
+
+
+@app.post("/system/proactive_scan")
+async def run_proactive_contradiction_scan():
+    """Run a proactive contradiction detection scan to increase SCAR utilization."""
+    detector = kimera_system['proactive_detector']
+    scan_results = detector.run_proactive_scan()
+    
+    # Process any tensions found during the scan
+    tensions_processed = 0
+    scars_created = 0
+    
+    if scan_results.get("tensions_found"):
+        # Load geoids for processing
+        with SessionLocal() as db:
+            geoid_rows = db.query(GeoidDB).all()
+            geoids_dict = {}
+            for row in geoid_rows:
+                try:
+                    geoid = GeoidState(
+                        geoid_id=row.geoid_id,
+                        semantic_state=row.semantic_state_json or {},
+                        symbolic_state=row.symbolic_state or {},
+                        embedding_vector=row.semantic_vector or [],
+                        metadata=row.metadata_json or {}
+                    )
+                    geoids_dict[geoid.geoid_id] = geoid
+                except:
+                    continue
+        
+        # Process each tension found
+        for tension in scan_results["tensions_found"][:10]:  # Limit to 10 per scan
+            try:
+                # Calculate pulse strength and make decision
+                pulse_strength = kimera_system['contradiction_engine'].calculate_pulse_strength(
+                    tension, geoids_dict
+                )
+                
+                decision = kimera_system['contradiction_engine'].decide_collapse_or_surge(
+                    pulse_strength, {"semantic_cohesion": 0.5}, None
+                )
+                
+                # Create SCAR for all decisions
+                if decision in ['collapse', 'surge', 'buffer']:
+                    scar, vector = create_scar_from_tension(tension, geoids_dict, decision)
+                    kimera_system['vault_manager'].insert_scar(scar, vector)
+                    scars_created += 1
+                
+                tensions_processed += 1
+                
+            except Exception as e:
+                # Skip problematic tensions
+                continue
+    
+    scan_results["tensions_processed"] = tensions_processed
+    scan_results["scars_created"] = scars_created
+    
+    return scan_results
+
+
+@app.get("/system/utilization_stats")
+async def get_utilization_statistics():
+    """Get detailed statistics about SCAR utilization and system performance."""
+    detector = kimera_system['proactive_detector']
+    stats = detector.get_scan_statistics()
+    
+    # Add additional system metrics
+    vault_manager = kimera_system['vault_manager']
+    stats.update({
+        "vault_a_scars": vault_manager.get_total_scar_count("vault_a"),
+        "vault_b_scars": vault_manager.get_total_scar_count("vault_b"),
+        "active_geoids": len(kimera_system['active_geoids']),
+        "system_cycle_count": kimera_system['system_state']['cycle_count']
+    })
+    
+    return stats
 
 
 # -----------------------------

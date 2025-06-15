@@ -1,0 +1,122 @@
+{
+  "axiom_of_choice": {
+    "archetype": "The Selector",
+    "paradox": "Choice without preference creates infinite possibility",
+    "keywords": ["choice", "selection", "function", "infinite", "family", "sets"],
+    "semantic_weight": 0.9,
+    "mathematical_domain": "set_theory",
+    "philosophical_implications": [
+      "Non-constructive existence proofs",
+      "Infinite decision-making processes",
+      "Foundation of mathematical analysis"
+    ]
+  },
+  "zorn_lemma": {
+    "archetype": "The Maximizer",
+    "paradox": "Every chain reaches its ultimate bound through partial order",
+    "keywords": ["maximal", "chain", "partial", "order", "upper", "bound"],
+    "semantic_weight": 0.8,
+    "mathematical_domain": "order_theory",
+    "philosophical_implications": [
+      "Existence of maximal objects",
+      "Completion of partial structures",
+      "Algebraic closure principles"
+    ]
+  },
+  "well_ordering": {
+    "archetype": "The Organizer",
+    "paradox": "Every set can be totally ordered, even when it seems impossible",
+    "keywords": ["well", "order", "least", "element", "total", "ordering"],
+    "semantic_weight": 0.85,
+    "mathematical_domain": "order_theory",
+    "philosophical_implications": [
+      "Universal comparability",
+      "Transfinite induction validity",
+      "Ordinal number foundations"
+    ]
+  },
+  "cardinal_arithmetic": {
+    "archetype": "The Counter",
+    "paradox": "Infinity plus infinity can equal infinity",
+    "keywords": ["cardinal", "cardinality", "infinite", "arithmetic", "cantor"],
+    "semantic_weight": 0.75,
+    "mathematical_domain": "cardinal_theory",
+    "philosophical_implications": [
+      "Different sizes of infinity",
+      "Non-intuitive arithmetic",
+      "Continuum hypothesis connections"
+    ]
+  },
+  "banach_tarski": {
+    "archetype": "The Paradox Weaver",
+    "paradox": "One sphere becomes two through pure mathematics",
+    "keywords": ["banach", "tarski", "sphere", "decomposition", "paradox", "measure"],
+    "semantic_weight": 0.95,
+    "mathematical_domain": "measure_theory",
+    "philosophical_implications": [
+      "Non-measurable sets existence",
+      "Geometric intuition limitations",
+      "Choice axiom consequences"
+    ]
+  },
+  "transfinite_induction": {
+    "archetype": "The Infinite Climber",
+    "paradox": "Induction works beyond the finite realm",
+    "keywords": ["transfinite", "induction", "ordinal", "successor", "limit"],
+    "semantic_weight": 0.8,
+    "mathematical_domain": "ordinal_theory",
+    "philosophical_implications": [
+      "Proof techniques for infinite objects",
+      "Recursive definitions on ordinals",
+      "Foundation of set theory proofs"
+    ]
+  },
+  "continuum_hypothesis": {
+    "archetype": "The Gap Seeker",
+    "paradox": "The space between countable and uncountable may or may not exist",
+    "keywords": ["continuum", "hypothesis", "aleph", "beth", "cardinality"],
+    "semantic_weight": 0.9,
+    "mathematical_domain": "cardinal_theory",
+    "philosophical_implications": [
+      "Independence from ZFC",
+      "Multiple mathematical universes",
+      "Limits of mathematical truth"
+    ]
+  },
+  "russell_paradox": {
+    "archetype": "The Self-Referential Destroyer",
+    "paradox": "The set of all sets that don't contain themselves",
+    "keywords": ["russell", "paradox", "self", "reference", "contradiction"],
+    "semantic_weight": 1.0,
+    "mathematical_domain": "foundational_theory",
+    "philosophical_implications": [
+      "Naive set theory limitations",
+      "Need for axiomatic foundations",
+      "Self-reference dangers"
+    ]
+  },
+  "goedel_incompleteness": {
+    "archetype": "The Truth Revealer",
+    "paradox": "Mathematical systems cannot prove their own consistency",
+    "keywords": ["goedel", "incompleteness", "consistency", "decidability"],
+    "semantic_weight": 0.95,
+    "mathematical_domain": "logic_theory",
+    "philosophical_implications": [
+      "Limits of formal systems",
+      "Undecidable propositions",
+      "Mathematical truth vs provability"
+    ]
+  },
+  "choice_function": {
+    "archetype": "The Universal Selector",
+    "paradox": "Selection without criteria across infinite collections",
+    "keywords": ["choice", "function", "selector", "arbitrary", "selection"],
+    "semantic_weight": 0.85,
+    "mathematical_domain": "function_theory",
+    "philosophical_implications": [
+      "Non-algorithmic selection",
+      "Existence without construction",
+      "Mathematical platonism support"
+    ]
+  }
+}

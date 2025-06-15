@@ -308,6 +308,91 @@ class EntropyMonitor:
         
         return conditional_entropy, mutual_information
     
+    
+    def _calculate_system_complexity_adaptive(self, geoids: List[GeoidState], 
+                                            vault_info: Dict[str, Any],
+                                            system_phase: str = 'balanced') -> float:
+        """
+        Calculate system complexity with phase-aware weighting.
+        
+        This enhanced version adapts complexity calculation based on system phase,
+        providing more accurate complexity assessment for different operational modes.
+        """
+        if not geoids:
+            return 0.0
+        
+        # Calculate base complexity components
+        structural_complexity = self._calculate_structural_complexity(geoids)
+        interaction_complexity = self._calculate_interaction_complexity(geoids)
+        vault_complexity = self._calculate_vault_complexity(vault_info)
+        
+        # Phase-dependent weights
+        if system_phase == 'exploration':
+            weights = [0.5, 0.3, 0.2]  # Emphasize structural diversity
+        elif system_phase == 'consolidation':
+            weights = [0.3, 0.5, 0.2]  # Emphasize interactions
+        elif system_phase == 'optimization':
+            weights = [0.2, 0.3, 0.5]  # Emphasize vault efficiency
+        else:  # balanced
+            weights = [0.4, 0.4, 0.2]  # Default balanced approach
+        
+        # Calculate weighted complexity
+        total_complexity = (
+            structural_complexity * weights[0] +
+            interaction_complexity * weights[1] +
+            vault_complexity * weights[2]
+        )
+        
+        return total_complexity
+    
+    def _calculate_structural_complexity(self, geoids: List[GeoidState]) -> float:
+        """Calculate structural complexity (unique features)"""
+        unique_features = set()
+        for geoid in geoids:
+            unique_features.update(geoid.semantic_state.keys())
+        return len(unique_features)
+    
+    def _calculate_interaction_complexity(self, geoids: List[GeoidState]) -> float:
+        """Calculate interaction complexity (feature co-occurrence)"""
+        feature_cooccurrence = defaultdict(set)
+        for geoid in geoids:
+            features = list(geoid.semantic_state.keys())
+            for i, f1 in enumerate(features):
+                for f2 in features[i+1:]:
+                    feature_cooccurrence[f1].add(f2)
+                    feature_cooccurrence[f2].add(f1)
+        
+        return sum(len(connections) for connections in feature_cooccurrence.values())
+    
+    def _calculate_vault_complexity(self, vault_info: Dict[str, Any]) -> float:
+        """Calculate vault complexity"""
+        return sum(vault_info.get(f'{vault}_scars', 0) for vault in ['vault_a', 'vault_b'])
+    
+    def detect_system_phase(self, recent_measurements: List[EntropyMeasurement]) -> str:
+        """
+        Detect current system phase based on entropy and complexity trends.
+        """
+        if len(recent_measurements) < 3:
+            return 'balanced'
+        
+        # Extract trends
+        entropies = [m.shannon_entropy for m in recent_measurements[-5:]]
+        complexities = [m.system_complexity for m in recent_measurements[-5:]]
+        
+        # Calculate slopes
+        entropy_slope = np.polyfit(range(len(entropies)), entropies, 1)[0] if len(entropies) > 1 else 0
+        complexity_slope = np.polyfit(range(len(complexities)), complexities, 1)[0] if len(complexities) > 1 else 0
+        
+        # Phase detection logic
+        if entropy_slope > 0.1 and complexity_slope > 0.1:
+            return 'exploration'  # Increasing entropy and complexity
+        elif entropy_slope < -0.1:
+            return 'consolidation'  # Decreasing entropy
+        elif complexity_slope < -0.1:
+            return 'optimization'  # Decreasing complexity
+        else:
+            return 'balanced'  # Stable or mixed signals
+
     def _calculate_system_complexity(self, geoids: List[GeoidState], 
                                    vault_info: Dict[str, Any]) -> float:
         """

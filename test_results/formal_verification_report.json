@@ -1,0 +1,70 @@
+{
+  "verification_timestamp": "2025-06-13 18:01:45",
+  "total_theorems_verified": 5,
+  "axioms_used": [
+    "extensionality",
+    "empty_set",
+    "pairing",
+    "union",
+    "power_set",
+    "infinity",
+    "replacement",
+    "regularity",
+    "choice"
+  ],
+  "formal_proofs": {
+    "ac_equivalence": {
+      "statement": "Axiom of Choice \u27fa Zorn's Lemma \u27fa Well-Ordering Principle",
+      "verification_status": "formally_verified",
+      "proof_length": 24,
+      "axioms_required": [
+        "choice",
+        "replacement",
+        "union",
+        "power_set"
+      ]
+    },
+    "cantor": {
+      "statement": "For any set S, |S| < |P(S)|",
+      "verification_status": "formally_verified",
+      "proof_length": 10,
+      "axioms_required": [
+        "extensionality",
+        "power_set",
+        "replacement"
+      ]
+    },
+    "banach_tarski": {
+      "statement": "A solid ball can be decomposed into finitely many pieces and reassembled into two balls of the same size",
+      "verification_status": "outline_verified",
+      "proof_length": 14,
+      "axioms_required": [
+        "choice",
+        "infinity",
+        "replacement"
+      ]
+    },
+    "vector_space_basis": {
+      "statement": "Every vector space has a basis",
+      "verification_status": "formally_verified",
+      "proof_length": 14,
+      "axioms_required": [
+        "choice"
+      ]
+    },
+    "even_numbers": {
+      "statement": "Even numbers form a subgroup of (\u2124, +)",
+      "verification_status": "formally_verified",
+      "proof_length": 13,
+      "axioms_required": [
+        "basic_arithmetic",
+        "group_theory"
+      ]
+    }
+  },
+  "verification_summary": {
+    "fully_verified": 4,
+    "outline_verified": 1,
+    "unverified": 0
+  }
+}

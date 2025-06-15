@@ -5,6 +5,12 @@ KIMERA SWM Startup Script
 import uvicorn
 import sys
 import socket
+import os
+from pathlib import Path
+
+# Add the current directory to Python path so we can import backend
+sys.path.insert(0, str(Path(__file__).parent))
+
 from backend.api.main import app
 
 def find_free_port(start_port=8001, max_port=8010):
@@ -20,11 +26,12 @@ def find_free_port(start_port=8001, max_port=8010):
 
 if __name__ == "__main__":
     print("🚀 Starting KIMERA SWM API Server...")
+    print("🔧 Using upgraded BGE-M3 embedding model (1024 dimensions)")
     
     # Find a free port
     port = find_free_port()
     if port is None:
-        print("❌ No free ports available between 8000-8010")
+        print("❌ No free ports available between 8001-8010")
         sys.exit(1)
     
     print(f"📡 Server will start on http://localhost:{port}")

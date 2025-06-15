@@ -53,8 +53,16 @@ def crystallization_job() -> None:
         vector = _embedding_fn(scar.reason)
         new_geoid = GeoidDB(
             geoid_id=geoid_id,
-            symbolic_state={'principle': scar.reason},
-            metadata_json={},
+            symbolic_state={
+                'type': 'crystallized_scar', 
+                'principle': scar.reason,
+                'timestamp': datetime.utcnow().isoformat()
+            },
+            metadata_json={
+                'source_scar_id': scar.scar_id, 
+                'crystallization_date': datetime.utcnow().isoformat(),
+                'created_by': 'crystallization_process'
+            },
             semantic_state_json={},
             semantic_vector=vector,
         )

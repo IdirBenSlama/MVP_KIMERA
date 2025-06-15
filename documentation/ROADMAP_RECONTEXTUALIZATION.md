@@ -165,5 +165,196 @@ pytest tests/echoform/test_insight_grammar.py
 
 ---
 ## ♻️ Phase 5 – Hardening & Optimisation *(Post-launch, ongoing)*
-1. **Self-Tuning Governance Monitor**
-   * **New Module:** `
+
+### 5.1 Self-Tuning Governance Monitor
+* **New Module:** `backend/governance/self_tuning_monitor.py`
+* **Goal:** Continuously monitor and adjust system parameters based on performance metrics and user feedback patterns.
+* **Implementation:**
+  * `monitor_insight_quality_trends()`: Tracks quality metrics over time and identifies degradation patterns.
+  * `auto_adjust_thresholds()`: Dynamically adjusts entropy thresholds, coherence parameters, and activation decay constants.
+  * `generate_governance_reports()`: Produces periodic reports on system health and optimization recommendations.
+
+### 5.2 Advanced Pattern Recognition
+* **Enhancement to Meta-Insight Engine:** Add machine learning components for pattern detection.
+* **New Module:** `backend/ml/pattern_classifier.py`
+* **Features:**
+  * Clustering of similar insights for redundancy detection.
+  * Anomaly detection for unusual insight patterns that may indicate system drift.
+  * Predictive modeling for insight utility based on historical engagement data.
+
+### 5.3 Cross-Domain Knowledge Transfer
+* **New Module:** `backend/engines/knowledge_transfer.py`
+* **Goal:** Facilitate the application of insights from one domain to another through structured analogical reasoning.
+* **Implementation:**
+  * `identify_transferable_patterns(source_domain, target_domain)`: Maps structural similarities between domains.
+  * `generate_transfer_hypotheses()`: Creates testable hypotheses for cross-domain application.
+  * `validate_transfer_success()`: Tracks the success rate of cross-domain transfers.
+
+### 5.4 Insight Ecosystem Health Metrics
+* **New Module:** `backend/analytics/ecosystem_health.py`
+* **Metrics:**
+  * **Diversity Index:** Measures the variety of insight types and domains covered.
+  * **Coherence Stability:** Tracks fluctuations in global coherence over time.
+  * **Innovation Rate:** Measures the generation of novel vs. derivative insights.
+  * **Utility Convergence:** Tracks how quickly insights reach stable utility scores.
+
+### 5.5 Edge Case Handling & Robustness
+* **Contradiction Resolution Enhancement:**
+  * Handle circular contradictions and paradoxes.
+  * Implement confidence-weighted resolution strategies.
+  * Add support for temporal contradictions (insights that conflict across time).
+
+* **Memory Pressure Management:**
+  * Implement intelligent insight archiving based on utility decay curves.
+  * Add compression strategies for long-term insight storage.
+  * Develop insight resurrection mechanisms for archived high-utility insights.
+
+### 5.6 Documentation & Knowledge Base
+* **Complete API Documentation:**
+  * Update `docs/api/insight_endpoints.md` with all new endpoints.
+  * Add code examples and integration patterns.
+  * Document error handling and rate limiting strategies.
+
+* **Developer Guides:**
+  * `docs/guides/insight_engine_architecture.md`: Comprehensive system overview.
+  * `docs/guides/extending_insight_types.md`: Guide for adding new insight categories.
+  * `docs/guides/tuning_parameters.md`: Best practices for system optimization.
+
+* **Operational Runbooks:**
+  * `docs/operations/monitoring_insight_health.md`: Monitoring and alerting setup.
+  * `docs/operations/troubleshooting_insight_generation.md`: Common issues and solutions.
+  * `docs/operations/backup_and_recovery.md`: Data protection strategies for insight data.
+
+### 5.7 Performance Optimization
+* **Caching Strategies:**
+  * Implement insight result caching with intelligent invalidation.
+  * Add activation path memoization for frequently accessed patterns.
+  * Optimize database queries with materialized views for insight analytics.
+
+* **Parallel Processing:**
+  * Implement parallel insight generation for independent resonance events.
+  * Add async processing for non-critical insight lifecycle operations.
+  * Optimize symbolic chaos processing with vectorized operations.
+
+### 5.8 Integration Testing & Validation
+* **End-to-End Test Suite:**
+  * `tests/integration/test_full_insight_pipeline.py`: Complete workflow validation.
+  * `tests/performance/test_insight_latency.py`: Performance regression testing.
+  * `tests/chaos/test_insight_under_load.py`: Stress testing and chaos engineering.
+
+* **Acceptance Criteria:**
+  * System maintains < 100ms latency under normal load.
+  * Insight quality metrics remain stable over extended operation.
+  * Memory usage grows sub-linearly with insight volume.
+  * Zero data loss during insight lifecycle transitions.
+
+---
+## 🎯 Success Metrics & KPIs
+
+### Technical Metrics
+- **Latency:** < 100ms added per KCCL cycle
+- **Throughput:** Support for 1000+ concurrent insight generation requests
+- **Quality:** Maintain > 85% user engagement rate with generated insights
+- **Reliability:** 99.9% uptime for insight generation services
+
+### Business Metrics
+- **User Adoption:** Track active users of insight features
+- **Insight Utility:** Measure real-world application of generated insights
+- **System Learning:** Demonstrate improvement in insight quality over time
+- **Cross-Domain Innovation:** Track successful knowledge transfer events
+
+### Operational Metrics
+- **Resource Efficiency:** CPU/memory usage per insight generated
+- **Storage Growth:** Sustainable insight data growth patterns
+- **Maintenance Overhead:** Time spent on system tuning and optimization
+- **Error Rates:** < 0.1% insight generation failures
+
+---
+## 🚀 Deployment Strategy
+
+### Rollout Phases
+1. **Alpha (Internal):** Deploy to development environment with synthetic data
+2. **Beta (Limited):** Deploy to staging with select user groups
+3. **Gamma (Controlled):** Gradual production rollout with feature flags
+4. **General Availability:** Full production deployment with monitoring
+
+### Risk Mitigation
+- **Feature Flags:** All new insight features behind toggleable flags
+- **Circuit Breakers:** Automatic fallback when insight generation fails
+- **Monitoring:** Comprehensive alerting on all critical metrics
+- **Rollback Plan:** Ability to disable insight features without system restart
+
+### Post-Deployment
+- **Week 1-2:** Intensive monitoring and hotfix deployment
+- **Month 1:** Performance tuning based on production load patterns
+- **Month 2-3:** Feature refinement based on user feedback
+- **Ongoing:** Continuous optimization and enhancement
+
+---
+## 📋 Appendices
+
+### A. Glossary of Terms
+- **InsightScar:** Core data structure representing a generated insight
+- **Activation Cascade:** Process of following neural-like activation paths through the knowledge graph
+- **Symbolic Chaos:** Archetypal pattern matching and symbolic interpretation layer
+- **Meta-Insight:** Higher-order insights about the insight generation process itself
+- **Coherence Temperature:** System parameter controlling exploration vs. exploitation balance
+
+### B. Configuration Reference
+```json
+{
+  "insight_engine": {
+    "entropy_threshold": 2.5,
+    "activation_decay_lambda": 0.1,
+    "coherence_temperature_range": [0.1, 0.9],
+    "meta_insight_cycle_interval": 10,
+    "utility_score_decay_rate": 0.05
+  }
+}
+```
+
+### C. API Quick Reference
+```bash
+# Generate insights from resonance
+POST /api/v1/recontextualize/{resonance_id}
+
+# Retrieve insight details
+GET /api/v1/insights/{insight_id}
+
+# Search insights
+GET /api/v1/insights?type=analogy&domain=biology
+
+# Submit feedback
+POST /api/v1/insights/{insight_id}/feedback
+
+# Guided insight generation
+POST /api/v1/insights/generate
+```
+
+### D. Troubleshooting Quick Guide
+- **Low insight quality:** Check entropy thresholds and coherence parameters
+- **High latency:** Review activation cascade depth limits and caching configuration
+- **Memory growth:** Verify insight pruning policies and archival processes
+- **Contradictions:** Examine ERL validation rules and contradiction resolution logic
+
+---
+## 📝 Change Log
+
+### Version 0.3 (Current)
+- Added meta-cognitive capabilities and recursive insight generation
+- Enhanced lifecycle management with utility scoring
+- Introduced user-guided insight generation APIs
+- Implemented comprehensive monitoring and self-tuning features
+
+### Version 0.2
+- Core insight generation pipeline implementation
+- Basic validation and contradiction detection
+- Initial storage and indexing capabilities
+
+### Version 0.1
+- Initial roadmap and architectural design
+- Core data structures and schema definitions
+- Foundational testing framework
+
+---
+*This roadmap is a living document and will be updated as the project evolves. For the latest version, check the project repository.*

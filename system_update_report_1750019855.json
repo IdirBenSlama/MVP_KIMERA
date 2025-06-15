@@ -1,0 +1,32 @@
+{
+  "timestamp": 1750018457.1121645,
+  "updates_applied": [
+    "embedding_model_updated",
+    "database_optimized",
+    "vault_system_optimized",
+    "system_tests_completed",
+    "system_cleanup_completed"
+  ],
+  "errors": [
+    {
+      "command": "pip install -r requirements.txt --upgrade",
+      "error": "error: resolution-too-deep\n\nDependency resolution exceeded maximum depth\n\nPip cannot resolve the current dependencies as the dependency graph is too complex for pip to solve efficiently.\n\nhint: Try adding lower bounds to constrain your dependencies, for example: 'package>=2.0.0' instead of just 'package'.\n\nLink: https://pip.pypa.io/en/stable/topics/dependency-resolution/#handling-resolution-too-deep-errors"
+    },
+    {
+      "component": "monitoring_system",
+      "error": "cannot import name 'get_system_metrics' from 'backend.monitoring.telemetry' (D:\\DEV\\Kimera_SWM_Alpha_Prototype V0.1 140625\\backend\\monitoring\\telemetry.py)"
+    }
+  ],
+  "performance_improvements": [
+    "Embedding model stats: {'total_embeddings': 1, 'total_time': 0.0004134178161621094, 'avg_time_per_embedding': 0.0004134178161621094, 'model_load_time': 0.0008213520050048828}",
+    "Database optimization completed",
+    "Vault rebalancing: moved 0 scars",
+    "\u26a0\ufe0f API health check skipped: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /system/status (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002677891E900>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+    "\u2705 Embedding system test passed",
+    "\u274c Database connection test failed: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')",
+    "Cleaned up 8 temporary items"
+  ],
+  "status": "completed",
+  "completion_time": 1750019855.6352196,
+  "duration": 1398.5230550765991
+}

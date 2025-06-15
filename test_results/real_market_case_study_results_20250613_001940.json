@@ -1,0 +1,46 @@
+{
+  "study_period": [
+    "2025-05-01T00:00:00",
+    "2025-06-12T00:00:00"
+  ],
+  "total_data_points": 300,
+  "contradictions_detected": 17,
+  "market_events_identified": 3,
+  "correlation_breakdowns": 2,
+  "volatility_spikes": 0,
+  "semantic_insights": [
+    {
+      "insight_type": "contradiction_severity_analysis",
+      "data": {
+        "medium": 14,
+        "high": 3
+      },
+      "description": "Distribution of contradiction severities detected"
+    },
+    {
+      "insight_type": "temporal_contradiction_pattern",
+      "data": {
+        "2025-05-01": 3,
+        "2025-06-02": 1,
+        "2025-05-12": 1,
+        "2025-05-02": 2,
+        "2025-06-13": 2,
+        "2025-05-14": 1,
+        "2025-05-13": 1,
+        "2025-06-11": 1,
+        "2025-06-10": 1,
+        "2025-05-30": 1,
+        "2025-05-21": 1,
+        "2025-05-07": 1,
+        "2025-06-09": 1
+      },
+      "description": "Daily contradiction occurrence patterns"
+    }
+  ],
+  "performance_metrics": {
+    "data_collection_success_rate": 1.0,
+    "contradiction_detection_rate": 0.056666666666666664,
+    "average_confidence_score": 0.5843817365135155,
+    "correlation_analysis_coverage": 1.0
+  }
+}

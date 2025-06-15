@@ -1,0 +1,802 @@
+2025-06-15 13:01:43,764 - INFO - 
+==================================================
+2025-06-15 13:01:43,765 - INFO - Step: Update Dependencies
+2025-06-15 13:01:43,765 - INFO - ==================================================
+2025-06-15 13:01:43,769 - INFO - Running: Upgrading pip
+2025-06-15 13:01:57,594 - INFO - Running: Installing/updating requirements
+2025-06-15 13:14:17,123 - INFO - 
+==================================================
+2025-06-15 13:14:17,124 - INFO - Step: Update Dependencies
+2025-06-15 13:14:17,124 - INFO - ==================================================
+2025-06-15 13:14:17,129 - INFO - Running: Upgrading pip
+2025-06-15 13:14:19,526 - INFO - Running: Installing/updating requirements
+2025-06-15 13:24:59,543 - ERROR - Error: error: resolution-too-deep
+
+Dependency resolution exceeded maximum depth
+
+Pip cannot resolve the current dependencies as the dependency graph is too complex for pip to solve efficiently.
+
+hint: Try adding lower bounds to constrain your dependencies, for example: 'package>=2.0.0' instead of just 'package'.
+
+Link: https://pip.pypa.io/en/stable/topics/dependency-resolution/#handling-resolution-too-deep-errors
+2025-06-15 13:24:59,547 - INFO - 
+==================================================
+2025-06-15 13:24:59,547 - INFO - Step: Update Embedding Model
+2025-06-15 13:24:59,548 - INFO - ==================================================
+2025-06-15 13:25:29,961 - INFO - Embedding model will use device: CUDA
+2025-06-15 13:25:29,961 - INFO - Initializing Transformers embedding model 'BAAI/bge-m3' on CUDA...
+2025-06-15 13:25:29,962 - ERROR - Failed to load any embedding model: 'NoneType' object has no attribute 'from_pretrained'. Using dummy encoder.
+2025-06-15 13:25:29,962 - INFO - Model initialization completed in 0.00s
+2025-06-15 13:25:29,962 - WARNING - No valid embedding model available. Using dummy encoder.
+2025-06-15 13:25:29,969 - INFO - 
+==================================================
+2025-06-15 13:25:29,970 - INFO - Step: Optimize Database
+2025-06-15 13:25:29,970 - INFO - ==================================================
+2025-06-15 13:25:31,129 - INFO - 
+==================================================
+2025-06-15 13:25:31,129 - INFO - Step: Optimize Vault System
+2025-06-15 13:25:31,129 - INFO - ==================================================
+2025-06-15 13:25:31,143 - INFO - Rebalanced vaults: moved 0 scars
+2025-06-15 13:25:31,152 - INFO - Vault A: 2 scars, Vault B: 1 scars
+2025-06-15 13:25:31,157 - INFO - 
+==================================================
+2025-06-15 13:25:31,157 - INFO - Step: Update Monitoring System
+2025-06-15 13:25:31,157 - INFO - ==================================================
+2025-06-15 13:25:31,736 - ERROR - Monitoring system update failed: cannot import name 'get_system_metrics' from 'backend.monitoring.telemetry' (D:\DEV\Kimera_SWM_Alpha_Prototype V0.1 140625\backend\monitoring\telemetry.py)
+2025-06-15 13:25:31,740 - INFO - 
+==================================================
+2025-06-15 13:25:31,740 - INFO - Step: Run System Tests
+2025-06-15 13:25:31,740 - INFO - ==================================================
+2025-06-15 13:25:35,837 - WARNING - No valid embedding model available. Using dummy encoder.
+2025-06-15 13:25:35,852 - INFO - 
+==================================================
+2025-06-15 13:25:35,852 - INFO - Step: Cleanup System
+2025-06-15 13:25:35,852 - INFO - ==================================================
+2025-06-15 13:25:40,838 - INFO - Cleaned up 1466 items
+2025-06-15 13:25:40,843 - ERROR - Update failed with unexpected error: 'charmap' codec can't encode character '\u2705' in position 2: character maps to <undefined>
+2025-06-15 13:37:22,012 - ERROR - Error: error: resolution-too-deep
+
+Dependency resolution exceeded maximum depth
+
+Pip cannot resolve the current dependencies as the dependency graph is too complex for pip to solve efficiently.
+
+hint: Try adding lower bounds to constrain your dependencies, for example: 'package>=2.0.0' instead of just 'package'.
+
+Link: https://pip.pypa.io/en/stable/topics/dependency-resolution/#handling-resolution-too-deep-errors
+2025-06-15 13:37:22,017 - INFO - 
+==================================================
+2025-06-15 13:37:22,017 - INFO - Step: Update Embedding Model
+2025-06-15 13:37:22,017 - INFO - ==================================================
+2025-06-15 13:37:28,177 - INFO - Embedding model will use device: CUDA
+2025-06-15 13:37:28,178 - INFO - Initializing Transformers embedding model 'BAAI/bge-m3' on CUDA...
+2025-06-15 13:37:28,178 - ERROR - Failed to load any embedding model: 'NoneType' object has no attribute 'from_pretrained'. Using dummy encoder.
+2025-06-15 13:37:28,179 - INFO - Model initialization completed in 0.00s
+2025-06-15 13:37:28,179 - WARNING - No valid embedding model available. Using dummy encoder.
+2025-06-15 13:37:28,186 - INFO - 
+==================================================
+2025-06-15 13:37:28,186 - INFO - Step: Optimize Database
+2025-06-15 13:37:28,187 - INFO - ==================================================
+2025-06-15 13:37:28,649 - INFO - 
+==================================================
+2025-06-15 13:37:28,649 - INFO - Step: Optimize Vault System
+2025-06-15 13:37:28,650 - INFO - ==================================================
+2025-06-15 13:37:28,672 - INFO - Rebalanced vaults: moved 0 scars
+2025-06-15 13:37:28,678 - INFO - Vault A: 2 scars, Vault B: 1 scars
+2025-06-15 13:37:28,682 - INFO - 
+==================================================
+2025-06-15 13:37:28,683 - INFO - Step: Update Monitoring System
+2025-06-15 13:37:28,683 - INFO - ==================================================
+2025-06-15 13:37:29,367 - ERROR - Monitoring system update failed: cannot import name 'get_system_metrics' from 'backend.monitoring.telemetry' (D:\DEV\Kimera_SWM_Alpha_Prototype V0.1 140625\backend\monitoring\telemetry.py)
+2025-06-15 13:37:29,371 - INFO - 
+==================================================
+2025-06-15 13:37:29,371 - INFO - Step: Run System Tests
+2025-06-15 13:37:29,371 - INFO - ==================================================
+2025-06-15 13:37:33,447 - WARNING - No valid embedding model available. Using dummy encoder.
+2025-06-15 13:37:33,466 - INFO - 
+==================================================
+2025-06-15 13:37:33,466 - INFO - Step: Cleanup System
+2025-06-15 13:37:33,466 - INFO - ==================================================
+2025-06-15 13:37:35,630 - INFO - Cleaned up 8 items
+2025-06-15 13:37:35,636 - ERROR - Update failed with unexpected error: 'charmap' codec can't encode character '\u2705' in position 2: character maps to <undefined>
+2025-06-15 14:54:28,571 - INFO - 🚀 Starting Kimera SWM System Update...
+2025-06-15 14:54:28,571 - INFO - 
+==================================================
+2025-06-15 14:54:28,571 - INFO - Step: Update Dependencies
+2025-06-15 14:54:28,572 - INFO - ==================================================
+2025-06-15 14:54:28,572 - INFO - 🔄 Updating Python dependencies...
+2025-06-15 14:54:28,572 - INFO - Running: Upgrading pip
+2025-06-15 14:54:34,201 - INFO - ✅ Success: Upgrading pip
+2025-06-15 14:54:34,202 - INFO - Running: Installing/updating requirements
+2025-06-15 15:16:54,810 - ERROR - ❌ Failed: Installing/updating requirements
+2025-06-15 15:16:54,811 - ERROR - Error: error: resolution-too-deep
+
+Dependency resolution exceeded maximum depth
+
+Pip cannot resolve the current dependencies as the dependency graph is too complex for pip to solve efficiently.
+
+hint: Try adding lower bounds to constrain your dependencies, for example: 'package>=2.0.0' instead of just 'package'.
+
+Link: https://pip.pypa.io/en/stable/topics/dependency-resolution/#handling-resolution-too-deep-errors
+2025-06-15 15:16:54,812 - ERROR - ❌ Update Dependencies failed
+2025-06-15 15:16:54,812 - INFO - 
+==================================================
+2025-06-15 15:16:54,813 - INFO - Step: Update Embedding Model
+2025-06-15 15:16:54,813 - INFO - ==================================================
+2025-06-15 15:16:54,813 - INFO - 🔄 Updating embedding model...
+2025-06-15 15:17:00,898 - INFO - Embedding model will use device: CUDA
+2025-06-15 15:17:00,898 - INFO - Initializing ONNX embedding model 'BAAI/bge-m3' on CUDA...
+2025-06-15 15:17:00,899 - WARNING - ONNX model not found at models\bge-m3-onnx\model.onnx. Falling back to Transformers.
+2025-06-15 15:17:00,899 - INFO - Initializing Transformers embedding model 'BAAI/bge-m3' on CUDA...
+2025-06-15 15:17:11,694 - INFO - Transformers embedding model loaded successfully.
+2025-06-15 15:17:11,695 - INFO - Model initialization completed in 10.80s
+2025-06-15 15:17:12,106 - INFO - ✅ BGE-M3 embedding model working correctly
+2025-06-15 15:17:12,106 - INFO - ✅ Update Embedding Model completed successfully
+2025-06-15 15:17:12,107 - INFO - 
+==================================================
+2025-06-15 15:17:12,107 - INFO - Step: Optimize Database
+2025-06-15 15:17:12,107 - INFO - ==================================================
+2025-06-15 15:17:12,107 - INFO - 🔄 Optimizing database...
+2025-06-15 15:17:12,485 - INFO - ✅ Optimize Database completed successfully
+2025-06-15 15:17:12,485 - INFO - 
+==================================================
+2025-06-15 15:17:12,486 - INFO - Step: Optimize Vault System
+2025-06-15 15:17:12,486 - INFO - ==================================================
+2025-06-15 15:17:12,486 - INFO - 🔄 Optimizing vault system...
+2025-06-15 15:17:12,497 - INFO - Rebalanced vaults: moved 0 scars
+2025-06-15 15:17:12,503 - INFO - Vault A: 2 scars, Vault B: 1 scars
+2025-06-15 15:17:12,504 - INFO - ✅ Optimize Vault System completed successfully
+2025-06-15 15:17:12,504 - INFO - 
+==================================================
+2025-06-15 15:17:12,504 - INFO - Step: Update Monitoring System
+2025-06-15 15:17:12,504 - INFO - ==================================================
+2025-06-15 15:17:12,504 - INFO - 🔄 Updating monitoring system...
+2025-06-15 15:17:12,900 - ERROR - Monitoring system update failed: cannot import name 'get_system_metrics' from 'backend.monitoring.telemetry' (D:\DEV\Kimera_SWM_Alpha_Prototype V0.1 140625\backend\monitoring\telemetry.py)
+2025-06-15 15:17:12,901 - ERROR - ❌ Update Monitoring System failed
+2025-06-15 15:17:12,901 - INFO - 
+==================================================
+2025-06-15 15:17:12,901 - INFO - Step: Run System Tests
+2025-06-15 15:17:12,901 - INFO - ==================================================
+2025-06-15 15:17:12,902 - INFO - 🔄 Running system tests...
+2025-06-15 15:17:16,992 - INFO - ⚠️ API health check skipped: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /system/status (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000019D91862510>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-06-15 15:17:16,992 - INFO - ✅ Embedding system test passed
+2025-06-15 15:17:16,993 - INFO - ❌ Database connection test failed: Textual SQL expression 'SELECT 1' should be explicitly declared as text('SELECT 1')
+2025-06-15 15:17:16,993 - ERROR - ❌ Run System Tests failed
+2025-06-15 15:17:16,993 - INFO - 
+==================================================
+2025-06-15 15:17:16,994 - INFO - Step: Cleanup System
+2025-06-15 15:17:16,994 - INFO - ==================================================
+2025-06-15 15:17:16,994 - INFO - 🔄 Cleaning up system...
+2025-06-15 15:17:19,151 - INFO - Cleaned up 12 items
+2025-06-15 15:17:19,151 - INFO - ✅ Cleanup System completed successfully
+2025-06-15 15:17:19,153 - ERROR - Update failed with unexpected error: 'charmap' codec can't encode character '\u2705' in position 2: character maps to <undefined>
+2025-06-15 15:29:36,652 - INFO - 🚀 Starting Kimera SWM System Update...
+2025-06-15 15:29:36,653 - INFO - 
+==================================================
+2025-06-15 15:29:36,653 - INFO - Step: Update Dependencies
+2025-06-15 15:29:36,653 - INFO - ==================================================
+2025-06-15 15:29:36,653 - INFO - [UPDATING] Python dependencies...
+2025-06-15 15:29:36,653 - INFO - Running: Upgrading pip
+2025-06-15 15:29:39,337 - INFO - [SUCCESS] Upgrading pip
+2025-06-15 15:29:39,337 - INFO - Running: Installing/updating requirements
+2025-06-15 15:30:40,713 - ERROR - [FAILED] Installing/updating requirements
+2025-06-15 15:30:40,713 - ERROR - Error: error: subprocess-exited-with-error
+  
+  Getting requirements to build wheel did not run successfully.
+  exit code: 1
+  
+  [48 lines of output]
+  Traceback (most recent call last):
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 389, in <module>
+      main()
+      ~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 373, in main
+      json_out["return_val"] = hook(**hook_input["kwargs"])
+                               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 143, in get_requires_for_build_wheel
+      return hook(config_settings)
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-dvmg8o76\overlay\Lib\site-packages\setuptools\build_meta.py", line 331, in get_requires_for_build_wheel
+      return self._get_build_requires(config_settings, requirements=[])
+             ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-dvmg8o76\overlay\Lib\site-packages\setuptools\build_meta.py", line 301, in _get_build_requires
+      self.run_setup()
+      ~~~~~~~~~~~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-dvmg8o76\overlay\Lib\site-packages\setuptools\build_meta.py", line 512, in run_setup
+      super().run_setup(setup_script=setup_script)
+      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-dvmg8o76\overlay\Lib\site-packages\setuptools\build_meta.py", line 317, in run_setup
+      exec(code, locals())
+      ~~~~^^^^^^^^^^^^^^^^
+    File "<string>", line 128, in <module>
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 414, in check_call
+      retcode = call(*popenargs, **kwargs)
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 395, in call
+      with Popen(*popenargs, **kwargs) as p:
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1039, in __init__
+      self._execute_child(args, executable, preexec_fn, close_fds,
+      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          pass_fds, cwd, env,
+                          ^^^^^^^^^^^^^^^^^^^
+      ...<5 lines>...
+                          gid, gids, uid, umask,
+                          ^^^^^^^^^^^^^^^^^^^^^^
+                          start_new_session, process_group)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1551, in _execute_child
+      hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                         ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                               # no special security
+                               ^^^^^^^^^^^^^^^^^^^^^
+      ...<4 lines>...
+                               cwd,
+                               ^^^^
+                               startupinfo)
+                               ^^^^^^^^^^^^
+  FileNotFoundError: [WinError 2] The system cannot find the file specified
+  [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: subprocess-exited-with-error
+
+Getting requirements to build wheel did not run successfully.
+exit code: 1
+
+See above for output.
+
+note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-06-15 15:30:40,720 - INFO - Main requirements failed, trying minimal requirements...
+2025-06-15 15:30:40,720 - INFO - Running: Installing/updating minimal requirements
+2025-06-15 15:31:05,630 - ERROR - [FAILED] Installing/updating minimal requirements
+2025-06-15 15:31:05,630 - ERROR - Error: error: subprocess-exited-with-error
+  
+  Getting requirements to build wheel did not run successfully.
+  exit code: 1
+  
+  [48 lines of output]
+  Traceback (most recent call last):
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 389, in <module>
+      main()
+      ~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 373, in main
+      json_out["return_val"] = hook(**hook_input["kwargs"])
+                               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 143, in get_requires_for_build_wheel
+      return hook(config_settings)
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-cc_o0ykp\overlay\Lib\site-packages\setuptools\build_meta.py", line 331, in get_requires_for_build_wheel
+      return self._get_build_requires(config_settings, requirements=[])
+             ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-cc_o0ykp\overlay\Lib\site-packages\setuptools\build_meta.py", line 301, in _get_build_requires
+      self.run_setup()
+      ~~~~~~~~~~~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-cc_o0ykp\overlay\Lib\site-packages\setuptools\build_meta.py", line 512, in run_setup
+      super().run_setup(setup_script=setup_script)
+      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-cc_o0ykp\overlay\Lib\site-packages\setuptools\build_meta.py", line 317, in run_setup
+      exec(code, locals())
+      ~~~~^^^^^^^^^^^^^^^^
+    File "<string>", line 128, in <module>
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 414, in check_call
+      retcode = call(*popenargs, **kwargs)
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 395, in call
+      with Popen(*popenargs, **kwargs) as p:
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1039, in __init__
+      self._execute_child(args, executable, preexec_fn, close_fds,
+      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          pass_fds, cwd, env,
+                          ^^^^^^^^^^^^^^^^^^^
+      ...<5 lines>...
+                          gid, gids, uid, umask,
+                          ^^^^^^^^^^^^^^^^^^^^^^
+                          start_new_session, process_group)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1551, in _execute_child
+      hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                         ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                               # no special security
+                               ^^^^^^^^^^^^^^^^^^^^^
+      ...<4 lines>...
+                               cwd,
+                               ^^^^
+                               startupinfo)
+                               ^^^^^^^^^^^^
+  FileNotFoundError: [WinError 2] The system cannot find the file specified
+  [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: subprocess-exited-with-error
+
+Getting requirements to build wheel did not run successfully.
+exit code: 1
+
+See above for output.
+
+note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-06-15 15:31:05,637 - ERROR - ❌ Update Dependencies failed
+2025-06-15 15:31:05,638 - INFO - 
+==================================================
+2025-06-15 15:31:05,638 - INFO - Step: Update Embedding Model
+2025-06-15 15:31:05,638 - INFO - ==================================================
+2025-06-15 15:31:05,638 - INFO - [UPDATING] Embedding model...
+2025-06-15 15:31:11,612 - INFO - Embedding model will use device: CUDA
+2025-06-15 15:31:11,612 - INFO - Initializing ONNX embedding model 'BAAI/bge-m3' on CUDA...
+2025-06-15 15:31:11,613 - WARNING - ONNX model not found at models\bge-m3-onnx\model.onnx. Falling back to Transformers.
+2025-06-15 15:31:11,613 - INFO - Initializing Transformers embedding model 'BAAI/bge-m3' on CUDA...
+2025-06-15 15:31:21,394 - INFO - Transformers embedding model loaded successfully.
+2025-06-15 15:31:21,395 - INFO - Model initialization completed in 9.78s
+2025-06-15 15:31:21,693 - INFO - ✅ BGE-M3 embedding model working correctly
+2025-06-15 15:31:21,693 - INFO - ✅ Update Embedding Model completed successfully
+2025-06-15 15:31:21,694 - INFO - 
+==================================================
+2025-06-15 15:31:21,694 - INFO - Step: Optimize Database
+2025-06-15 15:31:21,694 - INFO - ==================================================
+2025-06-15 15:31:21,694 - INFO - [OPTIMIZING] Database...
+2025-06-15 15:31:22,111 - INFO - ✅ Optimize Database completed successfully
+2025-06-15 15:31:22,111 - INFO - 
+==================================================
+2025-06-15 15:31:22,111 - INFO - Step: Optimize Vault System
+2025-06-15 15:31:22,112 - INFO - ==================================================
+2025-06-15 15:31:22,112 - INFO - 🔄 Optimizing vault system...
+2025-06-15 15:31:22,131 - INFO - Rebalanced vaults: moved 0 scars
+2025-06-15 15:31:22,138 - INFO - Vault A: 2 scars, Vault B: 1 scars
+2025-06-15 15:31:22,138 - INFO - ✅ Optimize Vault System completed successfully
+2025-06-15 15:31:22,139 - INFO - 
+==================================================
+2025-06-15 15:31:22,139 - INFO - Step: Update Monitoring System
+2025-06-15 15:31:22,139 - INFO - ==================================================
+2025-06-15 15:31:22,139 - INFO - 🔄 Updating monitoring system...
+2025-06-15 15:31:28,972 - INFO - System metrics collected: 4 metrics
+2025-06-15 15:31:28,973 - INFO - ✅ Update Monitoring System completed successfully
+2025-06-15 15:31:28,973 - INFO - 
+==================================================
+2025-06-15 15:31:28,973 - INFO - Step: Run System Tests
+2025-06-15 15:31:28,973 - INFO - ==================================================
+2025-06-15 15:31:28,973 - INFO - 🔄 Running system tests...
+2025-06-15 15:31:33,066 - INFO - ⚠️ API health check skipped: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /system/status (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001FF0C489D30>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-06-15 15:31:33,067 - INFO - ✅ Embedding system test passed
+2025-06-15 15:31:33,067 - INFO - ✅ Database connection test passed
+2025-06-15 15:31:33,067 - INFO - ✅ Run System Tests completed successfully
+2025-06-15 15:31:33,067 - INFO - 
+==================================================
+2025-06-15 15:31:33,068 - INFO - Step: Cleanup System
+2025-06-15 15:31:33,068 - INFO - ==================================================
+2025-06-15 15:31:33,068 - INFO - 🔄 Cleaning up system...
+2025-06-15 15:31:35,138 - INFO - Cleaned up 12 items
+2025-06-15 15:31:35,139 - INFO - ✅ Cleanup System completed successfully
+2025-06-15 15:31:35,140 - ERROR - Update failed with unexpected error: 'charmap' codec can't encode character '\u2705' in position 2: character maps to <undefined>
+2025-06-15 16:01:52,852 - INFO - 🚀 Starting Kimera SWM System Update...
+2025-06-15 16:01:52,853 - INFO - 
+==================================================
+2025-06-15 16:01:52,853 - INFO - Step: Update Dependencies
+2025-06-15 16:01:52,853 - INFO - ==================================================
+2025-06-15 16:01:52,853 - INFO - [UPDATING] Python dependencies...
+2025-06-15 16:01:52,854 - INFO - Running: Upgrading pip
+2025-06-15 16:01:55,685 - INFO - [SUCCESS] Upgrading pip
+2025-06-15 16:01:55,686 - INFO - Running: Installing/updating requirements
+2025-06-15 16:02:46,976 - ERROR - [FAILED] Installing/updating requirements
+2025-06-15 16:02:46,976 - ERROR - Error: error: subprocess-exited-with-error
+  
+  Getting requirements to build wheel did not run successfully.
+  exit code: 1
+  
+  [48 lines of output]
+  Traceback (most recent call last):
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 389, in <module>
+      main()
+      ~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 373, in main
+      json_out["return_val"] = hook(**hook_input["kwargs"])
+                               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 143, in get_requires_for_build_wheel
+      return hook(config_settings)
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-kuhs9ie8\overlay\Lib\site-packages\setuptools\build_meta.py", line 331, in get_requires_for_build_wheel
+      return self._get_build_requires(config_settings, requirements=[])
+             ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-kuhs9ie8\overlay\Lib\site-packages\setuptools\build_meta.py", line 301, in _get_build_requires
+      self.run_setup()
+      ~~~~~~~~~~~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-kuhs9ie8\overlay\Lib\site-packages\setuptools\build_meta.py", line 512, in run_setup
+      super().run_setup(setup_script=setup_script)
+      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-kuhs9ie8\overlay\Lib\site-packages\setuptools\build_meta.py", line 317, in run_setup
+      exec(code, locals())
+      ~~~~^^^^^^^^^^^^^^^^
+    File "<string>", line 128, in <module>
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 414, in check_call
+      retcode = call(*popenargs, **kwargs)
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 395, in call
+      with Popen(*popenargs, **kwargs) as p:
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1039, in __init__
+      self._execute_child(args, executable, preexec_fn, close_fds,
+      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          pass_fds, cwd, env,
+                          ^^^^^^^^^^^^^^^^^^^
+      ...<5 lines>...
+                          gid, gids, uid, umask,
+                          ^^^^^^^^^^^^^^^^^^^^^^
+                          start_new_session, process_group)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1551, in _execute_child
+      hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                         ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                               # no special security
+                               ^^^^^^^^^^^^^^^^^^^^^
+      ...<4 lines>...
+                               cwd,
+                               ^^^^
+                               startupinfo)
+                               ^^^^^^^^^^^^
+  FileNotFoundError: [WinError 2] The system cannot find the file specified
+  [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: subprocess-exited-with-error
+
+Getting requirements to build wheel did not run successfully.
+exit code: 1
+
+See above for output.
+
+note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-06-15 16:02:46,983 - INFO - Main requirements failed, trying alternative strategies...
+2025-06-15 16:02:46,983 - INFO - Running: Installing/updating minimal requirements
+2025-06-15 16:03:08,713 - ERROR - [FAILED] Installing/updating minimal requirements
+2025-06-15 16:03:08,714 - ERROR - Error: error: subprocess-exited-with-error
+  
+  Getting requirements to build wheel did not run successfully.
+  exit code: 1
+  
+  [48 lines of output]
+  Traceback (most recent call last):
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 389, in <module>
+      main()
+      ~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 373, in main
+      json_out["return_val"] = hook(**hook_input["kwargs"])
+                               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 143, in get_requires_for_build_wheel
+      return hook(config_settings)
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-ftpowieg\overlay\Lib\site-packages\setuptools\build_meta.py", line 331, in get_requires_for_build_wheel
+      return self._get_build_requires(config_settings, requirements=[])
+             ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-ftpowieg\overlay\Lib\site-packages\setuptools\build_meta.py", line 301, in _get_build_requires
+      self.run_setup()
+      ~~~~~~~~~~~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-ftpowieg\overlay\Lib\site-packages\setuptools\build_meta.py", line 512, in run_setup
+      super().run_setup(setup_script=setup_script)
+      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-ftpowieg\overlay\Lib\site-packages\setuptools\build_meta.py", line 317, in run_setup
+      exec(code, locals())
+      ~~~~^^^^^^^^^^^^^^^^
+    File "<string>", line 128, in <module>
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 414, in check_call
+      retcode = call(*popenargs, **kwargs)
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 395, in call
+      with Popen(*popenargs, **kwargs) as p:
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1039, in __init__
+      self._execute_child(args, executable, preexec_fn, close_fds,
+      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          pass_fds, cwd, env,
+                          ^^^^^^^^^^^^^^^^^^^
+      ...<5 lines>...
+                          gid, gids, uid, umask,
+                          ^^^^^^^^^^^^^^^^^^^^^^
+                          start_new_session, process_group)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1551, in _execute_child
+      hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                         ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                               # no special security
+                               ^^^^^^^^^^^^^^^^^^^^^
+      ...<4 lines>...
+                               cwd,
+                               ^^^^
+                               startupinfo)
+                               ^^^^^^^^^^^^
+  FileNotFoundError: [WinError 2] The system cannot find the file specified
+  [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: subprocess-exited-with-error
+
+Getting requirements to build wheel did not run successfully.
+exit code: 1
+
+See above for output.
+
+note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-06-15 16:03:08,720 - INFO - Minimal requirements failed, trying individual core packages...
+2025-06-15 16:03:08,720 - INFO - Running: Installing fastapi
+2025-06-15 16:03:11,677 - INFO - [SUCCESS] Installing fastapi
+2025-06-15 16:03:11,678 - INFO - Running: Installing uvicorn[standard]
+2025-06-15 16:03:26,610 - INFO - [SUCCESS] Installing uvicorn[standard]
+2025-06-15 16:03:26,610 - INFO - Running: Installing pydantic
+2025-06-15 16:03:32,742 - INFO - [SUCCESS] Installing pydantic
+2025-06-15 16:03:32,742 - INFO - Running: Installing sqlalchemy
+2025-06-15 16:03:35,667 - INFO - [SUCCESS] Installing sqlalchemy
+2025-06-15 16:03:35,668 - INFO - Running: Installing torch
+2025-06-15 16:03:38,364 - INFO - [SUCCESS] Installing torch
+2025-06-15 16:03:38,365 - INFO - Running: Installing transformers
+2025-06-15 16:03:41,177 - INFO - [SUCCESS] Installing transformers
+2025-06-15 16:03:41,178 - INFO - Running: Installing numpy
+2025-06-15 16:03:44,171 - INFO - [SUCCESS] Installing numpy
+2025-06-15 16:03:44,171 - INFO - Running: Installing requests
+2025-06-15 16:03:47,342 - INFO - [SUCCESS] Installing requests
+2025-06-15 16:03:47,343 - INFO - Running: Installing psutil
+2025-06-15 16:03:49,933 - INFO - [SUCCESS] Installing psutil
+2025-06-15 16:03:49,933 - INFO - Successfully installed 9/9 core packages
+2025-06-15 16:03:49,934 - INFO - ✅ Update Dependencies completed successfully
+2025-06-15 16:03:49,934 - INFO - 
+==================================================
+2025-06-15 16:03:49,934 - INFO - Step: Update Embedding Model
+2025-06-15 16:03:49,934 - INFO - ==================================================
+2025-06-15 16:03:49,935 - INFO - [UPDATING] Embedding model...
+2025-06-15 16:03:56,171 - INFO - Embedding model will use device: CUDA
+2025-06-15 16:03:56,172 - INFO - Initializing ONNX embedding model 'BAAI/bge-m3' on CUDA...
+2025-06-15 16:03:56,172 - WARNING - ONNX model not found at models\bge-m3-onnx\model.onnx. Falling back to Transformers.
+2025-06-15 16:03:56,172 - INFO - Initializing Transformers embedding model 'BAAI/bge-m3' on CUDA...
+2025-06-15 16:04:06,955 - INFO - Transformers embedding model loaded successfully.
+2025-06-15 16:04:06,956 - INFO - Model initialization completed in 10.78s
+2025-06-15 16:04:07,246 - INFO - ✅ BGE-M3 embedding model working correctly
+2025-06-15 16:04:07,247 - INFO - ✅ Update Embedding Model completed successfully
+2025-06-15 16:04:07,247 - INFO - 
+==================================================
+2025-06-15 16:04:07,248 - INFO - Step: Optimize Database
+2025-06-15 16:04:07,248 - INFO - ==================================================
+2025-06-15 16:04:07,248 - INFO - [OPTIMIZING] Database...
+2025-06-15 16:04:07,599 - INFO - ✅ Optimize Database completed successfully
+2025-06-15 16:04:07,599 - INFO - 
+==================================================
+2025-06-15 16:04:07,599 - INFO - Step: Optimize Vault System
+2025-06-15 16:04:07,600 - INFO - ==================================================
+2025-06-15 16:04:07,600 - INFO - 🔄 Optimizing vault system...
+2025-06-15 16:04:07,619 - INFO - Rebalanced vaults: moved 0 scars
+2025-06-15 16:04:07,624 - INFO - Vault A: 2 scars, Vault B: 1 scars
+2025-06-15 16:04:07,625 - INFO - ✅ Optimize Vault System completed successfully
+2025-06-15 16:04:07,625 - INFO - 
+==================================================
+2025-06-15 16:04:07,625 - INFO - Step: Update Monitoring System
+2025-06-15 16:04:07,626 - INFO - ==================================================
+2025-06-15 16:04:07,626 - INFO - 🔄 Updating monitoring system...
+2025-06-15 16:04:13,716 - INFO - System metrics collected: 4 metrics
+2025-06-15 16:04:13,717 - INFO - ✅ Update Monitoring System completed successfully
+2025-06-15 16:04:13,717 - INFO - 
+==================================================
+2025-06-15 16:04:13,717 - INFO - Step: Run System Tests
+2025-06-15 16:04:13,718 - INFO - ==================================================
+2025-06-15 16:04:13,718 - INFO - 🔄 Running system tests...
+2025-06-15 16:04:17,791 - INFO - ⚠️ API health check skipped: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /system/status (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001DD0C47DE80>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-06-15 16:04:17,791 - INFO - ✅ Embedding system test passed
+2025-06-15 16:04:17,792 - INFO - ✅ Database connection test passed
+2025-06-15 16:04:17,792 - INFO - ✅ Run System Tests completed successfully
+2025-06-15 16:04:17,792 - INFO - 
+==================================================
+2025-06-15 16:04:17,792 - INFO - Step: Cleanup System
+2025-06-15 16:04:17,793 - INFO - ==================================================
+2025-06-15 16:04:17,793 - INFO - 🔄 Cleaning up system...
+2025-06-15 16:04:19,814 - INFO - Cleaned up 12 items
+2025-06-15 16:04:19,815 - INFO - ✅ Cleanup System completed successfully
+2025-06-15 16:04:19,816 - ERROR - Update failed with unexpected error: 'charmap' codec can't encode character '\u2705' in position 2: character maps to <undefined>
+2025-06-15 16:40:54,380 - INFO - [STARTING] Starting Kimera SWM System Update...
+2025-06-15 16:40:54,381 - INFO - 
+==================================================
+2025-06-15 16:40:54,381 - INFO - Step: Update Dependencies
+2025-06-15 16:40:54,381 - INFO - ==================================================
+2025-06-15 16:40:54,382 - INFO - [UPDATING] Python dependencies...
+2025-06-15 16:40:54,382 - INFO - Running: Upgrading pip
+2025-06-15 16:40:56,898 - INFO - [SUCCESS] Upgrading pip
+2025-06-15 16:40:56,898 - INFO - Running: Installing/updating requirements
+2025-06-15 16:41:53,240 - ERROR - [FAILED] Installing/updating requirements
+2025-06-15 16:41:53,240 - ERROR - Error: error: subprocess-exited-with-error
+  
+  Getting requirements to build wheel did not run successfully.
+  exit code: 1
+  
+  [48 lines of output]
+  Traceback (most recent call last):
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 389, in <module>
+      main()
+      ~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 373, in main
+      json_out["return_val"] = hook(**hook_input["kwargs"])
+                               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 143, in get_requires_for_build_wheel
+      return hook(config_settings)
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-mya63w37\overlay\Lib\site-packages\setuptools\build_meta.py", line 331, in get_requires_for_build_wheel
+      return self._get_build_requires(config_settings, requirements=[])
+             ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-mya63w37\overlay\Lib\site-packages\setuptools\build_meta.py", line 301, in _get_build_requires
+      self.run_setup()
+      ~~~~~~~~~~~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-mya63w37\overlay\Lib\site-packages\setuptools\build_meta.py", line 512, in run_setup
+      super().run_setup(setup_script=setup_script)
+      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-mya63w37\overlay\Lib\site-packages\setuptools\build_meta.py", line 317, in run_setup
+      exec(code, locals())
+      ~~~~^^^^^^^^^^^^^^^^
+    File "<string>", line 128, in <module>
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 414, in check_call
+      retcode = call(*popenargs, **kwargs)
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 395, in call
+      with Popen(*popenargs, **kwargs) as p:
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1039, in __init__
+      self._execute_child(args, executable, preexec_fn, close_fds,
+      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          pass_fds, cwd, env,
+                          ^^^^^^^^^^^^^^^^^^^
+      ...<5 lines>...
+                          gid, gids, uid, umask,
+                          ^^^^^^^^^^^^^^^^^^^^^^
+                          start_new_session, process_group)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1551, in _execute_child
+      hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                         ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                               # no special security
+                               ^^^^^^^^^^^^^^^^^^^^^
+      ...<4 lines>...
+                               cwd,
+                               ^^^^
+                               startupinfo)
+                               ^^^^^^^^^^^^
+  FileNotFoundError: [WinError 2] The system cannot find the file specified
+  [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: subprocess-exited-with-error
+
+Getting requirements to build wheel did not run successfully.
+exit code: 1
+
+See above for output.
+
+note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-06-15 16:41:53,248 - INFO - Main requirements failed, trying alternative strategies...
+2025-06-15 16:41:53,248 - INFO - Running: Installing/updating minimal requirements
+2025-06-15 16:42:15,218 - ERROR - [FAILED] Installing/updating minimal requirements
+2025-06-15 16:42:15,219 - ERROR - Error: error: subprocess-exited-with-error
+  
+  Getting requirements to build wheel did not run successfully.
+  exit code: 1
+  
+  [48 lines of output]
+  Traceback (most recent call last):
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 389, in <module>
+      main()
+      ~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 373, in main
+      json_out["return_val"] = hook(**hook_input["kwargs"])
+                               ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip\_vendor\pyproject_hooks\_in_process\_in_process.py", line 143, in get_requires_for_build_wheel
+      return hook(config_settings)
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-1f_f4aum\overlay\Lib\site-packages\setuptools\build_meta.py", line 331, in get_requires_for_build_wheel
+      return self._get_build_requires(config_settings, requirements=[])
+             ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-1f_f4aum\overlay\Lib\site-packages\setuptools\build_meta.py", line 301, in _get_build_requires
+      self.run_setup()
+      ~~~~~~~~~~~~~~^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-1f_f4aum\overlay\Lib\site-packages\setuptools\build_meta.py", line 512, in run_setup
+      super().run_setup(setup_script=setup_script)
+      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Temp\pip-build-env-1f_f4aum\overlay\Lib\site-packages\setuptools\build_meta.py", line 317, in run_setup
+      exec(code, locals())
+      ~~~~^^^^^^^^^^^^^^^^
+    File "<string>", line 128, in <module>
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 414, in check_call
+      retcode = call(*popenargs, **kwargs)
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 395, in call
+      with Popen(*popenargs, **kwargs) as p:
+           ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1039, in __init__
+      self._execute_child(args, executable, preexec_fn, close_fds,
+      ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          pass_fds, cwd, env,
+                          ^^^^^^^^^^^^^^^^^^^
+      ...<5 lines>...
+                          gid, gids, uid, umask,
+                          ^^^^^^^^^^^^^^^^^^^^^^
+                          start_new_session, process_group)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    File "C:\Users\Loomine\AppData\Local\Programs\Python\Python313\Lib\subprocess.py", line 1551, in _execute_child
+      hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                         ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                               # no special security
+                               ^^^^^^^^^^^^^^^^^^^^^
+      ...<4 lines>...
+                               cwd,
+                               ^^^^
+                               startupinfo)
+                               ^^^^^^^^^^^^
+  FileNotFoundError: [WinError 2] The system cannot find the file specified
+  [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: subprocess-exited-with-error
+
+Getting requirements to build wheel did not run successfully.
+exit code: 1
+
+See above for output.
+
+note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-06-15 16:42:15,226 - INFO - Minimal requirements failed, trying individual core packages...
+2025-06-15 16:42:15,226 - INFO - Running: Installing fastapi
+2025-06-15 16:42:17,750 - INFO - [SUCCESS] Installing fastapi
+2025-06-15 16:42:17,751 - INFO - Running: Installing uvicorn[standard]
+2025-06-15 16:42:20,398 - INFO - [SUCCESS] Installing uvicorn[standard]
+2025-06-15 16:42:20,399 - INFO - Running: Installing pydantic
+2025-06-15 16:42:23,025 - INFO - [SUCCESS] Installing pydantic
+2025-06-15 16:42:23,026 - INFO - Running: Installing sqlalchemy
+2025-06-15 16:42:26,287 - INFO - [SUCCESS] Installing sqlalchemy
+2025-06-15 16:42:26,287 - INFO - Running: Installing torch
+2025-06-15 16:42:29,199 - INFO - [SUCCESS] Installing torch
+2025-06-15 16:42:29,199 - INFO - Running: Installing transformers
+2025-06-15 16:42:32,200 - INFO - [SUCCESS] Installing transformers
+2025-06-15 16:42:32,200 - INFO - Running: Installing numpy
+2025-06-15 16:42:35,593 - INFO - [SUCCESS] Installing numpy
+2025-06-15 16:42:35,594 - INFO - Running: Installing requests
+2025-06-15 16:42:38,351 - INFO - [SUCCESS] Installing requests
+2025-06-15 16:42:38,352 - INFO - Running: Installing psutil
+2025-06-15 16:42:42,436 - INFO - [SUCCESS] Installing psutil
+2025-06-15 16:42:42,437 - INFO - Successfully installed 9/9 core packages
+2025-06-15 16:42:42,437 - INFO - [SUCCESS] Update Dependencies completed successfully
+2025-06-15 16:42:42,437 - INFO - 
+==================================================
+2025-06-15 16:42:42,438 - INFO - Step: Update Embedding Model
+2025-06-15 16:42:42,438 - INFO - ==================================================
+2025-06-15 16:42:42,438 - INFO - [UPDATING] Embedding model...
+2025-06-15 16:42:48,852 - INFO - Embedding model will use device: CUDA
+2025-06-15 16:42:48,853 - INFO - Initializing ONNX embedding model 'BAAI/bge-m3' on CUDA...
+2025-06-15 16:42:48,853 - WARNING - ONNX model not found at models\bge-m3-onnx\model.onnx. Falling back to Transformers.
+2025-06-15 16:42:48,853 - INFO - Initializing Transformers embedding model 'BAAI/bge-m3' on CUDA...
+2025-06-15 16:42:59,622 - INFO - Transformers embedding model loaded successfully.
+2025-06-15 16:42:59,624 - INFO - Model initialization completed in 10.77s
+2025-06-15 16:42:59,933 - INFO - [SUCCESS] BGE-M3 embedding model working correctly
+2025-06-15 16:42:59,934 - INFO - [SUCCESS] Update Embedding Model completed successfully
+2025-06-15 16:42:59,935 - INFO - 
+==================================================
+2025-06-15 16:42:59,935 - INFO - Step: Optimize Database
+2025-06-15 16:42:59,935 - INFO - ==================================================
+2025-06-15 16:42:59,936 - INFO - [OPTIMIZING] Database...
+2025-06-15 16:43:00,321 - INFO - [SUCCESS] Optimize Database completed successfully
+2025-06-15 16:43:00,322 - INFO - 
+==================================================
+2025-06-15 16:43:00,322 - INFO - Step: Optimize Vault System
+2025-06-15 16:43:00,322 - INFO - ==================================================
+2025-06-15 16:43:00,322 - INFO - [PROCESSING] Optimizing vault system...
+2025-06-15 16:43:00,337 - INFO - Rebalanced vaults: moved 0 scars
+2025-06-15 16:43:00,343 - INFO - Vault A: 2 scars, Vault B: 1 scars
+2025-06-15 16:43:00,344 - INFO - [SUCCESS] Optimize Vault System completed successfully
+2025-06-15 16:43:00,344 - INFO - 
+==================================================
+2025-06-15 16:43:00,344 - INFO - Step: Update Monitoring System
+2025-06-15 16:43:00,345 - INFO - ==================================================
+2025-06-15 16:43:00,345 - INFO - [PROCESSING] Updating monitoring system...
+2025-06-15 16:43:06,752 - INFO - System metrics collected: 4 metrics
+2025-06-15 16:43:06,753 - INFO - [SUCCESS] Update Monitoring System completed successfully
+2025-06-15 16:43:06,753 - INFO - 
+==================================================
+2025-06-15 16:43:06,754 - INFO - Step: Run System Tests
+2025-06-15 16:43:06,754 - INFO - ==================================================
+2025-06-15 16:43:06,754 - INFO - [PROCESSING] Running system tests...
+2025-06-15 16:43:10,874 - INFO - [WARNING] API health check skipped: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /system/status (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000002BC0C3E1E80>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))
+2025-06-15 16:43:10,875 - INFO - [SUCCESS] Embedding system test passed
+2025-06-15 16:43:10,875 - INFO - [SUCCESS] Database connection test passed
+2025-06-15 16:43:10,876 - INFO - [SUCCESS] Run System Tests completed successfully
+2025-06-15 16:43:10,876 - INFO - 
+==================================================
+2025-06-15 16:43:10,876 - INFO - Step: Cleanup System
+2025-06-15 16:43:10,876 - INFO - ==================================================
+2025-06-15 16:43:10,877 - INFO - [PROCESSING] Cleaning up system...
+2025-06-15 16:43:12,980 - INFO - Cleaned up 12 items
+2025-06-15 16:43:12,980 - INFO - [SUCCESS] Cleanup System completed successfully
+2025-06-15 16:43:12,982 - INFO - 
+============================================================
+2025-06-15 16:43:12,982 - INFO - [COMPLETE] KIMERA SWM SYSTEM UPDATE COMPLETE
+2025-06-15 16:43:12,983 - INFO - ============================================================
+2025-06-15 16:43:12,983 - INFO - [SUCCESS] Successful steps: 7/7
+2025-06-15 16:43:12,983 - INFO - [REPORT] Report generated: D:\DEV\Kimera_SWM_Alpha_Prototype V0.1 140625\SYSTEM_UPDATE_REPORT_1750030992.md
+2025-06-15 16:43:12,984 - INFO - [DURATION]  Total duration: 138.60 seconds

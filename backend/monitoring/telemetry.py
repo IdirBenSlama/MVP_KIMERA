@@ -37,6 +37,29 @@ def update_metrics(system: Dict[str, Any]) -> None:  # noqa: D401
         log.warning("Failed to update telemetry metrics: %s", exc)
 
 
+def get_system_metrics() -> Dict[str, Any]:
+    """Get current system metrics for monitoring."""
+    try:
+        # Import here to avoid circular during app import
+        from ..api.main import kimera_system  # type: ignore
+        
+        metrics = {
+            "active_geoids": len(kimera_system.get("active_geoids", {})),
+            "cycle_count": kimera_system.get("system_state", {}).get("cycle_count", 0),
+            "vault_pressure": kimera_system.get("system_state", {}).get("vault_pressure", 0.0),
+            "timestamp": kimera_system.get("system_state", {}).get("last_update", "unknown")
+        }
+        return metrics
+    except Exception as exc:
+        log.warning("Failed to get system metrics: %s", exc)
+        return {
+            "active_geoids": 0,
+            "cycle_count": 0,
+            "vault_pressure": 0.0,
+            "timestamp": "error"
+        }
+
+
 @router.get("/metrics")
 async def metrics_endpoint() -> Response:  # noqa: D401
     """Return Prometheus-formatted metrics snapshot."""

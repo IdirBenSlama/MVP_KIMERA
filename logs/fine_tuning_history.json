@@ -1,0 +1,64 @@
+[
+  {
+    "timestamp": "2025-06-14T04:34:38.641244",
+    "metrics": {
+      "total_geoids": 168,
+      "total_scars": 3,
+      "scar_utilization_rate": 0.011904761904761904,
+      "scars_per_hour": 0.08333333333333333,
+      "contradictions_per_hour": 0.09999999999999999,
+      "geoid_creation_rate": 1.0,
+      "system_load": 0.5,
+      "memory_usage": 0.4,
+      "system_stability": 0.8,
+      "processing_speed": 1.0,
+      "resource_efficiency": 0.7
+    },
+    "adjustments": {
+      "contradiction_threshold": {
+        "old": 0.3,
+        "new": 0.22999999999999998,
+        "change": -0.07
+      },
+      "batch_size": {
+        "old": 50,
+        "new": 20,
+        "change": -30
+      },
+      "vault_threshold": {
+        "old": 1.5,
+        "new": 1.9500000000000002,
+        "change": 0.4500000000000002
+      }
+    },
+    "new_parameters": {
+      "contradiction_base_threshold": 0.3,
+      "contradiction_adaptive_range": [
+        0.1,
+        0.6
+      ],
+      "contradiction_adjustment_sensitivity": 0.05,
+      "proactive_base_batch_size": 50,
+      "proactive_max_batch_size": 200,
+      "proactive_scan_interval_base": 6,
+      "proactive_similarity_threshold_base": 0.7,
+      "vault_balance_threshold_base": 1.5,
+      "vault_rebalance_sensitivity": 0.1,
+      "decay_rate_base": 0.1,
+      "crystallization_threshold_base": 20.0,
+      "fusion_similarity_threshold": 0.9,
+      "spde_diffusion_rate_base": 0.5,
+      "spde_decay_factor_base": 1.0,
+      "activation_entropy_boost_threshold": 3.5,
+      "activation_entropy_damping_threshold": 1.0,
+      "activation_damping_factor": 0.7,
+      "activation_floor_threshold": 1e-09,
+      "performance_window_size": 100,
+      "optimization_interval_minutes": 30,
+      "contradiction_threshold": 0.22999999999999998,
+      "batch_size": 20,
+      "scan_interval": 6,
+      "vault_threshold": 1.9500000000000002
+    }
+  }
+]

@@ -1,0 +1,162 @@
+{
+  "test_results": {
+    "axiom_of_choice": {
+      "choice_functions_constructed": 10,
+      "successful_selections": 10,
+      "semantic_coherence": 1.0,
+      "choice_consistency": 1.0
+    },
+    "zorn_lemma": {
+      "chains_found": 54,
+      "maximal_elements": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "zorn_applicable": true,
+      "semantic_strength": 1.0
+    },
+    "well_ordering": {
+      "well_ordered_sets": 3,
+      "ordering_functions": [
+        [
+          1,
+          3,
+          5,
+          7,
+          9
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        [
+          -5,
+          -3,
+          0,
+          2,
+          4,
+          6
+        ]
+      ],
+      "semantic_consistency": 1.0
+    },
+    "cardinal_arithmetic": {
+      "finite_arithmetic_tests": 2,
+      "infinite_cardinal_tests": 1,
+      "cantor_theorem_verified": true,
+      "arithmetic_consistency": 1.0
+    },
+    "banach_tarski": {
+      "paradox_resistance_score": 0.3,
+      "non_measurable_sets_detected": 0,
+      "choice_dependency_strength": 0.9
+    },
+    "semantic_coherence": {
+      "total_geoids_analyzed": 16,
+      "feature_coherence": {
+        "axiom_of_choice_compatibility": {
+          "mean": 0.625,
+          "std": 0.4841229182759271,
+          "coherence": 0.2254045701112044
+        },
+        "well_ordering_strength": {
+          "mean": 0.1875,
+          "std": 0.3903123748998999,
+          "coherence": -1.0816548973066804
+        },
+        "zorn_lemma_applicability": {
+          "mean": 0.0625,
+          "std": 0.24206145913796356,
+          "coherence": -2.8729213794653456
+        },
+        "cardinal_arithmetic_consistency": {
+          "mean": 0.0625,
+          "std": 0.24206145913796356,
+          "coherence": -2.8729213794653456
+        },
+        "paradox_resistance": {
+          "mean": 0.01875,
+          "std": 0.07261843774138907,
+          "coherence": -2.8727767981115178
+        },
+        "set_complexity": {
+          "mean": 0.48,
+          "std": 0.24000000000000002,
+          "coherence": 0.5000010416644964
+        },
+        "structural_diversity": {
+          "mean": 0.45,
+          "std": 0.4153311931459038,
+          "coherence": 0.07704384402278264
+        },
+        "choice_difficulty": {
+          "mean": 0.3454666626097821,
+          "std": 0.27340614241153527,
+          "coherence": 0.20859121705883898
+        },
+        "chain_complexity": {
+          "mean": 0.54,
+          "std": 0.0,
+          "coherence": 1.0
+        },
+        "maximal_element_count": {
+          "mean": 8.0,
+          "std": 0.0,
+          "coherence": 1.0
+        },
+        "cantor_theorem_strength": {
+          "mean": 1.0,
+          "std": 0.0,
+          "coherence": 1.0
+        },
+        "infinite_comprehension": {
+          "mean": 0.8,
+          "std": 0.0,
+          "coherence": 1.0
+        },
+        "non_measurable_complexity": {
+          "mean": 0.7,
+          "std": 0.0,
+          "coherence": 1.0
+        },
+        "choice_function_dependency": {
+          "mean": 0.9,
+          "std": 0.0,
+          "coherence": 1.0
+        }
+      },
+      "overall_coherence": -0.19208812724939758,
+      "symbolic_archetype": null,
+      "symbolic_paradox": null,
+      "synthesis_cost": 1.1920881272493975
+    }
+  },
+  "overall_score": 0.7513186454584337,
+  "execution_time": 0.01573634147644043,
+  "geoids_created": 16,
+  "timestamp": "2025-06-13 17:43:05"
+}

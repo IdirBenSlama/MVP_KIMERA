@@ -1,0 +1,56 @@
+{
+  "scientific_fine_tuning": {
+    "enabled": true,
+    "adaptive_entropy_threshold": {
+      "enabled": true,
+      "base_threshold": 0.05,
+      "entropy_normalization_point": 2.0,
+      "entropy_adjustment_factor": 0.1,
+      "complexity_adjustment_factor": 0.2,
+      "performance_weight": 0.4
+    },
+    "enhanced_predictability": {
+      "enabled": true,
+      "scales": [
+        2,
+        3,
+        4
+      ],
+      "tolerance_factor": 0.2,
+      "scale_weights": [
+        1.0,
+        0.8,
+        0.6
+      ]
+    },
+    "intelligent_entropy_correction": {
+      "enabled": true,
+      "semantic_coherence_weight": 0.3,
+      "correction_precision": 0.01,
+      "max_correction_features": 10
+    },
+    "dynamic_complexity_weighting": {
+      "enabled": true,
+      "exploration_weights": [
+        0.5,
+        0.3,
+        0.2
+      ],
+      "consolidation_weights": [
+        0.3,
+        0.5,
+        0.2
+      ],
+      "optimization_weights": [
+        0.2,
+        0.3,
+        0.5
+      ],
+      "balanced_weights": [
+        0.4,
+        0.4,
+        0.2
+      ]
+    }
+  }
+}
