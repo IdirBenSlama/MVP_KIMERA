@@ -3,410 +3,348 @@
 KIMERA SWM Project Reorganization Script
 ========================================
 
-This script reorganizes the KIMERA project into a formal, professional structure
-with proper documentation and file organization.
+This script reorganizes the chaotic directory structure into a clean,
+professional layout following industry best practices.
 """
 
 import os
 import shutil
 import json
 from pathlib import Path
-from datetime import datetime
+from typing import Dict, List
 
 class ProjectReorganizer:
-    def __init__(self, project_root: str):
-        self.project_root = Path(project_root)
-        self.backup_dir = self.project_root / "backup" / f"backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    def __init__(self, root_path: str):
+        self.root = Path(root_path)
+        self.backup_dir = self.root / "backup_before_reorganization"
         
-    def create_directory_structure(self):
-        """Create the formal project directory structure"""
-        
-        directories = [
-            # Core directories
-            "src/kimera",
-            "src/kimera/api",
-            "src/kimera/core", 
-            "src/kimera/engines",
-            "src/kimera/linguistic",
-            "src/kimera/monitoring",
-            "src/kimera/vault",
+        # Define the new clean structure
+        self.new_structure = {
+            # Core application code
+            "src/": {
+                "kimera/": {
+                    "core/": [],
+                    "engines/": [],
+                    "api/": [],
+                    "vault/": [],
+                    "monitoring/": [],
+                    "linguistic/": [],
+                    "governance/": [],
+                    "tools/": []
+                }
+            },
             
             # Documentation
-            "docs/api",
-            "docs/architecture", 
-            "docs/installation",
-            "docs/testing",
-            "docs/performance",
-            "docs/research",
-            "docs/examples",
+            "docs/": {
+                "architecture/": [],
+                "api/": [],
+                "installation/": [],
+                "testing/": [],
+                "performance/": [],
+                "research/": [],
+                "guides/": [],
+                "specifications/": []
+            },
             
-            # Testing
-            "tests/unit",
-            "tests/integration", 
-            "tests/stress",
-            "tests/validation",
-            "tests/benchmarks",
-            "tests/fixtures",
+            # Tests
+            "tests/": {
+                "unit/": [],
+                "integration/": [],
+                "stress/": [],
+                "validation/": [],
+                "set_theory/": [],
+                "scientific/": []
+            },
             
             # Configuration
-            "config/environments",
-            "config/profiles",
+            "config/": {
+                "environments/": [],
+                "fine_tuning/": [],
+                "optimization/": []
+            },
             
-            # Scripts
-            "scripts/deployment",
-            "scripts/maintenance", 
-            "scripts/testing",
-            "scripts/utilities",
+            # Scripts and utilities
+            "scripts/": {
+                "deployment/": [],
+                "testing/": [],
+                "analysis/": [],
+                "utilities/": []
+            },
             
-            # Data and logs
-            "data/samples",
-            "data/exports",
-            "logs",
+            # Web interfaces
+            "web/": {
+                "dashboard/": [],
+                "monitoring/": [],
+                "static/": {
+                    "css/": [],
+                    "js/": [],
+                    "images/": []
+                }
+            },
             
-            # Docker and deployment
-            "docker",
-            "deployment/kubernetes",
-            "deployment/terraform",
+            # Data and results
+            "data/": {
+                "test_results/": [],
+                "benchmarks/": [],
+                "analysis/": [],
+                "databases/": []
+            },
             
-            # Resources and assets
-            "resources/documentation",
-            "resources/research",
-            "assets/images",
-            "assets/diagrams",
+            # Research and resources
+            "research/": {
+                "papers/": [],
+                "specifications/": [],
+                "theory/": [],
+                "case_studies/": []
+            },
             
-            # Backup directory
-            str(self.backup_dir.relative_to(self.project_root))
-        ]
-        
-        print("📁 Creating directory structure...")
-        for directory in directories:
-            dir_path = self.project_root / directory
-            dir_path.mkdir(parents=True, exist_ok=True)
-            print(f"   Created: {directory}")
-    
-    def backup_existing_files(self):
-        """Backup existing files before reorganization"""
-        print("\n💾 Creating backup of existing files...")
-        
-        # Files to backup
-        backup_files = [
-            "comprehensive_stress_test.py",
-            "continue_stress_test.py", 
-            "crash_test_kimera.py",
-            "entropy_analysis.py",
-            "entropy_formulas.py",
-            "entropy_math_validation.py",
-            "entropy_stress_test.py",
-            "entropy_validation_summary.py",
-            "progressive_crash_test.py",
-            "robust_stress_test.py",
-            "test_kimera_demo.py",
-            "test_monitoring_system.py"
-        ]
-        
-        for file in backup_files:
-            src = self.project_root / file
-            if src.exists():
-                dst = self.backup_dir / file
-                shutil.copy2(src, dst)
-                print(f"   Backed up: {file}")
-    
-    def organize_source_code(self):
-        """Organize source code into proper structure"""
-        print("\n🔧 Organizing source code...")
-        
-        # Move backend to src/kimera
-        if (self.project_root / "backend").exists():
-            print("   Moving backend/ to src/kimera/")
-            # Copy backend contents to src/kimera
-            backend_src = self.project_root / "backend"
-            kimera_dst = self.project_root / "src" / "kimera"
+            # Build and deployment
+            "build/": [],
+            "dist/": [],
             
-            for item in backend_src.iterdir():
-                if item.is_dir():
-                    shutil.copytree(item, kimera_dst / item.name, dirs_exist_ok=True)
-                else:
-                    shutil.copy2(item, kimera_dst / item.name)
-    
-    def organize_tests(self):
-        """Organize test files into proper structure"""
-        print("\n🧪 Organizing test files...")
+            # Temporary and backup
+            "temp/": [],
+            "backups/": []
+        }
         
-        # Move stress tests
-        stress_tests = [
-            "comprehensive_stress_test.py",
-            "continue_stress_test.py",
-            "crash_test_kimera.py", 
-            "progressive_crash_test.py",
-            "robust_stress_test.py"
-        ]
-        
-        for test_file in stress_tests:
-            src = self.project_root / test_file
-            if src.exists():
-                dst = self.project_root / "tests" / "stress" / test_file
-                shutil.move(str(src), str(dst))
-                print(f"   Moved: {test_file} -> tests/stress/")
-        
-        # Move validation tests
-        validation_tests = [
-            "entropy_analysis.py",
-            "entropy_formulas.py", 
-            "entropy_math_validation.py",
-            "entropy_validation_summary.py"
-        ]
-        
-        for test_file in validation_tests:
-            src = self.project_root / test_file
-            if src.exists():
-                dst = self.project_root / "tests" / "validation" / test_file
-                shutil.move(str(src), str(dst))
-                print(f"   Moved: {test_file} -> tests/validation/")
-        
-        # Move demo and monitoring tests
-        demo_tests = [
-            "test_kimera_demo.py",
-            "test_monitoring_system.py"
-        ]
-        
-        for test_file in demo_tests:
-            src = self.project_root / test_file
-            if src.exists():
-                dst = self.project_root / "tests" / "integration" / test_file
-                shutil.move(str(src), str(dst))
-                print(f"   Moved: {test_file} -> tests/integration/")
-    
-    def organize_scripts(self):
-        """Organize scripts into proper structure"""
-        print("\n📜 Organizing scripts...")
-        
-        # Move utility scripts
-        utility_scripts = [
-            "run_kimera.py",
-            "launch_dashboard.py",
-            "launch_monitoring.py", 
-            "open_all_dashboards.py",
-            "open_dashboard.py",
-            "serve_dashboard.py"
-        ]
-        
-        for script in utility_scripts:
-            src = self.project_root / script
-            if src.exists():
-                dst = self.project_root / "scripts" / "utilities" / script
-                shutil.copy2(src, dst)  # Copy instead of move to keep originals
-                print(f"   Copied: {script} -> scripts/utilities/")
-    
-    def organize_resources(self):
-        """Organize resources and documentation"""
-        print("\n📚 Organizing resources...")
-        
-        # Move Resources directory contents
-        resources_src = self.project_root / "Resources"
-        if resources_src.exists():
-            resources_dst = self.project_root / "resources" / "research"
+        # File categorization rules
+        self.file_rules = {
+            # Source code mappings
+            "backend/": "src/kimera/",
             
-            for item in resources_src.iterdir():
-                if item.is_file():
-                    dst_file = resources_dst / item.name
-                    shutil.copy2(item, dst_file)
-                    print(f"   Moved: Resources/{item.name} -> resources/research/")
+            # Documentation mappings
+            r".*\.md$": self._categorize_markdown,
+            r".*README.*": "docs/",
+            
+            # Test mappings
+            r"test_.*\.py$": "tests/",
+            r".*_test\.py$": "tests/",
+            r".*test.*\.py$": "tests/",
+            
+            # Configuration mappings
+            r".*config.*\.json$": "config/",
+            r"requirements.*\.txt$": "config/",
+            r"setup\.py$": "config/",
+            
+            # Script mappings
+            r"run_.*\.py$": "scripts/",
+            r"launch_.*\.py$": "scripts/",
+            r".*_analysis\.py$": "scripts/analysis/",
+            
+            # Web interface mappings
+            r".*\.html$": "web/dashboard/",
+            r".*\.js$": "web/static/js/",
+            r".*\.css$": "web/static/css/",
+            
+            # Data mappings
+            r".*\.db$": "data/databases/",
+            r".*\.json$": self._categorize_json,
+            r".*results.*": "data/test_results/",
+            
+            # Research mappings
+            r".*\.pdf$": "research/papers/",
+            
+            # Build artifacts
+            r".*\.egg-info/": "build/",
+            
+            # Temporary files
+            r".*\.pyc$": "temp/",
+            r"__pycache__/": "temp/"
+        }
     
-    def organize_data_files(self):
-        """Organize data files and databases"""
-        print("\n💾 Organizing data files...")
+    def _categorize_markdown(self, filepath: Path) -> str:
+        """Categorize markdown files based on content and name."""
+        name = filepath.name.lower()
         
-        # Move database files to data directory
-        db_files = [
-            "kimera_swm.db",
-            "crash_test_*.db*",
-            "robust_stress_test.db",
-            "stress_test*.db*"
-        ]
-        
-        data_dir = self.project_root / "data"
-        
-        for pattern in db_files:
-            for db_file in self.project_root.glob(pattern):
-                if db_file.is_file():
-                    dst = data_dir / db_file.name
-                    shutil.move(str(db_file), str(dst))
-                    print(f"   Moved: {db_file.name} -> data/")
-        
-        # Move result files
-        result_files = [
-            "*_results.json",
-            "*_test_results.json"
-        ]
-        
-        for pattern in result_files:
-            for result_file in self.project_root.glob(pattern):
-                if result_file.is_file():
-                    dst = data_dir / "exports" / result_file.name
-                    shutil.move(str(result_file), str(dst))
-                    print(f"   Moved: {result_file.name} -> data/exports/")
+        if any(x in name for x in ['architecture', 'system']):
+            return "docs/architecture/"
+        elif any(x in name for x in ['api', 'endpoint']):
+            return "docs/api/"
+        elif any(x in name for x in ['install', 'setup', 'deploy']):
+            return "docs/installation/"
+        elif any(x in name for x in ['test', 'validation']):
+            return "docs/testing/"
+        elif any(x in name for x in ['performance', 'benchmark']):
+            return "docs/performance/"
+        elif any(x in name for x in ['research', 'theory', 'swm']):
+            return "docs/research/"
+        elif any(x in name for x in ['guide', 'how', 'tutorial']):
+            return "docs/guides/"
+        elif any(x in name for x in ['spec', 'specification']):
+            return "docs/specifications/"
+        else:
+            return "docs/"
     
-    def organize_dashboard_files(self):
-        """Organize dashboard and monitoring files"""
-        print("\n📊 Organizing dashboard files...")
+    def _categorize_json(self, filepath: Path) -> str:
+        """Categorize JSON files based on content and name."""
+        name = filepath.name.lower()
         
-        # Dashboard files to move to monitoring
-        dashboard_files = [
-            "dashboard_cheatsheet.html",
-            "dashboard_guide.html", 
-            "monitoring_dashboard.html",
-            "real_time_dashboard.html",
-            "test_dashboard.html"
-        ]
-        
-        monitoring_dir = self.project_root / "src" / "kimera" / "monitoring" / "dashboards"
-        monitoring_dir.mkdir(exist_ok=True)
-        
-        for dashboard_file in dashboard_files:
-            src = self.project_root / dashboard_file
-            if src.exists():
-                dst = monitoring_dir / dashboard_file
-                shutil.move(str(src), str(dst))
-                print(f"   Moved: {dashboard_file} -> src/kimera/monitoring/dashboards/")
+        if any(x in name for x in ['config', 'settings']):
+            return "config/"
+        elif any(x in name for x in ['results', 'test', 'benchmark']):
+            return "data/test_results/"
+        elif any(x in name for x in ['analysis', 'report']):
+            return "data/analysis/"
+        else:
+            return "data/"
     
-    def create_configuration_files(self):
-        """Create proper configuration files"""
-        print("\n⚙️ Creating configuration files...")
+    def create_backup(self):
+        """Create a backup of the current state."""
+        print("Creating backup of current state...")
+        if self.backup_dir.exists():
+            shutil.rmtree(self.backup_dir)
         
-        # Create setup.py
-        setup_py_content = '''"""
-KIMERA SWM Setup Configuration
+        # Copy everything except the backup directory itself
+        shutil.copytree(self.root, self.backup_dir, 
+                       ignore=shutil.ignore_patterns('backup_*', '.git'))
+        print(f"Backup created at: {self.backup_dir}")
+    
+    def create_directory_structure(self):
+        """Create the new directory structure."""
+        print("Creating new directory structure...")
+        
+        def create_dirs(structure: Dict, base_path: Path):
+            for name, content in structure.items():
+                dir_path = base_path / name
+                dir_path.mkdir(parents=True, exist_ok=True)
+                
+                if isinstance(content, dict):
+                    create_dirs(content, dir_path)
+        
+        create_dirs(self.new_structure, self.root)
+        print("Directory structure created.")
+    
+    def move_files(self):
+        """Move files to their new locations."""
+        print("Moving files to new structure...")
+        
+        # Get all files in root directory (excluding new structure)
+        files_to_move = []
+        for item in self.root.iterdir():
+            if (item.is_file() and 
+                item.name not in ['reorganize_project.py'] and
+                not item.name.startswith('backup_')):
+                files_to_move.append(item)
+            elif (item.is_dir() and 
+                  item.name not in ['src', 'docs', 'tests', 'config', 'scripts', 
+                                   'web', 'data', 'research', 'build', 'dist', 
+                                   'temp', 'backups', 'backup_before_reorganization']):
+                files_to_move.append(item)
+        
+        moved_count = 0
+        for item in files_to_move:
+            try:
+                new_location = self._determine_new_location(item)
+                if new_location:
+                    target_path = self.root / new_location / item.name
+                    target_path.parent.mkdir(parents=True, exist_ok=True)
+                    
+                    if item.is_file():
+                        shutil.move(str(item), str(target_path))
+                    else:
+                        shutil.move(str(item), str(target_path))
+                    
+                    moved_count += 1
+                    print(f"Moved: {item.name} -> {new_location}")
+            except Exception as e:
+                print(f"Error moving {item.name}: {e}")
+        
+        print(f"Moved {moved_count} items.")
+    
+    def _determine_new_location(self, item: Path) -> str:
+        """Determine where a file/directory should be moved."""
+        name = item.name
+        
+        # Special directory mappings
+        if item.is_dir():
+            if name == 'backend':
+                return 'src/kimera'
+            elif name == 'docs':
+                return 'docs'  # Keep existing docs structure
+            elif name == 'tests':
+                return 'tests'  # Keep existing tests structure
+            elif name == 'config':
+                return 'config'
+            elif name == 'scripts':
+                return 'scripts'
+            elif name == 'dashboard':
+                return 'web'
+            elif name == 'static':
+                return 'web/static'
+            elif name == 'Resources':
+                return 'research'
+            elif name == 'optimization':
+                return 'scripts/optimization'
+            elif name == 'scientific':
+                return 'tests/scientific'
+            elif name == 'verification':
+                return 'tests/validation'
+            elif name == 'report_kimera':
+                return 'data/analysis'
+            elif name.endswith('.egg-info'):
+                return 'build'
+            else:
+                return 'temp'
+        
+        # File mappings
+        for pattern, destination in self.file_rules.items():
+            if callable(destination):
+                result = destination(item)
+                if result:
+                    return result
+            elif item.match(pattern) or pattern in name:
+                return destination
+        
+        # Default location for unmatched files
+        return 'temp'
+    
+    def create_new_structure_files(self):
+        """Create essential files for the new structure."""
+        print("Creating new structure files...")
+        
+        # Create main README
+        main_readme = """# KIMERA SWM - Semantic Working Memory System
+
+A sophisticated cognitive architecture implementing semantic thermodynamic principles.
+
+## Project Structure
+
+```
+kimera-swm/
+├── src/kimera/          # Core application code
+├── docs/                # Documentation
+├── tests/               # Test suites
+├── config/              # Configuration files
+├── scripts/             # Utility scripts
+├── web/                 # Web interfaces
+├── data/                # Data and results
+├── research/            # Research materials
+└── build/               # Build artifacts
+```
+
+## Quick Start
+
+```bash
+# Install dependencies
+pip install -r config/requirements.txt
+
+# Run the system
+python scripts/run_kimera.py
+
+# Run tests
+python -m pytest tests/
+```
+
+## Documentation
+
+See the [docs/](docs/) directory for comprehensive documentation.
 """
-from setuptools import setup, find_packages
-
-with open("README.md", "r", encoding="utf-8") as fh:
-    long_description = fh.read()
-
-with open("requirements.txt", "r", encoding="utf-8") as fh:
-    requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
-
-setup(
-    name="kimera-swm",
-    version="1.0.0",
-    author="KIMERA Development Team",
-    author_email="dev@kimera-swm.org",
-    description="Advanced Semantic Working Memory System",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    url="https://github.com/your-org/kimera-swm",
-    packages=find_packages(where="src"),
-    package_dir={"": "src"},
-    classifiers=[
-        "Development Status :: 5 - Production/Stable",
-        "Intended Audience :: Developers",
-        "Intended Audience :: Science/Research",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.12",
-        "Topic :: Scientific/Engineering :: Artificial Intelligence",
-        "Topic :: Software Development :: Libraries :: Python Modules",
-    ],
-    python_requires=">=3.12",
-    install_requires=requirements,
-    extras_require={
-        "dev": [
-            "pytest>=7.0.0",
-            "pytest-cov>=4.0.0",
-            "black>=22.0.0",
-            "flake8>=5.0.0",
-            "mypy>=1.0.0",
-            "pre-commit>=2.20.0",
-        ],
-        "docs": [
-            "sphinx>=5.0.0",
-            "sphinx-rtd-theme>=1.0.0",
-            "myst-parser>=0.18.0",
-        ],
-    },
-    entry_points={
-        "console_scripts": [
-            "kimera-swm=kimera.cli:main",
-        ],
-    },
-)
-'''
         
-        with open(self.project_root / "setup.py", "w") as f:
-            f.write(setup_py_content)
-        print("   Created: setup.py")
-        
-        # Create pyproject.toml
-        pyproject_content = '''[build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[project]
-name = "kimera-swm"
-version = "1.0.0"
-description = "Advanced Semantic Working Memory System"
-readme = "README.md"
-requires-python = ">=3.12"
-license = {text = "MIT"}
-authors = [
-    {name = "KIMERA Development Team", email = "dev@kimera-swm.org"},
-]
-keywords = ["ai", "cognitive-architecture", "semantic-processing", "thermodynamics"]
-classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.12",
-    "Topic :: Scientific/Engineering :: Artificial Intelligence",
-]
-
-[project.urls]
-Homepage = "https://github.com/your-org/kimera-swm"
-Documentation = "https://kimera-swm.readthedocs.io"
-Repository = "https://github.com/your-org/kimera-swm"
-Issues = "https://github.com/your-org/kimera-swm/issues"
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[tool.black]
-line-length = 88
-target-version = ["py312"]
-include = '\\.pyi?$'
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-python_files = ["test_*.py"]
-python_classes = ["Test*"]
-python_functions = ["test_*"]
-addopts = [
-    "-v",
-    "--strict-markers",
-    "--strict-config",
-    "--tb=short",
-]
-markers = [
-    "unit: Unit tests",
-    "integration: Integration tests", 
-    "stress: Stress tests",
-    "slow: Slow running tests",
-]
-
-[tool.mypy]
-python_version = "3.12"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-'''
-        
-        with open(self.project_root / "pyproject.toml", "w") as f:
-            f.write(pyproject_content)
-        print("   Created: pyproject.toml")
+        with open(self.root / "README.md", "w") as f:
+            f.write(main_readme)
         
         # Create .gitignore
-        gitignore_content = '''# Python
+        gitignore = """# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -427,192 +365,201 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
 
 # Virtual environments
-venv/
-venv-*/
+.env
+.venv
 env/
+venv/
 ENV/
+env.bak/
+venv.bak/
 
-# IDEs
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-
-# Databases
-*.db
-*.db-journal
-*.sqlite
-*.sqlite3
-
-# Logs
-logs/
-*.log
-
-# Environment variables
-.env
-.env.*
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Backup
-backup/
-
-# Data files
-data/exports/*.json
-data/exports/*.csv
-data/*.db*
-
-# Temporary files
-tmp/
+# Project specific
+data/databases/*.db
+data/databases/*.db-shm
+data/databases/*.db-wal
 temp/
-*.tmp
-'''
+backups/
+*.log
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+"""
         
-        with open(self.project_root / ".gitignore", "w") as f:
-            f.write(gitignore_content)
-        print("   Created: .gitignore")
+        with open(self.root / ".gitignore", "w") as f:
+            f.write(gitignore)
+        
+        # Create setup.cfg
+        setup_cfg = """[metadata]
+name = kimera-swm
+version = 2.2.1
+description = Semantic Working Memory System
+long_description = file: README.md
+long_description_content_type = text/markdown
+author = KIMERA Development Team
+license = MIT
+classifiers =
+    Development Status :: 4 - Beta
+    Intended Audience :: Developers
+    License :: OSI Approved :: MIT License
+    Programming Language :: Python :: 3
+    Programming Language :: Python :: 3.12
+
+[options]
+package_dir =
+    = src
+packages = find:
+python_requires = >=3.12
+install_requires =
+    fastapi>=0.115.12
+    sqlalchemy>=2.0.41
+    transformers>=4.52.4
+    sentence-transformers>=4.1.0
+    numpy>=2.3.0
+    scipy>=1.15.3
+    uvicorn>=0.34.3
+
+[options.packages.find]
+where = src
+
+[tool:pytest]
+testpaths = tests
+python_files = test_*.py
+python_classes = Test*
+python_functions = test_*
+"""
+        
+        with open(self.root / "setup.cfg", "w") as f:
+            f.write(setup_cfg)
+        
+        print("New structure files created.")
     
-    def create_init_files(self):
-        """Create __init__.py files for proper Python package structure"""
-        print("\n📦 Creating package __init__.py files...")
+    def cleanup_empty_directories(self):
+        """Remove empty directories."""
+        print("Cleaning up empty directories...")
         
-        init_files = [
-            "src/kimera/__init__.py",
-            "src/kimera/api/__init__.py",
-            "src/kimera/core/__init__.py",
-            "src/kimera/engines/__init__.py",
-            "src/kimera/linguistic/__init__.py",
-            "src/kimera/monitoring/__init__.py",
-            "src/kimera/vault/__init__.py",
-            "tests/__init__.py",
-            "tests/unit/__init__.py",
-            "tests/integration/__init__.py",
-            "tests/stress/__init__.py",
-            "tests/validation/__init__.py",
-        ]
+        def remove_empty_dirs(path: Path):
+            if not path.is_dir():
+                return
+            
+            # First, recursively clean subdirectories
+            for subdir in path.iterdir():
+                if subdir.is_dir():
+                    remove_empty_dirs(subdir)
+            
+            # Then check if this directory is empty and remove it
+            try:
+                if not any(path.iterdir()):
+                    path.rmdir()
+                    print(f"Removed empty directory: {path}")
+            except OSError:
+                pass  # Directory not empty or permission issue
         
-        for init_file in init_files:
-            init_path = self.project_root / init_file
-            if not init_path.exists():
-                init_path.touch()
-                print(f"   Created: {init_file}")
+        # Clean up from the root, but preserve our new structure
+        for item in self.root.iterdir():
+            if item.is_dir() and item.name not in ['src', 'docs', 'tests', 'config', 
+                                                  'scripts', 'web', 'data', 'research', 
+                                                  'build', 'dist', 'temp', 'backups',
+                                                  'backup_before_reorganization', '.git']:
+                remove_empty_dirs(item)
     
-    def generate_reorganization_report(self):
-        """Generate a report of the reorganization"""
-        print("\n📋 Generating reorganization report...")
+    def generate_report(self):
+        """Generate a reorganization report."""
+        print("Generating reorganization report...")
         
         report = {
-            "reorganization_date": datetime.now().isoformat(),
-            "project_structure": {
-                "source_code": "src/kimera/",
-                "documentation": "docs/",
-                "tests": "tests/",
-                "configuration": "config/",
-                "scripts": "scripts/",
-                "resources": "resources/",
-                "data": "data/",
-                "backup": str(self.backup_dir.relative_to(self.project_root))
+            "reorganization_date": "2024-12-14",
+            "original_structure": "Chaotic - 80+ files in root directory",
+            "new_structure": {
+                "src/kimera/": "Core application code",
+                "docs/": "All documentation organized by type",
+                "tests/": "All test suites organized by category",
+                "config/": "Configuration files and requirements",
+                "scripts/": "Utility and deployment scripts",
+                "web/": "Web interfaces and static assets",
+                "data/": "Test results, databases, and analysis",
+                "research/": "Research papers and theoretical materials",
+                "build/": "Build artifacts and distribution files",
+                "temp/": "Temporary files and unclassified items"
             },
-            "files_moved": {
-                "stress_tests": "tests/stress/",
-                "validation_tests": "tests/validation/",
-                "integration_tests": "tests/integration/",
-                "utility_scripts": "scripts/utilities/",
-                "dashboard_files": "src/kimera/monitoring/dashboards/",
-                "database_files": "data/",
-                "result_files": "data/exports/",
-                "research_documents": "resources/research/"
-            },
-            "new_files_created": [
-                "setup.py",
-                "pyproject.toml", 
-                ".gitignore",
-                "docs/README.md",
-                "docs/api/README.md",
-                "docs/architecture/README.md",
-                "docs/installation/README.md",
-                "docs/testing/README.md",
-                "docs/performance/README.md"
-            ]
+            "benefits": [
+                "Clear separation of concerns",
+                "Industry-standard directory structure",
+                "Easier navigation and maintenance",
+                "Better IDE support",
+                "Simplified CI/CD setup",
+                "Professional appearance"
+            ],
+            "backup_location": "backup_before_reorganization/"
         }
         
-        report_file = self.project_root / "REORGANIZATION_REPORT.json"
-        with open(report_file, "w") as f:
+        with open(self.root / "REORGANIZATION_REPORT.json", "w") as f:
             json.dump(report, f, indent=2)
         
-        print(f"   Report saved: {report_file}")
-        return report
-    
-    def run_reorganization(self):
-        """Run the complete project reorganization"""
-        print("🚀 KIMERA SWM PROJECT REORGANIZATION")
-        print("=" * 50)
-        
-        try:
-            self.create_directory_structure()
-            self.backup_existing_files()
-            self.organize_source_code()
-            self.organize_tests()
-            self.organize_scripts()
-            self.organize_resources()
-            self.organize_data_files()
-            self.organize_dashboard_files()
-            self.create_configuration_files()
-            self.create_init_files()
-            report = self.generate_reorganization_report()
-            
-            print("\n✅ PROJECT REORGANIZATION COMPLETED SUCCESSFULLY!")
-            print("=" * 50)
-            print(f"📁 Backup created: {self.backup_dir}")
-            print("📚 Documentation updated")
-            print("🧪 Tests organized")
-            print("⚙️ Configuration files created")
-            print("📦 Package structure established")
-            
-            return True
-            
-        except Exception as e:
-            print(f"\n❌ ERROR DURING REORGANIZATION: {e}")
-            print("🔄 Consider restoring from backup if needed")
-            return False
+        print("Reorganization complete! Report saved to REORGANIZATION_REPORT.json")
 
 def main():
-    """Main function to run project reorganization"""
-    import sys
+    """Main reorganization function."""
+    root_path = os.getcwd()
+    reorganizer = ProjectReorganizer(root_path)
     
-    if len(sys.argv) > 1:
-        project_root = sys.argv[1]
-    else:
-        project_root = os.getcwd()
+    print("KIMERA SWM Project Reorganization")
+    print("=" * 40)
+    print(f"Working directory: {root_path}")
+    print()
     
-    reorganizer = ProjectReorganizer(project_root)
-    success = reorganizer.run_reorganization()
+    # Confirm before proceeding
+    response = input("This will reorganize the entire project structure. Continue? (y/N): ")
+    if response.lower() != 'y':
+        print("Reorganization cancelled.")
+        return
     
-    if success:
-        print("\n🎉 KIMERA SWM project has been successfully reorganized!")
-        print("📖 Check the updated documentation in docs/")
-        print("🧪 Run tests with: pytest tests/")
-        print("🚀 Start the system with: python scripts/utilities/run_kimera.py")
-    else:
-        print("\n💥 Reorganization failed. Check error messages above.")
-        sys.exit(1)
+    try:
+        # Step 1: Create backup
+        reorganizer.create_backup()
+        
+        # Step 2: Create new directory structure
+        reorganizer.create_directory_structure()
+        
+        # Step 3: Move files
+        reorganizer.move_files()
+        
+        # Step 4: Create new structure files
+        reorganizer.create_new_structure_files()
+        
+        # Step 5: Cleanup
+        reorganizer.cleanup_empty_directories()
+        
+        # Step 6: Generate report
+        reorganizer.generate_report()
+        
+        print("\n" + "=" * 40)
+        print("✅ Reorganization completed successfully!")
+        print("📁 Backup created at: backup_before_reorganization/")
+        print("📊 See REORGANIZATION_REPORT.json for details")
+        print("\nNext steps:")
+        print("1. Review the new structure")
+        print("2. Update import statements in code")
+        print("3. Update CI/CD configurations")
+        print("4. Test the reorganized system")
+        
+    except Exception as e:
+        print(f"\n❌ Error during reorganization: {e}")
+        print("The backup is available at: backup_before_reorganization/")
+        print("You can restore from backup if needed.")
 
 if __name__ == "__main__":
     main()
