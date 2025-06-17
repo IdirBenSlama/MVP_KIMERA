@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import numpy as np
-from scipy.ndimage import gaussian_filter1d
+from ..core.native_math import NativeMath
 
 
 @dataclass
@@ -18,11 +18,14 @@ class SPDE:
             return {}
 
         keys = list(state)
-        values = np.array([state[k] for k in keys], dtype=float)
+        values = [state[k] for k in keys]
 
-        # Gaussian blur across the ordered feature vector
-        blurred = gaussian_filter1d(values, sigma=self.decay_factor, mode="nearest")
-        diffused = (1 - self.diffusion_rate) * values + self.diffusion_rate * blurred
+        # Gaussian blur across the ordered feature vector using native implementation
+        blurred = NativeMath.gaussian_filter_1d(values, sigma=self.decay_factor)
+        
+        # Apply diffusion
+        diffused = [(1 - self.diffusion_rate) * v + self.diffusion_rate * b 
+                   for v, b in zip(values, blurred)]
 
-        return dict(zip(keys, diffused.tolist()))
+        return dict(zip(keys, diffused))
 

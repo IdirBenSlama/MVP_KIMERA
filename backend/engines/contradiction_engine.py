@@ -1,10 +1,10 @@
 from __future__ import annotations
 from typing import List, Dict, Optional
 from dataclasses import dataclass
-from scipy.spatial.distance import cosine
 
 from ..core.geoid import GeoidState
 from ..core.insight import InsightScar
+from ..core.native_math import NativeMath
 from ..governance import erl
 
 @dataclass
@@ -37,12 +37,8 @@ class ContradictionEngine:
         if not a.embedding_vector or not b.embedding_vector:
             return 0.0
         
-        # Extra guard against zero vectors for scipy cosine
-        import numpy as np
-        if np.linalg.norm(a.embedding_vector) == 0 or np.linalg.norm(b.embedding_vector) == 0:
-            return 0.0
-            
-        return float(cosine(a.embedding_vector, b.embedding_vector))
+        # Use native cosine distance implementation
+        return NativeMath.cosine_distance(a.embedding_vector, b.embedding_vector)
 
     def _layer_conflict_intensity(self, a: GeoidState, b: GeoidState) -> float:
         """Simple proxy for semantic vs symbolic layer disagreement."""

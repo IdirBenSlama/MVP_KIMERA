@@ -8,6 +8,7 @@ from ..core.scar import ScarRecord
 from ..core.geoid import GeoidState
 from .database import SessionLocal, ScarDB, GeoidDB
 import uuid
+from ..graph.models import create_scar, create_geoid
 
 
 class VaultManager:
@@ -43,7 +44,7 @@ class VaultManager:
         """
         with SessionLocal() as db:
             geoid_db_records = db.query(GeoidDB).all()
-            return [
+            geoids = [
                 GeoidState(
                     geoid_id=g.geoid_id,
                     semantic_state=g.semantic_state_json,
@@ -53,6 +54,13 @@ class VaultManager:
                 )
                 for g in geoid_db_records
             ]
+            # --- dual-write to Neo4j (idempotent) ---
+            for geo in geoids:
+                try:
+                    create_geoid(geo.to_dict())
+                except Exception:
+                    pass  # don’t block SQLite retrieval if Neo4j down
+            return geoids
 
     def insert_scar(self, scar: ScarRecord | GeoidState, vector: list[float]) -> ScarDB:
         """Insert a ScarRecord and its vector into the persistent store."""
@@ -91,6 +99,15 @@ class VaultManager:
             db.add(scar_db)
             db.commit()
             db.refresh(scar_db)
+        # --- async write to Neo4j (fire-and-forget) ---
+        try:
+            create_scar({
+                **scar.__dict__,
+                "vault_id": vault_id,
+                "scar_vector": vector,
+            })
+        except Exception:
+            pass  # do not disrupt primary persistence path
         return scar_db
 
     def get_scars_from_vault(self, vault_id: str, limit: int = 100) -> List[ScarDB]:

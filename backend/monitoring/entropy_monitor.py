@@ -7,8 +7,8 @@ entropy and thermodynamic entropy measures for the semantic working memory syste
 """
 
 import numpy as np
-import scipy.stats
 from typing import Dict, List, Any, Optional, Tuple
+from ..core.native_math import NativeStats
 from dataclasses import dataclass, field
 from datetime import datetime
 import logging

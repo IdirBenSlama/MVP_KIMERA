@@ -1,0 +1,51 @@
+{
+  "timestamp": "2025-06-15T21:51:43.595059",
+  "statsmodels_integration": {
+    "version": null,
+    "availability": false,
+    "capabilities": []
+  },
+  "test_results": {
+    "statsmodels_availability": {
+      "status": "failed",
+      "timestamp": "2025-06-15T21:51:43.597101"
+    },
+    "statistical_modeling_engine": {
+      "status": "failed",
+      "timestamp": "2025-06-15T21:51:44.377686"
+    },
+    "time_series_analysis": {
+      "status": "failed",
+      "timestamp": "2025-06-15T21:51:44.378959"
+    },
+    "regression_analysis": {
+      "status": "failed",
+      "timestamp": "2025-06-15T21:51:44.379974"
+    },
+    "econometric_analysis": {
+      "status": "failed",
+      "timestamp": "2025-06-15T21:51:44.380993"
+    },
+    "comprehensive_analysis": {
+      "status": "failed",
+      "timestamp": "2025-06-15T21:51:44.382073"
+    },
+    "advanced_monitoring": {
+      "status": "failed",
+      "timestamp": "2025-06-15T21:51:44.567380"
+    },
+    "system_integration": {
+      "status": "failed",
+      "timestamp": "2025-06-15T21:51:44.568717"
+    },
+    "performance_comparison": {
+      "status": "failed",
+      "timestamp": "2025-06-15T21:51:44.569921"
+    }
+  },
+  "recommendations": [
+    "Install statsmodels: pip install statsmodels",
+    "Review failed tests: statsmodels_availability, statistical_modeling_engine, time_series_analysis, regression_analysis, econometric_analysis, comprehensive_analysis, advanced_monitoring, system_integration, performance_comparison",
+    "Install statsmodels to enable advanced statistical features"
+  ]
+}

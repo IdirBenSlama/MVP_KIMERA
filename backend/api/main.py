@@ -21,7 +21,7 @@ from ..engines.asm import AxisStabilityMonitor
 from ..engines.spde import SPDE
 from ..engines.kccl import KimeraCognitiveCycle
 from ..engines.meta_insight import MetaInsightEngine
-from ..vault.vault_manager import VaultManager
+from ..vault import get_vault_manager
 from ..vault.database import SessionLocal, GeoidDB, ScarDB, engine
 from ..engines.background_jobs import start_background_jobs, stop_background_jobs
 from ..engines.clip_service import clip_service
@@ -30,7 +30,7 @@ from .middleware import icw_middleware
 from .monitoring_routes import router as monitoring_router
 from ..monitoring.telemetry import router as telemetry_router
 import numpy as np
-from scipy.spatial.distance import cosine
+from ..core.native_math import NativeMath
 from ..engines.activation_synthesis import (
     trigger_activation_cascade,
     synthesize_patterns,
@@ -44,6 +44,17 @@ from ..engines.insight_lifecycle import (
     FeedbackEvent,
 )
 from ..engines.proactive_contradiction_detector import ProactiveContradictionDetector
+from ..core.statistical_modeling import (
+    statistical_engine,
+    StatisticalModelResult,
+    analyze_entropy_time_series,
+    analyze_contradiction_factors,
+    analyze_semantic_market
+)
+from ..monitoring.advanced_statistical_monitor import (
+    advanced_monitor,
+    initialize_advanced_monitoring
+)
 
 app = FastAPI(title="KIMERA SWM MVP API", version="0.1.0")
 
@@ -66,7 +77,7 @@ app.include_router(telemetry_router)
 kimera_system = {
     'contradiction_engine': ContradictionEngine(tension_threshold=0.3),
     'thermodynamics_engine': SemanticThermodynamicsEngine(),
-    'vault_manager': VaultManager(),
+    'vault_manager': get_vault_manager(mode="understanding"),
     'spde_engine': SPDE(),
     'cognitive_cycle': KimeraCognitiveCycle(),
     'meta_insight_engine': MetaInsightEngine(),
@@ -85,6 +96,16 @@ def startup_event():
     kimera_system['embedding_model'] = initialize_embedding_model()
     if os.getenv("ENABLE_JOBS", "1") != "0":
         start_background_jobs(encode_text)
+    
+    # Initialize advanced statistical monitoring
+    try:
+        from ..monitoring.entropy_monitor import EntropyMonitor
+        from ..monitoring.system_observer import SystemObserver
+        entropy_monitor = EntropyMonitor()
+        system_observer = SystemObserver()
+        initialize_advanced_monitoring(entropy_monitor, system_observer)
+    except Exception as e:
+        print(f"Warning: Could not initialize advanced monitoring: {e}")
 
 
 @app.on_event("shutdown")
@@ -115,7 +136,7 @@ def create_scar_from_tension(
     all_features = set(geoid_a.semantic_state.keys()) | set(geoid_b.semantic_state.keys())
     vec_a = [geoid_a.semantic_state.get(f, 0.0) for f in all_features]
     vec_b = [geoid_b.semantic_state.get(f, 0.0) for f in all_features]
-    cls_angle_proxy = cosine(vec_a, vec_b) if any(vec_a) and any(vec_b) else 0.0
+    cls_angle_proxy = NativeMath.cosine_distance(vec_a, vec_b) if any(vec_a) and any(vec_b) else 0.0
 
     # Adjust reason and resolved_by based on decision
     reason_map = {
@@ -618,6 +639,18 @@ async def get_system_health():
         health_status["checks"]["embedding_model"] = {"status": "unhealthy", "message": str(e)}
         health_status["status"] = "unhealthy"
     
+    # Check Neo4j connection
+    try:
+        from ..graph.session import driver_liveness_check
+        if driver_liveness_check():
+            health_status["checks"]["neo4j"] = {"status": "healthy", "message": "Neo4j connection OK"}
+        else:
+            health_status["checks"]["neo4j"] = {"status": "unhealthy", "message": "Neo4j not responding"}
+            health_status["status"] = "degraded"
+    except Exception as e:
+        health_status["checks"]["neo4j"] = {"status": "unhealthy", "message": str(e)}
+        health_status["status"] = "degraded"
+    
     # Check vault system
     try:
         vault_manager = kimera_system['vault_manager']
@@ -828,6 +861,276 @@ async def get_insight_lineage(insight_id: str):
         return lineage
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc))
+
+
+# -----------------------------
+# Statistical Modeling API Endpoints
+# -----------------------------
+
+class StatisticalAnalysisRequest(BaseModel):
+    entropy_history: List[float] = []
+    timestamps: List[str] = []
+    contradiction_scores: List[float] = []
+    semantic_features: Dict[str, List[float]] = {}
+    semantic_supply: List[float] = []
+    semantic_demand: List[float] = []
+    entropy_prices: List[float] = []
+
+
+@app.get("/statistics/capabilities")
+async def get_statistical_capabilities():
+    """Get available statistical modeling capabilities"""
+    return statistical_engine.get_model_summary()
+
+
+@app.post("/statistics/analyze/entropy_series")
+async def analyze_entropy_series_endpoint(
+    entropy_data: List[float],
+    timestamps: List[str] = None
+):
+    """Analyze entropy time series data"""
+    try:
+        # Convert string timestamps to datetime objects if provided
+        datetime_timestamps = None
+        if timestamps:
+            datetime_timestamps = [datetime.fromisoformat(ts.replace('Z', '+00:00')) for ts in timestamps]
+        
+        result = analyze_entropy_time_series(entropy_data, datetime_timestamps)
+        
+        # Convert result to dict for JSON serialization
+        return {
+            "model_type": result.model_type,
+            "parameters": result.parameters,
+            "statistics": result.statistics,
+            "predictions": result.predictions,
+            "diagnostics": result.diagnostics,
+            "timestamp": result.timestamp.isoformat() if result.timestamp else None
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Analysis failed: {str(e)}")
+
+
+@app.post("/statistics/analyze/contradiction_factors")
+async def analyze_contradiction_factors_endpoint(
+    contradiction_scores: List[float],
+    semantic_features: Dict[str, List[float]]
+):
+    """Analyze factors contributing to contradiction detection"""
+    try:
+        result = analyze_contradiction_factors(contradiction_scores, semantic_features)
+        
+        return {
+            "model_type": result.model_type,
+            "parameters": result.parameters,
+            "statistics": result.statistics,
+            "predictions": result.predictions,
+            "residuals": result.residuals,
+            "diagnostics": result.diagnostics,
+            "timestamp": result.timestamp.isoformat() if result.timestamp else None
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Analysis failed: {str(e)}")
+
+
+@app.post("/statistics/analyze/semantic_market")
+async def analyze_semantic_market_endpoint(
+    semantic_supply: List[float],
+    semantic_demand: List[float],
+    entropy_prices: List[float]
+):
+    """Analyze semantic market dynamics using econometric models"""
+    try:
+        result = analyze_semantic_market(semantic_supply, semantic_demand, entropy_prices)
+        
+        return {
+            "model_type": result.model_type,
+            "parameters": result.parameters,
+            "statistics": result.statistics,
+            "diagnostics": result.diagnostics,
+            "timestamp": result.timestamp.isoformat() if result.timestamp else None
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Analysis failed: {str(e)}")
+
+
+@app.post("/statistics/analyze/comprehensive")
+async def comprehensive_statistical_analysis(request: StatisticalAnalysisRequest):
+    """Perform comprehensive statistical analysis of system data"""
+    try:
+        # Prepare system data
+        system_data = {}
+        
+        if request.entropy_history:
+            system_data['entropy_history'] = request.entropy_history
+            
+        if request.timestamps:
+            system_data['timestamps'] = [
+                datetime.fromisoformat(ts.replace('Z', '+00:00')) 
+                for ts in request.timestamps
+            ]
+            
+        if request.contradiction_scores:
+            system_data['contradiction_scores'] = request.contradiction_scores
+            
+        if request.semantic_features:
+            system_data['semantic_features'] = request.semantic_features
+            
+        if request.semantic_supply and request.semantic_demand and request.entropy_prices:
+            system_data['semantic_supply'] = request.semantic_supply
+            system_data['semantic_demand'] = request.semantic_demand
+            system_data['entropy_prices'] = request.entropy_prices
+        
+        # Perform comprehensive analysis
+        results = statistical_engine.comprehensive_analysis(system_data)
+        
+        # Convert results to JSON-serializable format
+        json_results = {}
+        for analysis_type, result in results.items():
+            json_results[analysis_type] = {
+                "model_type": result.model_type,
+                "parameters": result.parameters,
+                "statistics": result.statistics,
+                "predictions": result.predictions,
+                "residuals": result.residuals,
+                "diagnostics": result.diagnostics,
+                "timestamp": result.timestamp.isoformat() if result.timestamp else None
+            }
+        
+        return {
+            "analysis_results": json_results,
+            "summary": {
+                "analyses_performed": len(json_results),
+                "data_points_analyzed": len(request.entropy_history),
+                "timestamp": datetime.now().isoformat()
+            }
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Comprehensive analysis failed: {str(e)}")
+
+
+@app.get("/statistics/monitoring/status")
+async def get_statistical_monitoring_status():
+    """Get status of advanced statistical monitoring"""
+    try:
+        summary = advanced_monitor.get_statistical_summary()
+        return summary
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get monitoring status: {str(e)}")
+
+
+@app.post("/statistics/monitoring/start")
+async def start_statistical_monitoring():
+    """Start advanced statistical monitoring"""
+    try:
+        advanced_monitor.start_monitoring()
+        return {"status": "started", "message": "Advanced statistical monitoring started"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to start monitoring: {str(e)}")
+
+
+@app.post("/statistics/monitoring/stop")
+async def stop_statistical_monitoring():
+    """Stop advanced statistical monitoring"""
+    try:
+        advanced_monitor.stop_monitoring()
+        return {"status": "stopped", "message": "Advanced statistical monitoring stopped"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to stop monitoring: {str(e)}")
+
+
+@app.get("/statistics/monitoring/alerts")
+async def get_statistical_alerts(severity: str = None, hours: int = 24):
+    """Get recent statistical alerts"""
+    try:
+        alerts = advanced_monitor.get_alerts(severity_filter=severity, hours=hours)
+        
+        # Convert alerts to JSON-serializable format
+        json_alerts = []
+        for alert in alerts:
+            json_alerts.append({
+                "alert_type": alert.alert_type,
+                "severity": alert.severity,
+                "message": alert.message,
+                "metric_name": alert.metric_name,
+                "current_value": alert.current_value,
+                "expected_range": alert.expected_range,
+                "confidence_level": alert.confidence_level,
+                "timestamp": alert.timestamp.isoformat(),
+                "statistical_test": alert.statistical_test,
+                "p_value": alert.p_value
+            })
+        
+        return {
+            "alerts": json_alerts,
+            "total_alerts": len(json_alerts),
+            "severity_filter": severity,
+            "time_window_hours": hours
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get alerts: {str(e)}")
+
+
+@app.get("/statistics/monitoring/forecast/{metric_name}")
+async def get_metric_forecast(metric_name: str):
+    """Get forecast for a specific metric"""
+    try:
+        forecast = advanced_monitor.get_forecast(metric_name)
+        if not forecast:
+            raise HTTPException(status_code=404, detail=f"No forecast available for metric: {metric_name}")
+        
+        return {
+            "metric_name": metric_name,
+            "forecast": forecast['forecast'],
+            "confidence_intervals": forecast.get('confidence_intervals', []),
+            "timestamp": forecast['timestamp'].isoformat()
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to get forecast: {str(e)}")
+
+
+@app.get("/statistics/system/entropy_analysis")
+async def get_system_entropy_analysis():
+    """Provides a high-level analysis of the system's current entropy state."""
+    # This endpoint can be expanded to return more detailed analysis
+    try:
+        from ..monitoring.entropy_monitor import entropy_monitor
+        if not entropy_monitor.history:
+            raise HTTPException(status_code=404, detail="No entropy data recorded yet.")
+        
+        latest_entropy = entropy_monitor.history[-1][1]
+        avg_entropy = entropy_monitor.get_average_entropy()
+        trend = entropy_monitor.get_entropy_trends(window_size=min(len(entropy_monitor.history), 20))
+
+        return {
+            "latest_entropy": latest_entropy,
+            "average_entropy": avg_entropy,
+            "trend_analysis": trend,
+            "stability": "stable" if trend.get('slope', 0) < 0.001 else "volatile"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error analyzing entropy: {e}")
+
+
+@app.get("/vault/understanding/metrics")
+async def get_understanding_metrics_endpoint():
+    """
+    Get high-level metrics about the "understanding" capabilities of the vault.
+    Requires the system to be running in 'understanding' mode.
+    """
+    vault_manager = kimera_system['vault_manager']
+    if not hasattr(vault_manager, 'get_understanding_metrics'):
+        raise HTTPException(
+            status_code=400,
+            detail="The system is not running in 'understanding' mode. The vault manager does not support this operation."
+        )
+    try:
+        metrics = vault_manager.get_understanding_metrics()
+        return metrics
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving understanding metrics: {e}")
 
 
 if __name__ == "__main__":

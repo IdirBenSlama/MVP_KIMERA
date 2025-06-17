@@ -1,0 +1,24 @@
+{
+  "timestamp": "2025-06-16T14:17:24.179923",
+  "axiom": "U(A \u2218 B) = U(A) \u2218 U(B)",
+  "mathematical_proof": {
+    "verified": false,
+    "assumptions": [
+      "U is a linear operator on semantic space S",
+      "Composition \u2218 is associative and has identity",
+      "S is a Hilbert space with inner product \u27e8\u00b7,\u00b7\u27e9",
+      "U preserves information: I(U(x)) = I(x)",
+      "U reduces entropy: H(U(x)) \u2264 H(x)"
+    ],
+    "num_steps": 27,
+    "counter_examples_found": 1000
+  },
+  "empirical_tests": {
+    "total_tests": 5,
+    "passed_tests": 1,
+    "success_rate": 0.2,
+    "average_error": 1.018757590395358,
+    "test_details": [
+      {
+        "name": "Linguistic Composition",
+        "passed": 

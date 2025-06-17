@@ -106,31 +106,25 @@ class KimeraSystemUpdater:
         if self.run_command("pip install -r requirements.txt --upgrade", "Installing/updating requirements"):
             success = True
         else:
-            log.info("Main requirements failed, trying alternative strategies...")
+            log.info("Main requirements failed, trying individual core packages...")
             
-            # Strategy 2: Try minimal requirements
-            if self.run_command("pip install -r requirements-minimal.txt --upgrade", "Installing/updating minimal requirements"):
+            # Strategy 2: Install core packages individually
+            core_packages = [
+                "fastapi", "uvicorn[standard]", "pydantic", "sqlalchemy", 
+                "torch", "transformers", "numpy", "requests", "psutil"
+            ]
+            
+            individual_success = 0
+            for package in core_packages:
+                if self.run_command(f"pip install {package} --upgrade", f"Installing {package}"):
+                    individual_success += 1
+            
+            if individual_success >= len(core_packages) * 0.7:  # 70% success rate
+                log.info(f"Successfully installed {individual_success}/{len(core_packages)} core packages")
                 success = True
             else:
-                log.info("Minimal requirements failed, trying individual core packages...")
-                
-                # Strategy 3: Install core packages individually
-                core_packages = [
-                    "fastapi", "uvicorn[standard]", "pydantic", "sqlalchemy", 
-                    "torch", "transformers", "numpy", "requests", "psutil"
-                ]
-                
-                individual_success = 0
-                for package in core_packages:
-                    if self.run_command(f"pip install {package} --upgrade", f"Installing {package}"):
-                        individual_success += 1
-                
-                if individual_success >= len(core_packages) * 0.7:  # 70% success rate
-                    log.info(f"Successfully installed {individual_success}/{len(core_packages)} core packages")
-                    success = True
-                else:
-                    log.warning("Dependency installation partially failed, but continuing with available packages...")
-                    success = True  # Continue anyway
+                log.warning("Dependency installation partially failed, but continuing with available packages...")
+                success = True  # Continue anyway
         
         if not success:
             log.error("All dependency installation strategies failed")

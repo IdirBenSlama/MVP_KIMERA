@@ -1,0 +1,142 @@
+[
+  {
+    "time": 0.062444210052490234,
+    "cpu_percent": 4.6,
+    "memory_percent": 45.4,
+    "memory_used_mb": 761.1875,
+    "threads": 58,
+    "gpu_util": 1,
+    "gpu_mem": 13494.80078125,
+    "gpu_temp": 47
+  },
+  {
+    "time": 5.1232829093933105,
+    "cpu_percent": 18.2,
+    "memory_percent": 46.1,
+    "memory_used_mb": 1274.90625,
+    "threads": 129,
+    "gpu_util": 31,
+    "gpu_mem": 14657.36328125,
+    "gpu_temp": 47
+  },
+  {
+    "time": 7.148310422897339,
+    "cpu_percent": 3.7,
+    "memory_percent": 46.1,
+    "memory_used_mb": 1274.83203125,
+    "threads": 128,
+    "gpu_util": 3,
+    "gpu_mem": 14657.36328125,
+    "gpu_temp": 46
+  },
+  {
+    "time": 8.43643593788147,
+    "cpu_percent": 13.0,
+    "memory_percent": 46.2,
+    "memory_used_mb": 1278.66015625,
+    "threads": 128,
+    "gpu_util": 64,
+    "gpu_mem": 14728.98828125,
+    "gpu_temp": 47
+  },
+  {
+    "time": 10.466636657714844,
+    "cpu_percent": 2.1,
+    "memory_percent": 46.2,
+    "memory_used_mb": 1278.66015625,
+    "threads": 128,
+    "gpu_util": 1,
+    "gpu_mem": 14728.98828125,
+    "gpu_temp": 46
+  },
+  {
+    "time": 13.261793851852417,
+    "cpu_percent": 12.8,
+    "memory_percent": 46.2,
+    "memory_used_mb": 1288.76171875,
+    "threads": 128,
+    "gpu_util": 20,
+    "gpu_mem": 14840.98828125,
+    "gpu_temp": 47
+  },
+  {
+    "time": 15.291487216949463,
+    "cpu_percent": 4.3,
+    "memory_percent": 46.2,
+    "memory_used_mb": 1288.76171875,
+    "threads": 128,
+    "gpu_util": 3,
+    "gpu_mem": 14840.98828125,
+    "gpu_temp": 46
+  },
+  {
+    "time": 20.849205493927002,
+    "cpu_percent": 12.0,
+    "memory_percent": 46.2,
+    "memory_used_mb": 1317.69140625,
+    "threads": 128,
+    "gpu_util": 42,
+    "gpu_mem": 15044.98828125,
+    "gpu_temp": 47
+  },
+  {
+    "time": 22.87837815284729,
+    "cpu_percent": 4.9,
+    "memory_percent": 46.2,
+    "memory_used_mb": 1317.6953125,
+    "threads": 128,
+    "gpu_util": 4,
+    "gpu_mem": 15044.98828125,
+    "gpu_temp": 46
+  },
+  {
+    "time": 34.9059112071991,
+    "cpu_percent": 10.3,
+    "memory_percent": 46.3,
+    "memory_used_mb": 1384.7109375,
+    "threads": 128,
+    "gpu_util": 29,
+    "gpu_mem": 15432.61328125,
+    "gpu_temp": 47
+  },
+  {
+    "time": 36.93387031555176,
+    "cpu_percent": 3.8,
+    "memory_percent": 46.3,
+    "memory_used_mb": 1384.7109375,
+    "threads": 128,
+    "gpu_util": 4,
+    "gpu_mem": 15432.61328125,
+    "gpu_temp": 47
+  },
+  {
+    "time": 64.39747190475464,
+    "cpu_percent": 12.1,
+    "memory_percent": 46.5,
+    "memory_used_mb": 1534.28515625,
+    "threads": 125,
+    "gpu_util": 35,
+    "gpu_mem": 16222.42578125,
+    "gpu_temp": 47
+  },
+  {
+    "time": 66.46025109291077,
+    "cpu_percent": 3.6,
+    "memory_percent": 46.5,
+    "memory_used_mb": 1534.2890625,
+    "threads": 125,
+    "gpu_util": 3,
+    "gpu_mem": 16222.42578125,
+    "gpu_temp": 47
+  },
+  {
+    "time": 136.55247354507446,
+    "cpu_percent": 13.1,
+    "memory_percent": 47.2,
+    "memory_used_mb": 2076.58984375,
+    "threads": 123,
+    "gpu_util": 25,
+    "gpu_mem": 17748.17578125,
+    "gpu_temp": 48
+  }
+]

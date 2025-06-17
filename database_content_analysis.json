@@ -1,0 +1,137 @@
+{
+  "timestamp": "2025-06-16T05:33:38.085937",
+  "sqlite_analysis": {
+    "scars": {
+      "VAULT_SCAR_2676f147": {
+        "reason": "VaultManager integration test",
+        "timestamp": "2025-06-16 05:27:49.305023",
+        "resolved_by": "test_vault_manager",
+        "geoids": [
+          "VAULT_TEST_9115c93d"
+        ],
+        "entropy_change": -0.2,
+        "vault": "vault_a",
+        "cls_angle": 30.0,
+        "semantic_polarity": 0.05
+      },
+      "VAULT_SCAR_16bb4f77": {
+        "reason": "VaultManager integration test",
+        "timestamp": "2025-06-16 05:24:27.599339",
+        "resolved_by": "test_vault_manager",
+        "geoids": [
+          "VAULT_TEST_3d59a6cc"
+        ],
+        "entropy_change": -0.2,
+        "vault": "vault_b",
+        "cls_angle": 30.0,
+        "semantic_polarity": 0.05
+      },
+      "VAULT_SCAR_62850455": {
+        "reason": "VaultManager integration test",
+        "timestamp": "2025-06-16 05:23:08.417937",
+        "resolved_by": "test_vault_manager",
+        "geoids": [
+          "VAULT_TEST_42fd7082"
+        ],
+        "entropy_change": -0.2,
+        "vault": "vault_a",
+        "cls_angle": 30.0,
+        "semantic_polarity": 0.05
+      }
+    },
+    "geoids": {
+      "GEOID_7c3f0ef5": {
+        "symbolic": {
+          "type": "dashboard_test",
+          "timestamp": 1749797632407
+        },
+        "metadata": {
+          "created_by": "real_time_dashboard"
+        },
+        "semantic": {
+          "creativity": 0.7599235193517441,
+          "logic": 0.8801081478277878,
+          "emotion": 0.8716719136017399
+        }
+      },
+      "GEOID_bdcc8cfc": {
+        "symbolic": {
+          "type": "dashboard_test",
+          "timestamp": 1749797642918
+        },
+        "metadata": {
+          "created_by": "real_time_dashboard"
+        },
+        "semantic": {
+          "creativity": 0.17461086197082398,
+          "logic": 0.26604672873046864,
+          "emotion": 0.7851398737806669
+        }
+      },
+      "GEOID_7a3eef3f": {
+        "symbolic": {
+          "type": "dashboard_test",
+          "timestamp": 1749797656383
+        },
+        "metadata": {
+          "created_by": "real_time_dashboard"
+        },
+        "semantic": {
+          "creativity": 0.06605608577232636,
+          "logic": 0.3322412432649985,
+          "emotion": 0.659415236287736
+        }
+      }
+    },
+    "relationships": {},
+    "patterns": {
+      "scar_reasons": {
+        "VaultManager integration test": 6,
+        "Collapsed 'composite' tension.": 1,
+        "auto-cycle": 1,
+        "Resolved 'composite' tension.": 1
+      },
+      "resolution_methods": {
+        "test_vault_manager": 6,
+        "ContradictionEngine:Collapse": 2,
+        "KimeraCognitiveCycle": 1
+      },
+      "vault_distribution": {
+        "vault_a": 5,
+        "vault_b": 4
+      },
+      "symbolic_types": {
+        "dashboard_test": 10
+      },
+      "metadata_sources": {
+        "real_time_dashboard": 10
+      },
+      "geoid_involvement": {
+        "GEOID_f7981394": 3,
+        "GEOID_7c3f0ef5": 3,
+        "VAULT_TEST_b0ab3ee9": 1,
+        "VAULT_TEST_7be1e311": 1,
+        "VAULT_TEST_cf18be8b": 1,
+        "VAULT_TEST_42fd7082": 1,
+        "VAULT_TEST_3d59a6cc": 1,
+        "VAULT_TEST_9115c93d": 1
+      },
+      "semantic_dimensions": [
+        "creativity",
+        "logic",
+        "emotion"
+      ]
+    },
+    "semantic_analysis": {}
+  },
+  "neo4j_analysis": {
+    "nodes": {
+      "Geoid": 295,
+      "Scar": 9
+    },
+    "relationships": {
+      "INVOLVES": 6
+    },
+    "patterns": {}
+  }
+}

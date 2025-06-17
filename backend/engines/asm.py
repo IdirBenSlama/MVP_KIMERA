@@ -3,8 +3,8 @@ from __future__ import annotations
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 import numpy as np
-from scipy.spatial.distance import pdist
 from ..vault.database import ScarDB, GeoidDB
+from ..core.native_math import NativeDistance
 
 
 class AxisStabilityMonitor:
@@ -34,10 +34,10 @@ class AxisStabilityMonitor:
             vectors = [g.semantic_vector for g in recent_geoids if g.semantic_vector is not None]
             if len(vectors) > 1:
                 min_len = min(len(v) for v in vectors)
-                norm_vectors = [np.array(v[:min_len]) for v in vectors]
-                # Compute pairwise cosine distances without heavy dependencies
-                distances = pdist(np.vstack(norm_vectors), metric="cosine")
-                avg_distance = float(np.mean(distances))
+                norm_vectors = [v[:min_len] for v in vectors]
+                # Compute pairwise cosine distances using native implementation
+                distances = NativeDistance.condensed_distances(norm_vectors, metric="cosine")
+                avg_distance = float(np.mean(distances)) if distances else 0.0
                 if np.isnan(avg_distance):
                     semantic_cohesion = 0.0
                 else:

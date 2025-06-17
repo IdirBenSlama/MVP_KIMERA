@@ -27,6 +27,9 @@ Welcome to the comprehensive documentation for KIMERA SWM (Semantic Working Memo
 - [**SCAR Utilization Analysis**](SCAR_UTILIZATION_ANALYSIS.md) - Memory utilization improvements (16.0%)
 - [**Performance Benchmarks**](docs/performance/README.md) - Comprehensive performance analysis
 - [**Stress Testing Results**](STRESS_TESTING.md) - System limits and breaking points
+- [**Extreme Crash Test Guide**](EXTREME_CRASH_TEST_GUIDE.md) - How to run ruthless stress scenarios
+- [**Tyrannic Crash Test Analysis**](TYRANNIC_CRASH_TEST_ANALYSIS.md) - Detailed performance results (100 % success up to 128 threads)
+- [**Database Analysis Report**](DATABASE_ANALYSIS_REPORT.md) - Schema utilisation and readiness assessment
 
 ---
 

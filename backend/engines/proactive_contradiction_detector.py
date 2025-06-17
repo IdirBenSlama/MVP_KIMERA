@@ -10,11 +10,11 @@ from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 import numpy as np
-from scipy.spatial.distance import cosine
 from sqlalchemy.orm import Session
 
 from ..vault.database import SessionLocal, GeoidDB, ScarDB
 from ..core.geoid import GeoidState
+from ..core.native_math import NativeMath
 from .contradiction_engine import ContradictionEngine, TensionGradient
 
 
@@ -175,8 +175,8 @@ class ProactiveContradictionDetector:
             return 0.0
             
         try:
-            # Use cosine similarity (higher = more similar)
-            return 1.0 - cosine(geoid_a.embedding_vector, geoid_b.embedding_vector)
+            # Use native cosine similarity (higher = more similar)
+            return NativeMath.cosine_similarity(geoid_a.embedding_vector, geoid_b.embedding_vector)
         except:
             return 0.0
     

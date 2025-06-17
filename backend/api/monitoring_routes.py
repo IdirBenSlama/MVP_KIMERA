@@ -12,7 +12,7 @@ import logging
 
 from ..monitoring.system_observer import SystemObserver
 from ..monitoring.benchmarking_suite import BenchmarkRunner
-from ..vault.vault_manager import VaultManager
+from ..vault import get_vault_manager
 from ..core.geoid import GeoidState
 from ..core.models import LinguisticGeoid
 
@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 
 # Global monitoring instances
 system_observer = SystemObserver()
-vault_manager = VaultManager()
+vault_manager = get_vault_manager(mode="understanding")
 benchmark_runner = BenchmarkRunner()  # Create an instance of BenchmarkRunner
 
 
