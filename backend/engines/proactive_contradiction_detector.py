@@ -108,7 +108,7 @@ class ProactiveContradictionDetector:
                     geoid_id=row.geoid_id,
                     semantic_state=row.semantic_state_json or {},
                     symbolic_state=row.symbolic_state or {},
-                    embedding_vector=row.semantic_vector or [],
+                    embedding_vector=row.semantic_vector if row.semantic_vector is not None else [],
                     metadata=row.metadata_json or {}
                 )
                 geoids.append(geoid)

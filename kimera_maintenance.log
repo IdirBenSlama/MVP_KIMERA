@@ -1,0 +1,26 @@
+2025-06-17 16:25:32,924 - INFO - Starting maintenance cycle...
+2025-06-17 16:25:32,925 - INFO - Generating maintenance report...
+2025-06-17 16:25:32,925 - INFO - Refreshing materialized views...
+2025-06-17 16:25:32,973 - INFO - Refreshed mv_scar_patterns in 0.01s
+2025-06-17 16:25:32,984 - INFO - Refreshed mv_geoid_complexity in 0.01s
+2025-06-17 16:25:32,987 - INFO - Updating table statistics...
+2025-06-17 16:25:32,990 - INFO - Updated stats for geoids: 33 rows, 680 kB
+2025-06-17 16:25:33,000 - INFO - Updated stats for scars: 521 rows, 12 MB
+2025-06-17 16:25:33,002 - INFO - Updated stats for insights: 0 rows, 64 kB
+2025-06-17 16:25:33,005 - INFO - Updated stats for multimodal_groundings: 0 rows, 40 kB
+2025-06-17 16:25:33,008 - INFO - Updated stats for causal_relationships: 14 rows, 144 kB
+2025-06-17 16:25:33,014 - INFO - Updated stats for enhanced_scars: 520 rows, 280 kB
+2025-06-17 16:25:33,015 - INFO - Cleaning up data older than 30 days...
+2025-06-17 16:25:33,019 - INFO - Cleaned up 0 old sync queue entries
+2025-06-17 16:25:33,022 - INFO - Cleaned up old cluster data
+2025-06-17 16:25:33,023 - INFO - Monitoring query performance...
+2025-06-17 16:25:33,026 - ERROR - Maintenance cycle failed: (psycopg2.errors.InFailedSqlTransaction) current transaction is aborted, commands ignored until end of transaction block
+
+[SQL: 
+                SELECT 
+                    pg_database_size(current_database()) as db_size_bytes,
+                    pg_size_pretty(pg_database_size(current_database())) as db_size,
+                    (SELECT count(*) FROM pg_stat_activity WHERE state = 'active') as active_connections,
+                    (SELECT setting FROM pg_settings WHERE name = 'max_connections') as max_connections
+            ]
+(Background on this error at: https://sqlalche.me/e/20/2j85)

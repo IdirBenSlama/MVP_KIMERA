@@ -1,0 +1,102 @@
+{
+  "timestamp": "2025-06-17T18:46:30.298141",
+  "tests": {
+    "database": {
+      "jsonb_query": {
+        "time": 0.0036382675170898438,
+        "rows": 0,
+        "status": "PASS"
+      },
+      "vector_similarity": {
+        "time": 2.569232702255249,
+        "rows": 10,
+        "avg_similarity": 1.0,
+        "status": "WARN"
+      },
+      "view_mv_scar_patterns": {
+        "time": 0.0011363029479980469,
+        "rows": 2,
+        "status": "PASS"
+      },
+      "view_mv_geoid_complexity": {
+        "time": 0.0007493495941162109,
+        "rows": 33,
+        "status": "PASS"
+      },
+      "similarity_function": {
+        "time": 0.003353118896484375,
+        "results": 2,
+        "status": "PASS"
+      }
+    },
+    "api": {
+      "/system/health": {
+        "status": "FAIL",
+        "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=10)"
+      },
+      "/system/health/detailed": {
+        "status": "FAIL",
+        "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=10)"
+      },
+      "/system/status": {
+        "status": "FAIL",
+        "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=10)"
+      },
+      "/monitoring/status": {
+        "status": "FAIL",
+        "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=10)"
+      },
+      "api_operations": {
+        "status": "FAIL",
+        "error": "HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=10)"
+      }
+    },
+    "concurrent": {
+      "database_concurrent": {
+        "queries": 100,
+        "total_time": 0.09570956230163574,
+        "qps": 1044.8276806955048,
+        "avg_query_time": 0.0034416961669921876,
+        "status": "PASS"
+      },
+      "api_concurrent": {
+        "requests": 50,
+        "successful": 0,
+        "total_time": 35.289306640625,
+        "rps": 0.0,
+        "status": "WARN"
+      }
+    },
+    "integrity": {
+      "geoids_vectors": {
+        "total": 33,
+        "correct_dimension": 33,
+        "null_vectors": 0,
+        "status": "PASS"
+      },
+      "scars_vectors": {
+        "total": 521,
+        "correct_dimension": 521,
+        "null_vectors": 0,
+        "status": "PASS"
+      },
+      "jsonb_integrity": {
+        "total": 33,
+        "valid_symbolic": 33,
+        "valid_metadata": 33,
+        "status": "PASS"
+      }
+    }
+  },
+  "performance_metrics": {
+    "database_performance": "EXCELLENT",
+    "api_performance": "EXCELLENT",
+    "concurrent_performance": "EXCELLENT",
+    "data_integrity": "EXCELLENT",
+    "overall": "NEEDS ATTENTION"
+  },
+  "errors": [
+    "API operation error: HTTPConnectionPool(host='localhost', port=8001): Read timed out. (read timeout=10)"
+  ],
+  "pass_rate": 0.5333333333333333
+}

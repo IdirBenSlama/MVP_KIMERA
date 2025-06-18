@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-06-17T14:31:27.537057",
+  "sqlite_analysis": {
+    "scars": {
+      "VAULT_SCAR_d4c17cf0": {
+        "reason": "VaultManager integration test",
+        "timestamp": "2025-06-17 14:29:06.775719",
+        "resolved_by": "test_vault_manager",
+        "geoids": [
+          "VAULT_TEST_481afa57"
+        ],
+        "entropy_change": -0.2,
+        "vault": "vault_a",
+        "cls_angle": 30.0,
+        "semantic_polarity": 0.05
+      }
+    },
+    "geoids": {},
+    "relationships": {},
+    "patterns": {
+      "scar_reasons": {
+        "VaultManager integration test": 1
+      },
+      "resolution_methods": {
+        "test_vault_manager": 1
+      },
+      "vault_distribution": {
+        "vault_a": 1
+      },
+      "symbolic_types": {},
+      "metadata_sources": {},
+      "geoid_involvement": {
+        "VAULT_TEST_481afa57": 1
+      },
+      "semantic_dimensions": []
+    },
+    "semantic_analysis": {}
+  },
+  "neo4j_analysis": {
+    "nodes": {},
+    "relationships": {},
+    "patterns": {},
+    "status": "unavailable"
+  }
+}

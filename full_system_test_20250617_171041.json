@@ -1,0 +1,106 @@
+{
+  "timestamp": "2025-06-17T17:10:16.555342",
+  "tests": {
+    "database": {
+      "jsonb_query": {
+        "time": 0.003155946731567383,
+        "rows": 0,
+        "status": "PASS"
+      },
+      "vector_similarity": {
+        "time": 1.9562568664550781,
+        "rows": 10,
+        "avg_similarity": 1.0,
+        "status": "PASS"
+      },
+      "view_mv_scar_patterns": {
+        "time": 0.00118255615234375,
+        "rows": 2,
+        "status": "PASS"
+      },
+      "view_mv_geoid_complexity": {
+        "time": 0.0009686946868896484,
+        "rows": 33,
+        "status": "PASS"
+      },
+      "similarity_function": {
+        "time": 0.002089977264404297,
+        "results": 2,
+        "status": "PASS"
+      }
+    },
+    "api": {
+      "/system/health": {
+        "status_code": 200,
+        "time": 2.086371660232544,
+        "status": "PASS"
+      },
+      "/system/status": {
+        "status_code": 200,
+        "time": 2.0568294525146484,
+        "status": "PASS"
+      },
+      "/monitoring/status": {
+        "status_code": 200,
+        "time": 2.0885276794433594,
+        "status": "PASS"
+      },
+      "geoid_creation": {
+        "status": "PASS",
+        "time": 2.0823354721069336,
+        "geoid_id": "GEOID_d5062853"
+      },
+      "contradiction_processing": {
+        "status": "PASS",
+        "time": 3.09409236907959,
+        "contradictions_detected": 12,
+        "scars_created": 12
+      }
+    },
+    "concurrent": {
+      "database_concurrent": {
+        "queries": 100,
+        "total_time": 0.08533000946044922,
+        "qps": 1171.9206482257614,
+        "avg_query_time": 0.0031940531730651855,
+        "status": "PASS"
+      },
+      "api_concurrent": {
+        "requests": 50,
+        "successful": 50,
+        "total_time": 11.014343023300171,
+        "rps": 4.5395353943696914,
+        "status": "PASS"
+      }
+    },
+    "integrity": {
+      "geoids_vectors": {
+        "total": 33,
+        "correct_dimension": 33,
+        "null_vectors": 0,
+        "status": "PASS"
+      },
+      "scars_vectors": {
+        "total": 521,
+        "correct_dimension": 521,
+        "null_vectors": 0,
+        "status": "PASS"
+      },
+      "jsonb_integrity": {
+        "total": 33,
+        "valid_symbolic": 33,
+        "valid_metadata": 33,
+        "status": "PASS"
+      }
+    }
+  },
+  "performance_metrics": {
+    "database_performance": "EXCELLENT",
+    "api_performance": "EXCELLENT",
+    "concurrent_performance": "EXCELLENT",
+    "data_integrity": "EXCELLENT",
+    "overall": "EXCELLENT"
+  },
+  "errors": [],
+  "pass_rate": 1.0
+}

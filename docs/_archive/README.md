@@ -1,3 +1,7 @@
+# Archive
+
+This directory contains historical, deprecated, or legacy documents and project files that are preserved for reference but are no longer part of the active project.
+
 # Documentation
 
 All Markdown documentation files

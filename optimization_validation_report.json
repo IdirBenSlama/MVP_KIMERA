@@ -1,0 +1,152 @@
+{
+  "timestamp": "2025-06-17T17:02:22.661253",
+  "validations": {
+    "database_setup": {
+      "postgresql_version": {
+        "value": "15.12",
+        "status": "PASS",
+        "message": "PostgreSQL 15.12"
+      },
+      "extension_vector": {
+        "value": "0.8.0",
+        "status": "PASS",
+        "message": "vector extension: 0.8.0"
+      },
+      "extension_pg_trgm": {
+        "value": "1.6",
+        "status": "PASS",
+        "message": "pg_trgm extension: 1.6"
+      },
+      "extension_uuid-ossp": {
+        "value": "1.1",
+        "status": "PASS",
+        "message": "uuid-ossp extension: 1.1"
+      },
+      "database_size": {
+        "value": "22 MB",
+        "status": "PASS",
+        "message": "Database size: 22 MB"
+      }
+    },
+    "schema_optimizations": {
+      "jsonb_columns": {
+        "value": 16,
+        "status": "PASS",
+        "message": "16 JSONB columns (expected \u226515)"
+      },
+      "jsonb_query_performance": {
+        "value": "3.0ms",
+        "status": "PASS",
+        "message": "JSONB query time: 3.0ms"
+      },
+      "vector_columns": {
+        "value": 14,
+        "status": "PASS",
+        "message": "14 vector columns found"
+      }
+    },
+    "indexes": {
+      "custom_indexes": {
+        "value": 16,
+        "status": "PASS",
+        "message": "16 custom indexes (expected \u226515)"
+      },
+      "gin_indexes": {
+        "value": 5,
+        "status": "PASS",
+        "message": "5 gin indexes"
+      },
+      "ivfflat_indexes": {
+        "value": 3,
+        "status": "PASS",
+        "message": "3 ivfflat indexes"
+      },
+      "btree_indexes": {
+        "value": 56,
+        "status": "PASS",
+        "message": "56 btree indexes"
+      }
+    },
+    "vector_search": {
+      "geoids_vector_coverage": {
+        "value": "100.0%",
+        "status": "PASS",
+        "message": "geoids: 33/33 vectors (100.0%)"
+      },
+      "scars_vector_coverage": {
+        "value": "100.0%",
+        "status": "PASS",
+        "message": "scars: 521/521 vectors (100.0%)"
+      },
+      "vector_similarity_performance": {
+        "value": "1.28s",
+        "status": "PASS",
+        "message": "Vector similarity query: 1.28s"
+      }
+    },
+    "materialized_views": {
+      "materialized_views": {
+        "value": 2,
+        "status": "PASS",
+        "message": "2 materialized views"
+      },
+      "view_mv_scar_patterns": {
+        "value": "1.0ms",
+        "status": "PASS",
+        "message": "mv_scar_patterns query: 1.0ms"
+      },
+      "view_mv_geoid_complexity": {
+        "value": "0.8ms",
+        "status": "PASS",
+        "message": "mv_geoid_complexity query: 0.8ms"
+      }
+    },
+    "functions": {
+      "function_find_similar_scars": {
+        "value": "Exists",
+        "status": "PASS",
+        "message": "find_similar_scars: Exists"
+      },
+      "function_find_related_geoids": {
+        "value": "Exists",
+        "status": "PASS",
+        "message": "find_related_geoids: Exists"
+      }
+    },
+    "performance": {
+      "concurrent_performance": {
+        "value": "826.6 QPS",
+        "status": "PASS",
+        "message": "Concurrent queries: 826.6 queries/second"
+      },
+      "cache_hit_ratio": {
+        "value": "100.0%",
+        "status": "PASS",
+        "message": "Cache hit ratio: 100.0%"
+      }
+    },
+    "api_integration": {
+      "api_/system/health": {
+        "value": 200,
+        "status": "PASS",
+        "message": "/system/health: 200"
+      },
+      "api_/system/status": {
+        "value": 200,
+        "status": "PASS",
+        "message": "/system/status: 200"
+      },
+      "api_/monitoring/status": {
+        "value": 200,
+        "status": "PASS",
+        "message": "/monitoring/status: 200"
+      }
+    }
+  },
+  "summary": {
+    "total_tests": 25,
+    "passed_tests": 25,
+    "success_rate": 100.0,
+    "status": "EXCELLENT"
+  }
+}

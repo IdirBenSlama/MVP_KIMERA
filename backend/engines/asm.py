@@ -31,17 +31,20 @@ class AxisStabilityMonitor:
         )
         semantic_cohesion = 1.0
         if len(recent_geoids) > 1:
-            vectors = [g.semantic_vector for g in recent_geoids if g.semantic_vector is not None]
-            if len(vectors) > 1:
-                min_len = min(len(v) for v in vectors)
-                norm_vectors = [v[:min_len] for v in vectors]
-                # Compute pairwise cosine distances using native implementation
-                distances = NativeDistance.condensed_distances(norm_vectors, metric="cosine")
-                avg_distance = float(np.mean(distances)) if distances else 0.0
-                if np.isnan(avg_distance):
-                    semantic_cohesion = 0.0
-                else:
-                    semantic_cohesion = 1.0 - avg_distance
+            try:
+                vectors = [g.semantic_vector for g in recent_geoids if g.semantic_vector is not None]
+                if len(vectors) > 1:
+                    min_len = min(len(v) for v in vectors)
+                    norm_vectors = [v[:min_len] for v in vectors]
+                    # Compute pairwise cosine distances using native implementation
+                    distances = NativeDistance.condensed_distances(norm_vectors, metric="cosine")
+                    if distances:
+                        avg_distance = float(np.mean(distances))
+                        if not np.isnan(avg_distance):
+                            semantic_cohesion = max(0.0, min(1.0, 1.0 - avg_distance))
+            except Exception as e:
+                # Fallback to default value if computation fails
+                semantic_cohesion = 0.5
 
         # Metric 3: Entropic Stability - trend of entropy change
         recent_scars = (

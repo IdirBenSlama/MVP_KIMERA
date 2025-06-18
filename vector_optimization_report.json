@@ -1,0 +1,7 @@
+{
+  "timestamp": "2025-06-17T16:25:00.450092",
+  "vector_distribution": {
+    "geoid_stats": {
+      "total_geoids": 33,
+      "geoids_with_vectors": 33,
+      "vector_coverage_pct": 

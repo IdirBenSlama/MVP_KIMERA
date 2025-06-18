@@ -1,0 +1,168 @@
+{
+  "timestamp": "2025-06-17T16:33:02.667993",
+  "database_queries": {
+    "jsonb_query": {
+      "avg_time": 0.0011341118812561036,
+      "min_time": 0.0009202957153320312,
+      "max_time": 0.0029358863830566406,
+      "std_dev": 0.00023421337988658724,
+      "iterations": 100
+    },
+    "vector_similarity": {
+      "avg_time": 1.7653384447097777,
+      "min_time": 1.6369011402130127,
+      "max_time": 2.3473291397094727,
+      "std_dev": 0.13388994511571417,
+      "iterations": 50
+    },
+    "materialized_view": {
+      "avg_time": 0.001104123592376709,
+      "min_time": 0.0009248256683349609,
+      "max_time": 0.0017926692962646484,
+      "std_dev": 0.000139011245297714,
+      "iterations": 100
+    },
+    "indexed_query": {
+      "avg_time": 0.0011707139015197754,
+      "min_time": 0.0009844303131103516,
+      "max_time": 0.0021071434020996094,
+      "std_dev": 0.00016450366460063858,
+      "iterations": 100
+    }
+  },
+  "concurrent_queries": {
+    "total_queries": 200,
+    "total_time": 0.08640480041503906,
+    "queries_per_second": 2314.686210017439,
+    "avg_query_time": 0.0011511921882629394,
+    "min_query_time": 0.0006062984466552734,
+    "max_query_time": 0.0053424835205078125,
+    "std_dev": 0.0007548650304259717
+  },
+  "api_endpoints": {
+    "health": {
+      "error": "No successful requests",
+      "success_rate": 0,
+      "iterations": 50
+    },
+    "status": {
+      "error": "No successful requests",
+      "success_rate": 0,
+      "iterations": 50
+    },
+    "monitoring": {
+      "error": "No successful requests",
+      "success_rate": 0,
+      "iterations": 50
+    }
+  },
+  "geoid_creation": {
+    "error": "No successful geoid creations",
+    "success_rate": 0,
+    "iterations": 10
+  },
+  "memory_usage": {
+    "database_size": "22 MB",
+    "active_connections": 1,
+    "shared_buffers": "16384",
+    "effective_cache_size": "524288",
+    "table_sizes": [
+      {
+        "table": "scars",
+        "size": "12 MB",
+        "size_bytes": 12902400
+      },
+      {
+        "table": "geoids",
+        "size": "680 kB",
+        "size_bytes": 696320
+      },
+      {
+        "table": "enhanced_scars",
+        "size": "280 kB",
+        "size_bytes": 286720
+      },
+      {
+        "table": "causal_relationships",
+        "size": "144 kB",
+        "size_bytes": 147456
+      },
+      {
+        "table": "understanding_tests",
+        "size": "64 kB",
+        "size_bytes": 65536
+      },
+      {
+        "table": "conceptual_abstractions",
+        "size": "64 kB",
+        "size_bytes": 65536
+      },
+      {
+        "table": "insights",
+        "size": "64 kB",
+        "size_bytes": 65536
+      },
+      {
+        "table": "self_models",
+        "size": "48 kB",
+        "size_bytes": 49152
+      },
+      {
+        "table": "multimodal_groundings",
+        "size": "40 kB",
+        "size_bytes": 40960
+      },
+      {
+        "table": "introspection_logs",
+        "size": "32 kB",
+        "size_bytes": 32768
+      },
+      {
+        "table": "consciousness_indicators",
+        "size": "32 kB",
+        "size_bytes": 32768
+      },
+      {
+        "table": "value_systems",
+        "size": "32 kB",
+        "size_bytes": 32768
+      },
+      {
+        "table": "genuine_opinions",
+        "size": "32 kB",
+        "size_bytes": 32768
+      },
+      {
+        "table": "ethical_reasoning",
+        "size": "24 kB",
+        "size_bytes": 24576
+      },
+      {
+        "table": "compositional_semantics",
+        "size": "24 kB",
+        "size_bytes": 24576
+      },
+      {
+        "table": "enhanced_geoids",
+        "size": "24 kB",
+        "size_bytes": 24576
+      },
+      {
+        "table": "neo4j_sync_queue",
+        "size": "16 kB",
+        "size_bytes": 16384
+      },
+      {
+        "table": "scar_clusters",
+        "size": "16 kB",
+        "size_bytes": 16384
+      },
+      {
+        "table": "geoid_clusters",
+        "size": "16 kB",
+        "size_bytes": 16384
+      }
+    ]
+  },
+  "total_benchmark_time": 740.8249516487122
+}

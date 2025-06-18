@@ -1,0 +1,102 @@
+{
+  "timestamp": "2025-06-17T17:32:59.031365",
+  "tests": {
+    "database": {
+      "jsonb_query": {
+        "time": 0.0031468868255615234,
+        "rows": 0,
+        "status": "PASS"
+      },
+      "vector_similarity": {
+        "time": 2.02053165435791,
+        "rows": 10,
+        "avg_similarity": 1.0,
+        "status": "WARN"
+      },
+      "view_mv_scar_patterns": {
+        "time": 0.0011315345764160156,
+        "rows": 2,
+        "status": "PASS"
+      },
+      "view_mv_geoid_complexity": {
+        "time": 0.0007960796356201172,
+        "rows": 33,
+        "status": "PASS"
+      },
+      "similarity_function": {
+        "time": 0.0020172595977783203,
+        "results": 2,
+        "status": "PASS"
+      }
+    },
+    "api": {
+      "/system/health": {
+        "status": "FAIL",
+        "error": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /system/health (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C662E727B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "/system/health/detailed": {
+        "status": "FAIL",
+        "error": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /system/health/detailed (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C662E1BB10>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "/system/status": {
+        "status": "FAIL",
+        "error": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /system/status (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C662E1B610>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "/monitoring/status": {
+        "status": "FAIL",
+        "error": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /monitoring/status (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C662E75CD0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      },
+      "api_operations": {
+        "status": "FAIL",
+        "error": "HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /geoids (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C662E755B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+      }
+    },
+    "concurrent": {
+      "database_concurrent": {
+        "queries": 100,
+        "total_time": 0.06855463981628418,
+        "qps": 1458.6904732923185,
+        "avg_query_time": 0.002743523120880127,
+        "status": "PASS"
+      },
+      "api_concurrent": {
+        "requests": 50,
+        "successful": 0,
+        "total_time": 20.42892622947693,
+        "rps": 0.0,
+        "status": "WARN"
+      }
+    },
+    "integrity": {
+      "geoids_vectors": {
+        "total": 33,
+        "correct_dimension": 33,
+        "null_vectors": 0,
+        "status": "PASS"
+      },
+      "scars_vectors": {
+        "total": 521,
+        "correct_dimension": 521,
+        "null_vectors": 0,
+        "status": "PASS"
+      },
+      "jsonb_integrity": {
+        "total": 33,
+        "valid_symbolic": 33,
+        "valid_metadata": 33,
+        "status": "PASS"
+      }
+    }
+  },
+  "performance_metrics": {
+    "database_performance": "EXCELLENT",
+    "api_performance": "EXCELLENT",
+    "concurrent_performance": "EXCELLENT",
+    "data_integrity": "EXCELLENT",
+    "overall": "NEEDS ATTENTION"
+  },
+  "errors": [
+    "API operation error: HTTPConnectionPool(host='localhost', port=8001): Max retries exceeded with url: /geoids (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x000001C662E755B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))"
+  ],
+  "pass_rate": 0.5333333333333333
+}

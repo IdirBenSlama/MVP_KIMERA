@@ -1,0 +1,2112 @@
+{
+  "timestamp": "2025-06-17T14:28:03.162833",
+  "sqlite_analysis": {
+    "file_info": {
+      "size_mb": 0.53,
+      "created": "2025-06-16T21:40:54.477134",
+      "modified": "2025-06-16T22:46:47.043442",
+      "accessed": "2025-06-17T14:18:30.216437"
+    },
+    "tables": {
+      "scars": {
+        "columns": [
+          {
+            "name": "scar_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "geoids",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "reason",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "timestamp",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "resolved_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "pre_entropy",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "post_entropy",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "delta_entropy",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "cls_angle",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "semantic_polarity",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "mutation_frequency",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "weight",
+            "type": "FLOAT",
+            "nullable": false,
+            "primary_key": false
+          },
+          {
+            "name": "last_accessed",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "scar_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "vault_id",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "geoids": {
+        "columns": [
+          {
+            "name": "geoid_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "symbolic_state",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "metadata_json",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "semantic_state_json",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "semantic_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "insights": {
+        "columns": [
+          {
+            "name": "insight_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "insight_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "source_resonance_id",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "echoform_repr",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "application_domains",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "confidence",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "entropy_reduction",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "utility_score",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "last_reinforced_cycle",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "multimodal_groundings": {
+        "columns": [
+          {
+            "name": "grounding_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "concept_id",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "visual_features",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "auditory_features",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "tactile_features",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "temporal_context",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "causal_predecessors",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "causal_successors",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "causal_mechanisms",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "physical_properties",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "spatial_relationships",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "visual_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "auditory_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "causal_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "confidence_score",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 61,
+        "sample_data": [
+          [
+            "GROUNDING_24ea6f05",
+            "water",
+            "{\"features\": {\"features\": {\"color\": [\"blue\", \"transparent\"], \"shape\": [\"irregular\"], \"texture\": [\"smooth\", \"flowing\"], \"size\": [\"variable\"]}, \"feature_vector\": [0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.06987648636394998, -0.08957506271467552, -0.022762501929968926, 0.06161257435973991, -0.06508175106870367, 0.07761659724690523, -0.08975530179072505, 0.012104418954677357, 0.04451423639165035, 0.012471779116678045, -0.002494268543907066, 0.02302963353491962, -0.14122418884263038, 0.012068811346073688, 0.03164249983770648, -0.03382755503776438, -0.06259284381964828, 0.026353616513925676, 0.007346048281618234, 0.0545316390462559, 0.11771173229318231, -0.24828296553733165, -0.026532520741395504, 0.1025157666224887, 0.05852741512115012, -0.10543439373644875, -0.07992790373149825, 0.01061256947583884, -0.029337311945380914, -0.015096842690004456, 0.034463706065131265, -0.01630937453792905, 0.029979997185960686, -0.013912312842754779, 0.10688949453130853, 0.053807431195045496, 0.08382579422426513, -0.19368378961672614, -0.16358739071068237], \"associations\": [\"car\", \"fire\"], \"confidence\": 0.9, \"color\": \"blue\", \"shape\": \"irregular\", \"texture\": \"smooth\", \"size\": \"variable\"}, \"confidence\": 0.9, \"associations\": [\"car\", \"fire\"], \"properties\": {\"color\": \"blue\", \"shape\": \"irregular\", \"texture\": \"smooth\", \"size\": \"variable\"}}",
+            "{\"features\": {\"features\": {\"frequency\": \"mid\", \"amplitude\": \"moderate\", \"timbre\": \"noisy\", \"rhythm\": \"continuous\"}, \"feature_vector\": [0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0820849986238988, 0.1430666827544082, 0.24935220877729622, 0.43459820850707825, 0.7574651283969664, 0.7574651283969664, 0.43459820850707814, 0.2493522087772961, 0.14306668275440818, 0.0820849986238988, -0.16511909276876882, -0.038206560029056945, -0.09129762468411658, -0.10117425026510972, 0.10095144091141955, -0.11930941689430273, 0.12467202163782874, -0.06404442348209412, -0.1486241811625687, 0.05888098753856844, -0.035371247624329916, -0.15358935910122146, 0.007137399918001521, -0.05536794386515026, 0.021364570205364232, -0.004578559951163727, -0.1763362911520584, 0.13313096737693006, 0.07225605822685892, 0.006884296964066217, -0.03656652166258322, 0.0401599302052664, -0.06220760473079562, -0.12610856915550095, -0.11659379353641915, -0.1489028581848995, -0.01756971002431772, 0.08157393531814448, -0.15261639878992134, -0.10058629926584035, -0.04406289777408518, -0.18004721470802543, -0.16198478320139256, 0.08041079796191997, -0.17139337122340337, 0.005524817576182648, -0.04895972674195012, 0.02639344097599144, 0.11734694591981787, 0.11006072565211125], \"associations\": [\"fire\"], \"confidence\": 0.9, \"frequency\": [250, 2000], \"amplitude\": \"moderate\", \"timbre\": \"noisy\", \"rhythm\": \"continuous\"}, \"confidence\": 0.9, \"associations\": [\"fire\"], \"properties\": {\"frequency\": [250, 2000], \"amplitude\": \"moderate\", \"timbre\": \"noisy\", \"rhythm\": \"continuous\"}}",
+            "{}",
+            "{\"duration\": null, \"frequency\": null, \"temporal_patterns\": [], \"lifecycle\": null, \"confidence\": 0.5}",
+            null,
+            null,
+            null,
+            "{\"mass\": null, \"volume\": null, \"density\": 1000.0, \"state\": \"liquid\", \"interactions\": [{\"type\": \"electromagnetic\", \"strength\": 1.0000000000000001e-11, \"range\": Infinity, \"description\": \"Can conduct electricity\"}, {\"type\": \"fluid_dynamics\", \"strength\": 0.7, \"range\": 1.0, \"description\": \"Flows and exerts pressure\"}, {\"type\": \"thermal\", \"strength\": 0.6, \"range\": 0.1, \"description\": \"Exchanges heat with environment\"}], \"constraints\": [{\"type\": \"conservation_of_energy\", \"description\": \"Total energy must be conserved\", \"formula\": \"E_total = E_kinetic + E_potential + E_internal\"}, {\"type\": \"incompressible\", \"description\": \"Volume remains nearly constant\", \"parameters\": {\"bulk_modulus\": 2200000000.0}}, {\"type\": \"container_required\", \"description\": \"Takes shape of container\"}, {\"type\": \"thermodynamic\", \"description\": \"Temperature cannot go below absolute zero\", \"parameters\": {\"min_temperature\": 0.0}}, {\"type\": \"relativistic\", \"description\": \"Cannot exceed speed of light\", \"parameters\": {\"max_speed\": 299792458}}], \"confidence\": 0.9}",
+            null,
+            null,
+            null,
+            null,
+            "2025-06-17 05:25:31.433337",
+            1.0
+          ],
+          [
+            "GROUNDING_722a4d2e",
+            "fire",
+            "{\"features\": {\"features\": {\"color\": [\"red\", \"yellow\", \"orange\"], \"shape\": [\"irregular\", \"flickering\"], \"texture\": [\"intangible\"], \"size\": [\"variable\"]}, \"feature_vector\": [1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.2058192608828814, 0.07280662845127349, 0.04472443237706089, 0.13215735303574613, 0.028227294977900382, -0.09090391500933181, 0.09393488639124042, -0.024293256184293736, -0.25675358484976735, 0.13057669750908427, -0.12157032882014301, -0.06439348011772028, -0.20142357058073956, 0.028415643219169798, 0.007720177192288071, -0.13844483347742695, -0.08171910927362697, -0.08003944685735148, -0.1448251077998209, -0.032732485434979905, -0.057711055478457764, -0.07798954549572239, -0.10308795537116938, -0.05115342426525874, 0.014420227721292908, -0.13683169582369475, -0.19992683273710368, -0.0003621057639904537, -0.0439435483683015, 0.16684404892761004, 0.06058437787166646, -0.09589801272879854, -0.015082364862376428, -0.05331076677027646, 0.0354201234518384, -0.17718179810082826, 0.11024058423255792, 0.009284431898151245, 0.03358458934718823], \"associations\": [\"water\"], \"confidence\": 0.9, \"color\": \"red\", \"shape\": \"irregular\", \"texture\": \"intangible\", \"size\": \"variable\"}, \"confidence\": 0.9, \"associations\": [\"water\"], \"properties\": {\"color\": \"red\", \"shape\": \"irregular\", \"texture\": \"intangible\", \"size\": \"variable\"}}",
+            "{\"features\": {\"features\": {\"frequency\": \"mid\", \"amplitude\": \"moderate\", \"timbre\": \"noisy\", \"rhythm\": \"irregular\"}, \"feature_vector\": [0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0820849986238988, 0.1430666827544082, 0.24935220877729622, 0.43459820850707825, 0.7574651283969664, 0.7574651283969664, 0.43459820850707814, 0.2493522087772961, 0.14306668275440818, 0.0820849986238988, 0.04819989064316198, -0.05158448636334774, 0.10213869531483731, -0.05930574879928801, -0.12687109934533133, -0.12981597786176577, 0.03286256031181546, 0.13657816016636004, 0.05056236098679045, -0.12003583787349009, -0.12291228326204039, 0.16475848483212416, 0.13342403262116306, 0.0899468457179376, -0.02225279208491912, -0.1039668406785833, -0.015941123846649606, -0.13036808901430308, -0.14560343952629598, -0.006590076936101532, -0.009500359792234011, 0.18891122650213474, 0.06517189067729039, 0.08914299565847066, 0.015660464136577828, -0.127167064294337, -0.029085065071134283, 0.022833578134187293, 0.2021790213682161, 0.09264676767384625, 0.0008218614750022508, 0.005625396649617019, 0.1349244105000206, -0.07373205939344074, 0.13118248908412045, -0.026798452129557344, -0.05364298787676235, 0.018268023913851777, -0.017588845668372, -0.06832853408545958], \"associations\": [\"water\"], \"confidence\": 0.9, \"frequency\": [250, 2000], \"amplitude\": \"moderate\", \"timbre\": \"noisy\", \"rhythm\": \"irregular\"}, \"confidence\": 0.9, \"associations\": [\"water\"], \"properties\": {\"frequency\": [250, 2000], \"amplitude\": \"moderate\", \"timbre\": \"noisy\", \"rhythm\": \"irregular\"}}",
+            "{}",
+            "{\"duration\": null, \"frequency\": null, \"temporal_patterns\": [], \"lifecycle\": null, \"confidence\": 0.5}",
+            null,
+            null,
+            null,
+            "{\"mass\": null, \"volume\": null, \"density\": null, \"state\": \"unknown\", \"interactions\": [{\"type\": \"thermal\", \"strength\": 0.6, \"range\": 0.1, \"description\": \"Exchanges heat with environment\"}], \"constraints\": [{\"type\": \"conservation_of_energy\", \"description\": \"Total energy must be conserved\", \"formula\": \"E_total = E_kinetic + E_potential + E_internal\"}, {\"type\": \"thermodynamic\", \"description\": \"Temperature cannot go below absolute zero\", \"parameters\": {\"min_temperature\": 0.0}}, {\"type\": \"relativistic\", \"description\": \"Cannot exceed speed of light\", \"parameters\": {\"max_speed\": 299792458}}], \"confidence\": 0.5}",
+            null,
+            null,
+            null,
+            null,
+            "2025-06-17 05:25:31.449424",
+            0.99
+          ],
+          [
+            "GROUNDING_372bb1f1",
+            "earth",
+            "{\"features\": {\"features\": {\"size\": [\"medium\"], \"color\": [\"gray\"], \"shape\": [\"irregular\"], \"texture\": [\"smooth\"]}, \"feature_vector\": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.07333844041672817, 0.016134802221085372, -0.04846065234145577, -0.15425757933663853, 0.2571773891974915, -0.2011176730801661, -0.05022066503177078, -0.035785521660738374, 0.05384125076751506, 0.05662590129528982, 0.02092037659716343, -0.04968205570413699, -0.14994853316664075, -0.020798726170515505, 0.048604571602451546, 0.02553570080399284, 0.15560025539624978, 0.0068701526115630355, -0.009281296060080546, -0.08816785762791972, 0.10409206173000128, -0.0034520933193558662, 0.010622233965620485, 0.020217286331612763, 0.054469487111936644, 0.21197959323257096, 0.03662681801152484, 0.014881616821898206, 0.2515599417401124, -0.009998019976895901, -0.058208673633772724, -0.09125901495943911, 0.09368405371528762, -0.01221965214267233, 0.0031122153167192027, -0.04950166992132274, -0.01723302680763778, 0.11095730810710802, 0.0523304891917995], \"associations\": [\"apple\", \"car\", \"water\"], \"confidence\": 0.5, \"color\": \"gray\", \"shape\": \"irregular\", \"texture\": \"smooth\", \"size\": \"medium\"}, \"confidence\": 0.5, \"associations\": [\"apple\", \"car\", \"water\"], \"properties\": {\"color\": \"gray\", \"shape\": \"irregular\", \"texture\": \"smooth\", \"size\": \"medium\"}}",
+            "{\"features\": {\"features\": {\"amplitude\": \"moderate\", \"rhythm\": \"continuous\", \"frequency\": \"mid\", \"timbre\": \"complex\"}, \"feature_vector\": [0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0820849986238988, 0.1430666827544082, 0.24935220877729622, 0.43459820850707825, 0.7574651283969664, 0.7574651283969664, 0.43459820850707814, 0.2493522087772961, 0.14306668275440818, 0.0820849986238988, 0.21954803951222734, 0.11856078348762622, 0.019630832378698435, 0.027453571663805906, 0.013697272284051648, 0.008538584414365604, -0.14666484130431282, -0.018212349047540034, 0.08591167697177227, -0.01602068245169818, 0.04906570950370395, -0.034234783815021284, 0.2083359464677936, 0.0006544702421710721, -0.0363559779557523, 0.1662189267043541, 0.2207238381895217, -0.021780450734176345, -0.0075560666743869145, 0.0672079310639197, -0.10561893731467425, 0.04178656695509875, -0.06582433648285356, -0.12636232154370142, 0.07373112258015445, 0.00998526746421868, -0.006745125492806245, -0.07934763098737774, -0.020744165593297857, -0.1941341653669012, -0.1351261769599132, -0.009651032802487981, -0.09843985798797127, 0.03396306716871074, -0.24082037154250846, -0.12834025790506415, -0.03990495874763164, -0.0909148260765173, 0.0458593618772362, 0.1114164643301461], \"associations\": [\"water\", \"fire\"], \"confidence\": 0.5, \"frequency\": [250, 2000], \"amplitude\": \"moderate\", \"timbre\": \"complex\", \"rhythm\": \"continuous\"}, \"confidence\": 0.5, \"associations\": [\"water\", \"fire\"], \"properties\": {\"frequency\": [250, 2000], \"amplitude\": \"moderate\", \"timbre\": \"complex\", \"rhythm\": \"continuous\"}}",
+            "{}",
+            "{\"duration\": null, \"frequency\": null, \"temporal_patterns\": [], \"lifecycle\": null, \"confidence\": 0.5}",
+            null,
+            null,
+            null,
+            "{\"mass\": null, \"volume\": null, \"density\": null, \"state\": \"unknown\", \"interactions\": [], \"constraints\": [{\"type\": \"conservation_of_energy\", \"description\": \"Total energy must be conserved\", \"formula\": \"E_total = E_kinetic + E_potential + E_internal\"}, {\"type\": \"relativistic\", \"description\": \"Cannot exceed speed of light\", \"parameters\": {\"max_speed\": 299792458}}], \"confidence\": 0.5}",
+            null,
+            null,
+            null,
+            null,
+            "2025-06-17 05:25:31.460820",
+            0.7
+          ]
+        ]
+      },
+      "causal_relationships": {
+        "columns": [
+          {
+            "name": "relationship_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "cause_concept_id",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "effect_concept_id",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "causal_strength",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "evidence_quality",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "mechanism_description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "counterfactual_scenarios",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "intervention_predictions",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "causal_delay",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "temporal_pattern",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "validated_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "validation_method",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 14,
+        "sample_data": [
+          [
+            "CAUSAL_a08689b6",
+            "rain",
+            "wet_ground",
+            0.9,
+            0.95,
+            "Water falls from sky and accumulates on ground",
+            "[]",
+            null,
+            0.1,
+            "immediate",
+            "2025-06-17 05:27:32.713208",
+            null,
+            null
+          ],
+          [
+            "CAUSAL_105867dd",
+            "fire",
+            "smoke",
+            0.85,
+            0.9,
+            "Combustion produces particulate matter",
+            "[]",
+            null,
+            0.01,
+            "immediate",
+            "2025-06-17 05:27:32.724091",
+            null,
+            null
+          ],
+          [
+            "CAUSAL_ccdae817",
+            "low_pressure",
+            "cloud_formation",
+            0.8,
+            0.0,
+            "Low pressure creates updrafts that cool air, causing condensation",
+            "[]",
+            null,
+            3600.0,
+            "delayed",
+            "2025-06-17 05:35:16.326781",
+            null,
+            null
+          ]
+        ]
+      },
+      "self_models": {
+        "columns": [
+          {
+            "name": "model_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "model_version",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "processing_capabilities",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "knowledge_domains",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "reasoning_patterns",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "limitation_awareness",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "self_assessment_accuracy",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "introspection_depth",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "metacognitive_awareness",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "modification_history",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "modification_triggers",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "modification_outcomes",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "last_updated",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "validation_score",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 2,
+        "sample_data": [
+          [
+            "SELF_MODEL_db98c7e1",
+            2,
+            "{\"semantic_grounding\": 0.8, \"causal_reasoning\": 0.7, \"temporal_processing\": 0.6}",
+            "{\"physical_world\": 0.7, \"abstract_concepts\": 0.5, \"social_dynamics\": 0.3}",
+            "{\"deductive\": 0.8, \"inductive\": 0.6, \"abductive\": 0.5}",
+            "{\"context_window\": \"limited\", \"real_world_interaction\": \"none\", \"consciousness\": \"simulated\"}",
+            0.7,
+            0,
+            "{}",
+            null,
+            null,
+            null,
+            "2025-06-17 05:27:32.742442",
+            "2025-06-17 05:27:32.742448",
+            null
+          ],
+          [
+            "SELF_MODEL_7a31f71d",
+            2,
+            "{\"grounding\": 0.6, \"causal_reasoning\": 0.3, \"abstraction\": 0.2, \"counterfactual\": 0.1, \"self_awareness\": 0.15}",
+            "{\"physics_concepts\": 0.7, \"causal_mechanisms\": 0.3, \"temporal_patterns\": 0.5, \"abstract_concepts\": 0.1, \"natural_phenomena\": 0.6, \"transformations\": 0.4}",
+            "{\"deductive\": 0.7, \"inductive\": 0.4, \"abductive\": 0.2, \"analogical\": 0.3}",
+            "{\"consciousness\": \"No genuine self-awareness, only self-description\", \"creativity\": \"Cannot generate truly novel concepts\", \"emotion\": \"No affective understanding\", \"social_dynamics\": \"Limited understanding of social causation\", \"ethics\": \"No value system or moral reasoning\", \"aesthetics\": \"No concept of beauty or artistic value\", \"meaning\": \"Can ground symbols but not understand significance\", \"purpose\": \"No teleological reasoning\", \"qualia\": \"No subjective experience modeling\"}",
+            0.4,
+            0,
+            "{}",
+            null,
+            null,
+            null,
+            "2025-06-17 05:46:47.038867",
+            "2025-06-17 05:46:47.038873",
+            null
+          ]
+        ]
+      },
+      "introspection_logs": {
+        "columns": [
+          {
+            "name": "log_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "introspection_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "current_state_analysis",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "belief_examination",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "process_monitoring",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "predicted_state",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "actual_state",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "accuracy_score",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "awareness_level",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "confidence_in_introspection",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "timestamp",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "processing_context",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "compositional_semantics": {
+        "columns": [
+          {
+            "name": "composition_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "component_concepts",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "composition_rules",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "emergent_meaning",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "context_variations",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "pragmatic_implications",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "comprehension_tests",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "understanding_confidence",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "abstraction_level",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "abstract_properties",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "generalization_scope",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "validation_status",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "conceptual_abstractions": {
+        "columns": [
+          {
+            "name": "abstraction_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "concept_name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "abstraction_level",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "essential_properties",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "non_essential_properties",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "concrete_instances",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "boundary_cases",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "counter_examples",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "parent_concepts",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "child_concepts",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "related_concepts",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "concept_coherence",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "usage_consistency",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "last_refined",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 4,
+        "sample_data": [
+          [
+            "ABSTRACT_cc5b1087",
+            "growth",
+            2,
+            "{\"direction\": \"increasing\", \"continuity\": \"gradual\", \"requirements\": [\"resources\", \"time\"], \"limit\": \"carrying capacity\"}",
+            null,
+            "[{\"type\": \"biological\", \"example\": \"plant_growth\"}, {\"type\": \"economic\", \"example\": \"gdp_growth\"}, {\"type\": \"cognitive\", \"example\": \"knowledge_growth\"}]",
+            null,
+            null,
+            null,
+            null,
+            null,
+            0.85,
+            0.8,
+            "2025-06-17 05:35:16.418741",
+            "2025-06-17 05:35:16.418747"
+          ],
+          [
+            "ABSTRACT_8ae9f944",
+            "transformation",
+            2,
+            "{\"initial_state\": \"required\", \"final_state\": \"required\", \"energy\": \"required\"}",
+            null,
+            "[{\"name\": \"melting\", \"type\": \"example\"}, {\"name\": \"learning\", \"type\": \"example\"}, {\"name\": \"growth\", \"type\": \"example\"}, {\"name\": \"evolution\", \"type\": \"example\"}]",
+            null,
+            null,
+            null,
+            null,
+            null,
+            1.0,
+            0.8,
+            "2025-06-17 05:46:46.983217",
+            "2025-06-17 05:46:46.983223"
+          ],
+          [
+            "ABSTRACT_9643eb9a",
+            "system",
+            2,
+            "{}",
+            null,
+            "[{\"name\": \"organism\", \"type\": \"example\"}, {\"name\": \"ecosystem\", \"type\": \"example\"}, {\"name\": \"computer\", \"type\": \"example\"}, {\"name\": \"society\", \"type\": \"example\"}]",
+            null,
+            null,
+            null,
+            null,
+            null,
+            0.9,
+            0.8,
+            "2025-06-17 05:46:46.996199",
+            "2025-06-17 05:46:46.996205"
+          ]
+        ]
+      },
+      "value_systems": {
+        "columns": [
+          {
+            "name": "value_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "value_name",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "value_description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "value_strength",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "value_priority",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "learning_source",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "learning_evidence",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "learning_confidence",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "conflicting_values",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "resolution_strategies",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "application_domains",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "application_examples",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "last_applied",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "stability_score",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "genuine_opinions": {
+        "columns": [
+          {
+            "name": "opinion_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "topic",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "stance",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "reasoning",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "confidence",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "supporting_values",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "value_weights",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "supporting_evidence",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "contradicting_evidence",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "experiential_basis",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "previous_opinions",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "change_triggers",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "stability_indicators",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "consistency_score",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "consistency_violations",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "formed_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "last_updated",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "revision_count",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "ethical_reasoning": {
+        "columns": [
+          {
+            "name": "reasoning_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "ethical_dilemma",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "stakeholders",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "potential_harms",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "potential_benefits",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "deontological_analysis",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "consequentialist_analysis",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "virtue_ethics_analysis",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "ethical_decision",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "decision_reasoning",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "confidence_in_decision",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "competing_values",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "value_prioritization",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "decision_outcome",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "outcome_evaluation",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "enhanced_scars": {
+        "columns": [
+          {
+            "name": "scar_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "geoids",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "reason",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "timestamp",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "resolved_by",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "pre_entropy",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "post_entropy",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "delta_entropy",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "cls_angle",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "semantic_polarity",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "mutation_frequency",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "weight",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "understanding_depth",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "causal_understanding",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "compositional_analysis",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "contextual_factors",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "introspective_accuracy",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "metacognitive_insights",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "value_implications",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "opinion_changes",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "scar_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "understanding_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "causal_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "vault_id",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "last_accessed",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 1,
+        "sample_data": [
+          [
+            "SCAR_DEMO_1750138052.791509",
+            "[\"concept_rain\", \"concept_wet\"]",
+            "Causal relationship discovered",
+            "2025-06-16 22:27:32.791517",
+            "semantic_grounding",
+            2.5,
+            1.8,
+            -0.7,
+            45.0,
+            0.8,
+            0.1,
+            1.5,
+            0.85,
+            "{\"mechanism\": \"precipitation causes surface wetness\", \"strength\": 0.9, \"reversible\": false}",
+            "{\"components\": [\"rain\", \"ground\", \"wetness\"], \"emergence\": \"weather effect\"}",
+            "{\"weather_conditions\": \"rainy\", \"surface_type\": \"various\"}",
+            0.8,
+            null,
+            "{\"practical\": \"seek shelter when raining\", \"safety\": \"slippery surfaces\"}",
+            null,
+            null,
+            null,
+            null,
+            "understanding_vault",
+            "2025-06-17 05:27:32.793427"
+          ]
+        ]
+      },
+      "enhanced_geoids": {
+        "columns": [
+          {
+            "name": "geoid_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "symbolic_state",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "metadata_json",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "semantic_state_json",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "compositional_structure",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "abstraction_level",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "causal_relationships",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "contextual_variations",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "multimodal_groundings",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "physical_groundings",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "experiential_basis",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "understanding_confidence",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "comprehension_depth",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "conceptual_clarity",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "semantic_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "compositional_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "causal_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "grounding_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "last_updated",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "understanding_tests": {
+        "columns": [
+          {
+            "name": "test_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "test_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "test_description",
+            "type": "TEXT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "test_input",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "expected_output",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "actual_output",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "passed",
+            "type": "BOOLEAN",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "accuracy_score",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "understanding_quality",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "system_state",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "test_conditions",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "test_duration",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 3,
+        "sample_data": [
+          [
+            "TEST_b4068fbe",
+            "compositional_semantics",
+            "Understanding 'red apple' compositionally",
+            "{\"components\": [\"red\", \"apple\"], \"context\": \"fruit description\"}",
+            "{\"meaning\": \"apple with red color\", \"properties\": [\"edible\", \"fruit\", \"colored\"]}",
+            "{\"meaning\": \"apple that is red\", \"properties\": [\"edible\", \"fruit\", \"colored\", \"sweet\"]}",
+            0,
+            0.0,
+            0.5,
+            "{}",
+            null,
+            "2025-06-17 05:27:32.754844",
+            null
+          ],
+          [
+            "TEST_18377404",
+            "compositional",
+            "Understanding 'heavy rain'",
+            "{\"components\": [\"heavy\", \"rain\"]}",
+            "{\"meaning\": \"intense precipitation\"}",
+            "{\"meaning\": \"rain with high intensity\"}",
+            0,
+            0.0,
+            0.5,
+            "{}",
+            null,
+            "2025-06-17 05:35:16.455719",
+            null
+          ],
+          [
+            "TEST_59decd94",
+            "causal",
+            "Understanding fire causation",
+            "{\"concept\": \"fire\", \"question\": \"what causes it?\"}",
+            "{\"causes\": [\"heat\", \"fuel\", \"oxygen\"]}",
+            "{\"causes\": [\"heat\", \"combustible material\", \"oxygen\"]}",
+            0,
+            0.0,
+            0.5,
+            "{}",
+            null,
+            "2025-06-17 05:35:16.466419",
+            null
+          ]
+        ]
+      },
+      "consciousness_indicators": {
+        "columns": [
+          {
+            "name": "indicator_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "measurement_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "phi_value",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "global_accessibility",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "reportability_score",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "attention_focus",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "experience_report",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "qualia_indicators",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "awareness_level",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "processing_integration",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "information_flow",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "binding_strength",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "measured_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "measurement_context",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "confidence_in_measurement",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "semantic_groundings": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "concept",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false
+          },
+          {
+            "name": "confidence",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "visual_features",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "auditory_features",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "causal_features",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "temporal_features",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "physical_features",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "updated_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "multimodal_features": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "concept",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false
+          },
+          {
+            "name": "modality",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false
+          },
+          {
+            "name": "feature_vector",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "feature_properties",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "confidence",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "temporal_patterns": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "concept",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false
+          },
+          {
+            "name": "pattern_type",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "period",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "trend",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "confidence",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "observations",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "physical_properties": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "concept",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false
+          },
+          {
+            "name": "mass",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "volume",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "density",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "temperature",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "state",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "interactions",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "constraints",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      },
+      "processing_goals": {
+        "columns": [
+          {
+            "name": "id",
+            "type": "INTEGER",
+            "nullable": false,
+            "primary_key": true
+          },
+          {
+            "name": "goal_id",
+            "type": "VARCHAR",
+            "nullable": false,
+            "primary_key": false
+          },
+          {
+            "name": "description",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "priority",
+            "type": "INTEGER",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "criteria",
+            "type": "JSON",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "progress",
+            "type": "FLOAT",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "deadline",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "status",
+            "type": "VARCHAR",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "created_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          },
+          {
+            "name": "completed_at",
+            "type": "DATETIME",
+            "nullable": true,
+            "primary_key": false
+          }
+        ],
+        "row_count": 0,
+        "sample_data": []
+      }
+    },
+    "data_summary": {
+      "scars": {
+        "vault_distribution": {},
+        "entropy_stats": {
+          "avg_pre_entropy": null,
+          "avg_post_entropy": null,
+          "avg_delta_entropy": null
+        },
+        "recent_activity": 0,
+        "resolution_methods": {}
+      },
+      "insights": {
+        "insight_types": {},
+        "status_distribution": {},
+        "confidence_stats": {
+          "avg": null,
+          "min": null,
+          "max": null
+        }
+      }
+    },
+    "relationships": {},
+    "performance_metrics": {
+      "total_tables": 21,
+      "total_indexes": 48,
+      "database_size_mb": 0.53
+    }
+  },
+  "neo4j_analysis": {
+    "status": "unavailable",
+    "reason": "modules_not_found"
+  }
+}

@@ -11,6 +11,7 @@ from .semantic_metrics import SemanticMetricsCollector
 from .thermodynamic_analyzer import ThermodynamicAnalyzer
 from .system_observer import SystemObserver
 from .benchmarking_suite import BenchmarkRunner, BenchmarkSuite
+from .cognitive_field_metrics import CognitiveFieldMetricsCollector, get_metrics_collector
 
 __all__ = [
     'EntropyMonitor',
@@ -18,5 +19,7 @@ __all__ = [
     'ThermodynamicAnalyzer',
     'SystemObserver',
     'BenchmarkRunner',
-    'BenchmarkSuite'
+    'BenchmarkSuite',
+    'CognitiveFieldMetricsCollector',
+    'get_metrics_collector'
 ]

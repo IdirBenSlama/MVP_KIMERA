@@ -59,11 +59,21 @@ class VaultManager:
                 try:
                     create_geoid(geo.to_dict())
                 except Exception:
-                    pass  # don’t block SQLite retrieval if Neo4j down
+                    pass  # don't block SQLite retrieval if Neo4j down
             return geoids
 
-    def insert_scar(self, scar: ScarRecord | GeoidState, vector: list[float]) -> ScarDB:
-        """Insert a ScarRecord and its vector into the persistent store."""
+    def insert_scar(self, scar: ScarRecord, vector: List[float], db: Session = None):
+        """
+        Inserts a new SCAR into the database and vector index,
+        using an existing session if provided.
+        """
+        if db:
+            self._insert_scar_data(db, scar, vector)
+        else:
+            with SessionLocal() as session:
+                self._insert_scar_data(session, scar, vector)
+
+    def _insert_scar_data(self, db: Session, scar: ScarRecord, vector: List[float]):
         if isinstance(scar, GeoidState):
             scar = ScarRecord(
                 scar_id=f"SCAR_{uuid.uuid4().hex[:8]}",
@@ -95,10 +105,9 @@ class VaultManager:
             scar_vector=vector,
             vault_id=vault_id,
         )
-        with SessionLocal() as db:
-            db.add(scar_db)
-            db.commit()
-            db.refresh(scar_db)
+        db.add(scar_db)
+        db.commit()
+        db.refresh(scar_db)
         # --- async write to Neo4j (fire-and-forget) ---
         try:
             create_scar({

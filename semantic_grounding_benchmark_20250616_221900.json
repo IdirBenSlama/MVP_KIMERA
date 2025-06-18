@@ -1,0 +1,113 @@
+{
+  "timestamp": "2025-06-16T22:19:00.261818",
+  "benchmarks": {
+    "grounding_speed": {
+      "total_concepts": 20,
+      "total_time": 0.005834341049194336,
+      "average_time": 0.00029059648513793943,
+      "min_time": 0.00015163421630859375,
+      "max_time": 0.001459360122680664,
+      "std_time": 0.000323095436179423,
+      "average_confidence": 0.7514999999999998,
+      "concepts_per_second": 3427.97924073393
+    },
+    "multimodal_integration": {
+      "total_integrations": 5,
+      "total_time": 0.0006055831909179688,
+      "average_time": 0.00012040138244628906,
+      "integrations_per_second": 8256.503937007874
+    },
+    "causal_reasoning": {
+      "concepts_analyzed": 5,
+      "total_time": 0.002569437026977539,
+      "average_causal_time": 0.0005101203918457031,
+      "counterfactual_time": 1.1920928955078125e-05,
+      "total_relations_found": 5,
+      "relations_per_concept": 1.0
+    },
+    "temporal_processing": {
+      "data_points": 100,
+      "total_time": 0.0008242130279541016,
+      "pattern_detection_time": 0.0004189014434814453,
+      "evolution_analysis_time": 0.00040268898010253906,
+      "prediction_time": 1.6689300537109375e-06,
+      "patterns_found": 1
+    },
+    "physical_simulation": {
+      "objects_mapped": 5,
+      "interactions_simulated": 3,
+      "total_time": 0.00011801719665527344,
+      "average_mapping_time": 8.821487426757812e-06,
+      "average_simulation_time": 2.2649765014648438e-05
+    },
+    "intentional_processing": {
+      "inputs_processed": 5,
+      "active_goals": 2,
+      "total_time": 0.0007786750793457031,
+      "average_processing_time": 0.00015506744384765624,
+      "goal_progress": {
+        "understand_nature": 0.0,
+        "explore_physics": 0.0
+      }
+    },
+    "memory_usage": {
+      "baseline_memory_mb": 145.859375,
+      "final_memory_mb": 154.8359375,
+      "total_memory_increase_mb": 8.9765625,
+      "concepts_grounded": 1000,
+      "memory_per_concept_kb": 9.192,
+      "checkpoints": [
+        {
+          "concepts": 0,
+          "memory_mb": 145.93359375,
+          "delta_mb": 0.07421875
+        },
+        {
+          "concepts": 100,
+          "memory_mb": 146.828125,
+          "delta_mb": 0.96875
+        },
+        {
+          "concepts": 200,
+          "memory_mb": 147.6640625,
+          "delta_mb": 1.8046875
+        },
+        {
+          "concepts": 300,
+          "memory_mb": 148.5546875,
+          "delta_mb": 2.6953125
+        },
+        {
+          "concepts": 400,
+          "memory_mb": 149.45703125,
+          "delta_mb": 3.59765625
+        },
+        {
+          "concepts": 500,
+          "memory_mb": 150.3515625,
+          "delta_mb": 4.4921875
+        },
+        {
+          "concepts": 600,
+          "memory_mb": 151.2578125,
+          "delta_mb": 5.3984375
+        },
+        {
+          "concepts": 700,
+          "memory_mb": 152.1484375,
+          "delta_mb": 6.2890625
+        },
+        {
+          "concepts": 800,
+          "memory_mb": 153.04296875,
+          "delta_mb": 7.18359375
+        },
+        {
+          "concepts": 900,
+          "memory_mb": 153.9453125,
+          "delta_mb": 8.0859375
+        }
+      ]
+    }
+  }
+}

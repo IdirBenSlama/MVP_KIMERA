@@ -1,0 +1,111 @@
+{
+  "timestamp": "2025-06-17T17:29:06.254953",
+  "tests": {
+    "database": {
+      "jsonb_query": {
+        "time": 0.003017902374267578,
+        "rows": 0,
+        "status": "PASS"
+      },
+      "vector_similarity": {
+        "time": 1.9276976585388184,
+        "rows": 10,
+        "avg_similarity": 1.0,
+        "status": "PASS"
+      },
+      "view_mv_scar_patterns": {
+        "time": 0.0011458396911621094,
+        "rows": 2,
+        "status": "PASS"
+      },
+      "view_mv_geoid_complexity": {
+        "time": 0.0007293224334716797,
+        "rows": 33,
+        "status": "PASS"
+      },
+      "similarity_function": {
+        "time": 0.002386808395385742,
+        "results": 2,
+        "status": "PASS"
+      }
+    },
+    "api": {
+      "/system/health": {
+        "status_code": 200,
+        "time": 2.128612756729126,
+        "status": "FAIL"
+      },
+      "/system/health/detailed": {
+        "status_code": 404,
+        "time": 2.0396363735198975,
+        "status": "FAIL"
+      },
+      "/system/status": {
+        "status_code": 200,
+        "time": 2.037423610687256,
+        "status": "PASS"
+      },
+      "/monitoring/status": {
+        "status_code": 200,
+        "time": 2.0689351558685303,
+        "status": "PASS"
+      },
+      "geoid_creation": {
+        "status": "PASS",
+        "time": 2.098926067352295,
+        "geoid_id": "GEOID_bd119ac5"
+      },
+      "contradiction_processing": {
+        "status": "PASS",
+        "time": 3.8438146114349365,
+        "contradictions_detected": 12,
+        "scars_created": 12
+      }
+    },
+    "concurrent": {
+      "database_concurrent": {
+        "queries": 100,
+        "total_time": 0.0651085376739502,
+        "qps": 1535.8968819232107,
+        "avg_query_time": 0.0026766324043273927,
+        "status": "PASS"
+      },
+      "api_concurrent": {
+        "requests": 50,
+        "successful": 50,
+        "total_time": 11.05192756652832,
+        "rps": 4.524097692372609,
+        "status": "PASS"
+      }
+    },
+    "integrity": {
+      "geoids_vectors": {
+        "total": 33,
+        "correct_dimension": 33,
+        "null_vectors": 0,
+        "status": "PASS"
+      },
+      "scars_vectors": {
+        "total": 521,
+        "correct_dimension": 521,
+        "null_vectors": 0,
+        "status": "PASS"
+      },
+      "jsonb_integrity": {
+        "total": 33,
+        "valid_symbolic": 33,
+        "valid_metadata": 33,
+        "status": "PASS"
+      }
+    }
+  },
+  "performance_metrics": {
+    "database_performance": "EXCELLENT",
+    "api_performance": "EXCELLENT",
+    "concurrent_performance": "EXCELLENT",
+    "data_integrity": "EXCELLENT",
+    "overall": "GOOD"
+  },
+  "errors": [],
+  "pass_rate": 0.875
+}

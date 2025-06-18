@@ -2,6 +2,9 @@
 """
 KIMERA SWM Startup Script
 """
+from dotenv import load_dotenv
+load_dotenv()  # Load .env file
+
 import uvicorn
 import sys
 import socket
@@ -34,6 +37,10 @@ if __name__ == "__main__":
         print("❌ No free ports available between 8001-8010")
         sys.exit(1)
     
+    # Save the port to a file for the test script to use
+    with open(".port.tmp", "w") as f:
+        f.write(str(port))
+    
     print(f"📡 Server will start on http://localhost:{port}")
     print("📚 API Documentation available at:")
     print(f"   - Swagger UI: http://localhost:{port}/docs")
@@ -47,11 +54,10 @@ if __name__ == "__main__":
     
     try:
         uvicorn.run(
-            app, 
+            "backend.api.main:app", 
             host="0.0.0.0", 
             port=port,
-            log_level="info",
-            reload=False
+            log_level="info"
         )
     except KeyboardInterrupt:
         print("\n🛑 Server stopped by user")

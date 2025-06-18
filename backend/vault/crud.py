@@ -2,6 +2,7 @@
 CRUD operations for interacting with the database models.
 """
 from sqlalchemy.orm import Session
+from typing import List, Tuple, Optional
 from . import database as models
 from ..core.insight import InsightScar
 
@@ -43,4 +44,34 @@ def update_insight_status(db: Session, insight_id: str, status: str, utility_sco
         db_insight.utility_score = utility_score
         db.commit()
         db.refresh(db_insight)
-    return db_insight 
+    return db_insight
+
+def get_geoids_with_embeddings(limit: int = 100) -> List[Tuple[str, Optional[List[float]]]]:
+    """
+    Retrieve geoids with their embeddings from the database.
+    
+    Args:
+        limit: Maximum number of geoids to retrieve
+        
+    Returns:
+        List of tuples containing (geoid_id, embedding) where embedding is a list of floats or None
+    """
+    from .database import SessionLocal
+    
+    with SessionLocal() as db:
+        # Check if GeoidDB exists in the models
+        if hasattr(models, 'GeoidDB'):
+            geoids_db = db.query(models.GeoidDB).limit(limit).all()
+            
+            result = []
+            for geoid_db in geoids_db:
+                # Check for semantic_vector attribute
+                if hasattr(geoid_db, 'semantic_vector') and geoid_db.semantic_vector is not None:
+                    result.append((geoid_db.geoid_id, geoid_db.semantic_vector))
+                else:
+                    result.append((geoid_db.geoid_id, None))
+            
+            return result
+        else:
+            # Return empty list if GeoidDB doesn't exist
+            return [] 

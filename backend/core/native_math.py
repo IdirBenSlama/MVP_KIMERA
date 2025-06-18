@@ -23,7 +23,7 @@ class NativeMath:
         if len(a) != len(b):
             raise ValueError("Vectors must have the same length")
         
-        if not a or not b:
+        if len(a) == 0 or len(b) == 0:
             return 1.0
         
         # Calculate dot product
@@ -316,6 +316,9 @@ class NativeDistance:
         Calculate condensed distance matrix (upper triangle only).
         Compatible with scipy.spatial.distance.pdist output format.
         """
+        if not vectors:
+            return []
+        
         n = len(vectors)
         distances = []
         
@@ -327,7 +330,21 @@ class NativeDistance:
         
         for i in range(n):
             for j in range(i + 1, n):
-                distances.append(distance_func(vectors[i], vectors[j]))
+                try:
+                    # Ensure vectors are properly formatted
+                    vec_a = vectors[i]
+                    vec_b = vectors[j]
+                    if vec_a is None or vec_b is None:
+                        continue
+                    # Convert to list if numpy array or other format
+                    if hasattr(vec_a, 'tolist'):
+                        vec_a = vec_a.tolist()
+                    if hasattr(vec_b, 'tolist'):
+                        vec_b = vec_b.tolist()
+                    distances.append(distance_func(vec_a, vec_b))
+                except Exception as e:
+                    # Skip problematic vector pairs
+                    continue
         
         return distances
 

@@ -24,13 +24,16 @@ try:
     import scipy.stats as stats
     import scipy.optimize as optimize
     import scipy.special as special
-    from scipy.spatial.distance import entropy as scipy_entropy
+    # Use the correct import path for entropy function
+    from scipy.stats import entropy as scipy_entropy
     SCIPY_AVAILABLE = True
 except ImportError:
     SCIPY_AVAILABLE = False
-    # Fallback message for development
+    # Only warn during development, not in production
     import warnings
-    warnings.warn("SciPy not available. Using native implementations only.", UserWarning)
+    import os
+    if os.getenv('KIMERA_DEBUG', '').lower() in ('true', '1', 'yes'):
+        warnings.warn("SciPy not available. Using native implementations only.", UserWarning)
 
 
 class EnhancedEntropyCalculator:

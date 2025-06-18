@@ -64,7 +64,7 @@ class InsightDB(Base):
     insight_type = Column(String, index=True)
     source_resonance_id = Column(String, index=True)
     echoform_repr = Column(JSON)
-    application_domains = Column(JSON, index=True)
+    application_domains = Column(JSON)  # JSON columns cannot be indexed directly in PostgreSQL
     confidence = Column(Float)
     entropy_reduction = Column(Float)
     utility_score = Column(Float, default=0.0)
