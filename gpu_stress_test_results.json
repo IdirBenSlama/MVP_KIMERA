@@ -1,0 +1,68 @@
+{
+  "field_creation": [
+    {
+      "batch_size": 100,
+      "duration_s": 0.25135359998967033,
+      "throughput_fields_per_sec": 397.8459031583777,
+      "memory_used_mb": 0.1005859375,
+      "memory_per_field_kb": 1.03
+    },
+    {
+      "batch_size": 500,
+      "duration_s": 0.5431992999947397,
+      "throughput_fields_per_sec": 920.4724674807975,
+      "memory_used_mb": 0.49609375,
+      "memory_per_field_kb": 1.016
+    },
+    {
+      "batch_size": 1000,
+      "duration_s": 1.174375799993868,
+      "throughput_fields_per_sec": 851.5161841764974,
+      "memory_used_mb": 0.9921875,
+      "memory_per_field_kb": 1.016
+    },
+    {
+      "batch_size": 2500,
+      "duration_s": 2.669170400011353,
+      "throughput_fields_per_sec": 936.6206069081863,
+      "memory_used_mb": 2.48046875,
+      "memory_per_field_kb": 1.016
+    },
+    {
+      "batch_size": 5000,
+      "duration_s": 5.416611199994804,
+      "throughput_fields_per_sec": 923.0863754822934,
+      "memory_used_mb": 4.9609375,
+      "memory_per_field_kb": 1.016
+    },
+    {
+      "batch_size": 10000,
+      "duration_s": 12.95455039999797,
+      "throughput_fields_per_sec": 771.9295298740408,
+      "memory_used_mb": 10.3896484375,
+      "memory_per_field_kb": 1.0639
+    }
+  ],
+  "neighbor_finding": {
+    "field_count": 10000,
+    "test_queries": 100,
+    "search_time_s": 1.1017279000079725,
+    "search_throughput": 90.76651321916815,
+    "total_neighbors": 5000
+  },
+  "batch_operations": {
+    "total_fields": 25000,
+    "creation_throughput": 796.608055644958,
+    "search_throughput": 132.0981975730829,
+    "gpu_efficiency": 102.33205237619329,
+    "gpu_memory_mb": 57.3359375
+  },
+  "performance_comparison": {
+    "gpu_creation_rate": 875.9798272459248,
+    "gpu_search_rate": 123.56772647940484,
+    "jax_creation_rate": 5.7,
+    "jax_search_rate": 92.0,
+    "creation_improvement": 153.68067144665346,
+    "search_improvement": 1.3431274617326614
+  }
+}

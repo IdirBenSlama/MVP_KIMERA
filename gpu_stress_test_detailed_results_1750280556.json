@@ -1,0 +1,104 @@
+{
+  "system_info": {
+    "platform": "Windows-10-10.0.19045-SP0",
+    "processor": "AMD64 Family 23 Model 8 Stepping 2, AuthenticAMD",
+    "machine": "AMD64",
+    "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+    "pytorch_version": "2.7.1+cu118",
+    "cuda_available": true,
+    "cpu_count_physical": 24,
+    "cpu_count_logical": 48,
+    "total_ram_gb": 63.89379119873047,
+    "available_ram_gb": 37.80034255981445,
+    "nvidia_smi_available": true,
+    "gpu_name": "NVIDIA GeForce RTX 4090",
+    "gpu_memory_gb": 23.9876708984375,
+    "cuda_version": "11.8",
+    "cudnn_version": 90100,
+    "gpu_compute_capability": "8.9",
+    "gpu_multiprocessor_count": 128,
+    "gpu_warp_size": 32,
+    "gpu_max_threads_per_block": 1024,
+    "gpu_max_threads_per_multiprocessor": 2048,
+    "gpu_total_constant_memory": 65536,
+    "gpu_max_shared_memory_per_block": 49152,
+    "gpu_max_registers_per_block": 65536,
+    "initial_gpu_state": {
+      "gpu_available": true,
+      "timestamp": 1750280555.9626958,
+      "memory_allocated_bytes": 0,
+      "memory_allocated_mb": 0.0,
+      "memory_reserved_bytes": 0,
+      "memory_reserved_mb": 0.0,
+      "max_memory_allocated_bytes": 0,
+      "max_memory_allocated_mb": 0.0,
+      "max_memory_reserved_bytes": 0,
+      "max_memory_reserved_mb": 0.0,
+      "memory_cached_bytes": 0,
+      "memory_cached_mb": 0.0,
+      "total_memory_bytes": 25756565504,
+      "total_memory_gb": 23.9876708984375,
+      "memory_usage_percentage": 0.0,
+      "memory_reserved_percentage": 0.0,
+      "gpu_multiprocessor_count": 128,
+      "gpu_warp_size": 32,
+      "gpu_max_threads_per_block": 1024,
+      "gpu_max_threads_per_multiprocessor": 2048,
+      "nvidia_driver_version": "576.40",
+      "memory_total_mb": 24564.0,
+      "memory_used_mb": 5891.0,
+      "memory_free_mb": 18252.0,
+      "gpu_utilization_percent": 11.0,
+      "memory_utilization_percent": 9.0,
+      "temperature_celsius": 43.0,
+      "power_draw_watts": 31.77,
+      "power_limit_watts": 450.0,
+      "clock_graphics_mhz": 285.0,
+      "clock_memory_mhz": 405.0,
+      "clock_graphics_max_mhz": 3165.0,
+      "clock_memory_max_mhz": 10501.0,
+      "fan_speed_percent": 0.0,
+      "compute_mode": "Default",
+      "display_mode": "[Requested functionality has been deprecated]",
+      "display_active": "Enabled",
+      "persistence_mode": "[N/A]",
+      "memory_used_percentage": 23.982250447809804,
+      "power_usage_percentage": 7.06,
+      "clock_graphics_percentage": 9.004739336492891
+    },
+    "cpu_frequency_current_mhz": 3000.0,
+    "cpu_frequency_min_mhz": 0.0,
+    "cpu_frequency_max_mhz": 3000.0
+  },
+  "test_results": {
+    "field_creation": {
+      "error": "attempted relative import beyond top-level package"
+    },
+    "neighbor_search": {
+      "error": "attempted relative import beyond top-level package"
+    },
+    "memory_limits": {
+      "error": "Import failed: attempted relative import beyond top-level package"
+    }
+  },
+  "performance_metrics": {
+    "peak_field_creation_rate": 0,
+    "peak_performance_config": null,
+    "jax_improvement_factor": 0,
+    "target_achievement": 0,
+    "gpu_optimization_success": false
+  },
+  "detailed_gpu_monitoring": {},
+  "realtime_metrics": {
+    "total_monitoring_sessions": 0,
+    "total_samples_collected": 0,
+    "monitoring_coverage_sec": 0
+  },
+  "memory_analysis": {},
+  "thermal_performance": {},
+  "power_consumption": {},
+  "comparison_baseline": {
+    "jax_cpu_performance": 5.7,
+    "target_improvement": 153.7
+  }
+}
