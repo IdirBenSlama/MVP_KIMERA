@@ -1,0 +1,208 @@
+2025-06-18 06:53:03,739 - INFO - KIMERA Real-World Test Suite starting...
+2025-06-18 06:53:03,740 - INFO - Targeting API Server at: http://localhost:8001
+2025-06-18 06:53:04,147 - INFO - ================================================================================
+2025-06-18 06:53:04,148 - INFO - 🌍 STARTING COMPREHENSIVE REAL-WORLD TEST SUITE
+2025-06-18 06:53:04,148 - INFO - ================================================================================
+2025-06-18 06:53:04,461 - INFO - HTTP Request: GET http://localhost:8001/system/status "HTTP/1.1 200 OK"
+2025-06-18 06:53:04,462 - INFO - ✅ KIMERA system is healthy: unknown
+2025-06-18 06:53:04,488 - INFO - HTTP Request: GET http://localhost:8001/system/status "HTTP/1.1 200 OK"
+2025-06-18 06:53:04,561 - INFO - HTTP Request: GET http://localhost:8001/system/stability "HTTP/1.1 200 OK"
+2025-06-18 06:53:04,563 - INFO - HTTP Request: GET http://localhost:8001/monitoring/entropy/current "HTTP/1.1 404 Not Found"
+2025-06-18 06:53:04,565 - INFO - HTTP Request: GET http://localhost:8001/vault/understanding/metrics "HTTP/1.1 400 Bad Request"
+2025-06-18 06:53:04,565 - INFO - 💰 TESTING FINANCIAL MARKET SCENARIO
+2025-06-18 06:53:04,566 - INFO - ============================================================
+2025-06-18 06:53:05,072 - INFO - HTTP Request: POST http://localhost:8001/geoids "HTTP/1.1 200 OK"
+2025-06-18 06:53:05,074 - INFO -   💰 Created bull_market_tech: GEOID_ce124565
+2025-06-18 06:53:05,181 - INFO - HTTP Request: POST http://localhost:8001/geoids "HTTP/1.1 200 OK"
+2025-06-18 06:53:05,182 - INFO -   💰 Created bear_market_tech: GEOID_e8c89769
+2025-06-18 06:53:05,183 - INFO -   🔍 Processing financial contradictions...
+2025-06-18 06:53:05,285 - INFO - HTTP Request: POST http://localhost:8001/process/contradictions/sync "HTTP/1.1 200 OK"
+2025-06-18 06:53:05,390 - INFO - HTTP Request: POST http://localhost:8001/process/contradictions/sync "HTTP/1.1 200 OK"
+2025-06-18 06:53:05,391 - INFO -   ✅ Financial scenario complete: 0 contradictions found
+2025-06-18 06:53:07,396 - INFO - ⚡ RUNNING SYSTEM STRESS TEST
+2025-06-18 06:53:07,400 - INFO - HTTP Request: POST http://localhost:8001/system/cycle "HTTP/1.1 200 OK"
+2025-06-18 06:53:07,403 - INFO - HTTP Request: POST http://localhost:8001/system/cycle "HTTP/1.1 200 OK"
+2025-06-18 06:53:07,406 - INFO - HTTP Request: POST http://localhost:8001/system/cycle "HTTP/1.1 200 OK"
+2025-06-18 06:53:07,409 - INFO - HTTP Request: POST http://localhost:8001/system/cycle "HTTP/1.1 200 OK"
+2025-06-18 06:53:07,412 - INFO - HTTP Request: POST http://localhost:8001/system/cycle "HTTP/1.1 200 OK"
+2025-06-18 06:53:11,240 - INFO - HTTP Request: POST http://localhost:8001/system/proactive_scan "HTTP/1.1 500 Internal Server Error"
+2025-06-18 06:53:11,259 - INFO - 🧠 ANALYZING CROSS-DOMAIN INSIGHTS
+2025-06-18 06:53:11,550 - INFO - HTTP Request: GET http://localhost:8001/system/status "HTTP/1.1 200 OK"
+2025-06-18 06:53:11,615 - INFO - HTTP Request: GET http://localhost:8001/system/stability "HTTP/1.1 200 OK"
+2025-06-18 06:53:11,618 - INFO - HTTP Request: GET http://localhost:8001/monitoring/entropy/current "HTTP/1.1 404 Not Found"
+2025-06-18 06:53:11,620 - INFO - HTTP Request: GET http://localhost:8001/vault/understanding/metrics "HTTP/1.1 400 Bad Request"
+2025-06-18 06:53:11,620 - INFO - 📋 GENERATING COMPREHENSIVE REPORT
+2025-06-18 06:53:11,621 - INFO - 
+{
+  "start_time": "2025-06-18T06:53:04.147837",
+  "scenarios": {
+    "financial_markets": {
+      "name": "financial_markets",
+      "start_time": "2025-06-18T06:53:04.566646",
+      "geoids_created": [
+        "GEOID_ce124565",
+        "GEOID_e8c89769"
+      ],
+      "contradictions_found": 0,
+      "insights": []
+    }
+  },
+  "system_metrics": {
+    "initial_status": {
+      "timestamp": 1750254784.4450347,
+      "system_info": {
+        "active_geoids": 0,
+        "vault_a_scars": 411,
+        "vault_b_scars": 410,
+        "system_entropy": 0,
+        "cycle_count": 0
+      },
+      "embedding_performance": {
+        "total_embeddings": 0,
+        "total_time": 0.0,
+        "avg_time_per_embedding": 0.0,
+        "model_load_time": 5.0338287353515625
+      },
+      "system_metrics": {
+        "cpu_percent": 10.4,
+        "memory_percent": 42.4,
+        "disk_usage": 63.3
+      },
+      "gpu_info": {
+        "gpu_available": true,
+        "gpu_count": 1,
+        "current_device": 0,
+        "gpu_name": "NVIDIA GeForce RTX 4090",
+        "gpu_memory_allocated": 1742063616,
+        "gpu_memory_reserved": 1759510528
+      },
+      "model_info": {
+        "embedding_model": "BAAI/bge-m3",
+        "embedding_dimension": 1024,
+        "model_type": "transformers"
+      },
+      "revolutionary_intelligence": {
+        "available": true,
+        "status": "operational"
+      }
+    },
+    "before_test": {
+      "status": {
+        "timestamp": 1750254784.481065,
+        "system_info": {
+          "active_geoids": 0,
+          "vault_a_scars": 411,
+          "vault_b_scars": 410,
+          "system_entropy": 0,
+          "cycle_count": 0
+        },
+        "embedding_performance": {
+          "total_embeddings": 0,
+          "total_time": 0.0,
+          "avg_time_per_embedding": 0.0,
+          "model_load_time": 5.0338287353515625
+        },
+        "system_metrics": {
+          "cpu_percent": 3.1,
+          "memory_percent": 42.4,
+          "disk_usage": 63.3
+        },
+        "gpu_info": {
+          "gpu_available": true,
+          "gpu_count": 1,
+          "current_device": 0,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "gpu_memory_allocated": 1742063616,
+          "gpu_memory_reserved": 1759510528
+        },
+        "model_info": {
+          "embedding_model": "BAAI/bge-m3",
+          "embedding_dimension": 1024,
+          "model_type": "transformers"
+        },
+        "revolutionary_intelligence": {
+          "available": true,
+          "status": "operational"
+        }
+      },
+      "stability": {
+        "vault_pressure": 1.0,
+        "semantic_cohesion": 0.7833962937067185,
+        "entropic_stability": 0.5,
+        "axis_convergence": 0.7833962937067185,
+        "vault_resonance": 0.0,
+        "contradiction_lineage_ambiguity": 1.0
+      }
+    },
+    "after_test": {
+      "status": {
+        "timestamp": 1750254791.5425973,
+        "system_info": {
+          "active_geoids": 2,
+          "vault_a_scars": 411,
+          "vault_b_scars": 410,
+          "system_entropy": 4.607816762435909,
+          "cycle_count": 5
+        },
+        "embedding_performance": {
+          "total_embeddings": 12,
+          "total_time": 0.8422591686248779,
+          "avg_time_per_embedding": 0.07018826405207317,
+          "model_load_time": 5.0338287353515625
+        },
+        "system_metrics": {
+          "cpu_percent": 6.1,
+          "memory_percent": 42.5,
+          "disk_usage": 63.3
+        },
+        "gpu_info": {
+          "gpu_available": true,
+          "gpu_count": 1,
+          "current_device": 0,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "gpu_memory_allocated": 1750583296,
+          "gpu_memory_reserved": 1761607680
+        },
+        "model_info": {
+          "embedding_model": "BAAI/bge-m3",
+          "embedding_dimension": 1024,
+          "model_type": "transformers"
+        },
+        "revolutionary_intelligence": {
+          "available": true,
+          "status": "operational"
+        }
+      },
+      "stability": {
+        "vault_pressure": 1.0,
+        "semantic_cohesion": 0.7846365025166815,
+        "entropic_stability": 0.5,
+        "axis_convergence": 0.7846365025166815,
+        "vault_resonance": 0.0,
+        "contradiction_lineage_ambiguity": 1.0
+      }
+    }
+  },
+  "insights": [],
+  "performance": {},
+  "status": "completed",
+  "system_stress_test": {
+    "cycles": 5,
+    "proactive_scans": 0,
+    "errors": 1
+  },
+  "cross_domain_analysis": {
+    "total_contradictions": 0,
+    "cross_domain_patterns": []
+  },
+  "end_time": "2025-06-18T06:53:11.620934"
+}
+2025-06-18 06:53:11,639 - INFO - 
+💾 Detailed results saved to: real_world_test_results_20250618_065311.json
+2025-06-18 06:53:11,639 - INFO - 🧹 Cleaning up test artifacts...
+2025-06-18 06:53:11,640 - INFO -   ℹ️ Created 2 geoids during testing
+2025-06-18 06:53:11,640 - INFO -   ℹ️ Geoids preserved for analysis (cleanup not implemented)
+2025-06-18 06:53:11,640 - INFO - 
+🎉 REAL-WORLD TEST SUITE COMPLETED SUCCESSFULLY!
+2025-06-18 06:53:11,640 - INFO - ================================================================================
+2025-06-18 06:53:11,641 - INFO - ✅✅✅ REAL-WORLD TEST SUITE COMPLETED SUCCESSFULLY ✅✅✅

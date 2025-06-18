@@ -1,0 +1,164 @@
+{
+  "start_time": "2025-06-18T06:53:04.147837",
+  "scenarios": {
+    "financial_markets": {
+      "name": "financial_markets",
+      "start_time": "2025-06-18T06:53:04.566646",
+      "geoids_created": [
+        "GEOID_ce124565",
+        "GEOID_e8c89769"
+      ],
+      "contradictions_found": 0,
+      "insights": []
+    }
+  },
+  "system_metrics": {
+    "initial_status": {
+      "timestamp": 1750254784.4450347,
+      "system_info": {
+        "active_geoids": 0,
+        "vault_a_scars": 411,
+        "vault_b_scars": 410,
+        "system_entropy": 0,
+        "cycle_count": 0
+      },
+      "embedding_performance": {
+        "total_embeddings": 0,
+        "total_time": 0.0,
+        "avg_time_per_embedding": 0.0,
+        "model_load_time": 5.0338287353515625
+      },
+      "system_metrics": {
+        "cpu_percent": 10.4,
+        "memory_percent": 42.4,
+        "disk_usage": 63.3
+      },
+      "gpu_info": {
+        "gpu_available": true,
+        "gpu_count": 1,
+        "current_device": 0,
+        "gpu_name": "NVIDIA GeForce RTX 4090",
+        "gpu_memory_allocated": 1742063616,
+        "gpu_memory_reserved": 1759510528
+      },
+      "model_info": {
+        "embedding_model": "BAAI/bge-m3",
+        "embedding_dimension": 1024,
+        "model_type": "transformers"
+      },
+      "revolutionary_intelligence": {
+        "available": true,
+        "status": "operational"
+      }
+    },
+    "before_test": {
+      "status": {
+        "timestamp": 1750254784.481065,
+        "system_info": {
+          "active_geoids": 0,
+          "vault_a_scars": 411,
+          "vault_b_scars": 410,
+          "system_entropy": 0,
+          "cycle_count": 0
+        },
+        "embedding_performance": {
+          "total_embeddings": 0,
+          "total_time": 0.0,
+          "avg_time_per_embedding": 0.0,
+          "model_load_time": 5.0338287353515625
+        },
+        "system_metrics": {
+          "cpu_percent": 3.1,
+          "memory_percent": 42.4,
+          "disk_usage": 63.3
+        },
+        "gpu_info": {
+          "gpu_available": true,
+          "gpu_count": 1,
+          "current_device": 0,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "gpu_memory_allocated": 1742063616,
+          "gpu_memory_reserved": 1759510528
+        },
+        "model_info": {
+          "embedding_model": "BAAI/bge-m3",
+          "embedding_dimension": 1024,
+          "model_type": "transformers"
+        },
+        "revolutionary_intelligence": {
+          "available": true,
+          "status": "operational"
+        }
+      },
+      "stability": {
+        "vault_pressure": 1.0,
+        "semantic_cohesion": 0.7833962937067185,
+        "entropic_stability": 0.5,
+        "axis_convergence": 0.7833962937067185,
+        "vault_resonance": 0.0,
+        "contradiction_lineage_ambiguity": 1.0
+      }
+    },
+    "after_test": {
+      "status": {
+        "timestamp": 1750254791.5425973,
+        "system_info": {
+          "active_geoids": 2,
+          "vault_a_scars": 411,
+          "vault_b_scars": 410,
+          "system_entropy": 4.607816762435909,
+          "cycle_count": 5
+        },
+        "embedding_performance": {
+          "total_embeddings": 12,
+          "total_time": 0.8422591686248779,
+          "avg_time_per_embedding": 0.07018826405207317,
+          "model_load_time": 5.0338287353515625
+        },
+        "system_metrics": {
+          "cpu_percent": 6.1,
+          "memory_percent": 42.5,
+          "disk_usage": 63.3
+        },
+        "gpu_info": {
+          "gpu_available": true,
+          "gpu_count": 1,
+          "current_device": 0,
+          "gpu_name": "NVIDIA GeForce RTX 4090",
+          "gpu_memory_allocated": 1750583296,
+          "gpu_memory_reserved": 1761607680
+        },
+        "model_info": {
+          "embedding_model": "BAAI/bge-m3",
+          "embedding_dimension": 1024,
+          "model_type": "transformers"
+        },
+        "revolutionary_intelligence": {
+          "available": true,
+          "status": "operational"
+        }
+      },
+      "stability": {
+        "vault_pressure": 1.0,
+        "semantic_cohesion": 0.7846365025166815,
+        "entropic_stability": 0.5,
+        "axis_convergence": 0.7846365025166815,
+        "vault_resonance": 0.0,
+        "contradiction_lineage_ambiguity": 1.0
+      }
+    }
+  },
+  "insights": [],
+  "performance": {},
+  "status": "completed",
+  "system_stress_test": {
+    "cycles": 5,
+    "proactive_scans": 0,
+    "errors": 1
+  },
+  "cross_domain_analysis": {
+    "total_contradictions": 0,
+    "cross_domain_patterns": []
+  },
+  "end_time": "2025-06-18T06:53:11.620934"
+}

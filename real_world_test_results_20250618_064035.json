@@ -1,0 +1,371 @@
+{
+  "start_time": "2025-06-18T06:37:32.436129",
+  "scenarios": {
+    "financial_markets": {
+      "name": "financial_markets",
+      "start_time": "2025-06-18T06:37:34.559937",
+      "geoids_created": [
+        {
+          "geoid_id": "GEOID_15643ec6",
+          "scenario": "bull_market_tech"
+        },
+        {
+          "geoid_id": "GEOID_23a14cce",
+          "scenario": "bear_market_tech"
+        },
+        {
+          "geoid_id": "GEOID_2242a030",
+          "scenario": "market_euphoria"
+        },
+        {
+          "geoid_id": "GEOID_583be842",
+          "scenario": "flight_to_safety"
+        }
+      ],
+      "contradictions_found": 0,
+      "insights": [],
+      "end_time": "2025-06-18T06:37:54.061077"
+    },
+    "weather_systems": {
+      "name": "weather_systems",
+      "start_time": "2025-06-18T06:37:57.074229",
+      "geoids_created": [
+        {
+          "geoid_id": "GEOID_b069b8aa",
+          "scenario": "high_pressure_clear"
+        },
+        {
+          "geoid_id": "GEOID_64423fef",
+          "scenario": "low_pressure_storm"
+        },
+        {
+          "geoid_id": "GEOID_85d8ce47",
+          "scenario": "temperature_inversion"
+        },
+        {
+          "geoid_id": "GEOID_ad566148",
+          "scenario": "microclimate_anomaly"
+        }
+      ],
+      "contradictions_found": 0,
+      "insights": [],
+      "end_time": "2025-06-18T06:38:14.183170"
+    },
+    "social_dynamics": {
+      "name": "social_dynamics",
+      "start_time": "2025-06-18T06:38:17.196153",
+      "geoids_created": [
+        {
+          "geoid_id": "GEOID_830cb103",
+          "scenario": "group_consensus"
+        },
+        {
+          "geoid_id": "GEOID_43f74acd",
+          "scenario": "group_polarization"
+        },
+        {
+          "geoid_id": "GEOID_227e34cf",
+          "scenario": "false_consensus"
+        },
+        {
+          "geoid_id": "GEOID_fda7828e",
+          "scenario": "emergent_leadership"
+        }
+      ],
+      "contradictions_found": 0,
+      "insights": [],
+      "end_time": "2025-06-18T06:38:34.291533"
+    },
+    "scientific_discovery": {
+      "name": "scientific_discovery",
+      "start_time": "2025-06-18T06:38:37.305541",
+      "geoids_created": [
+        {
+          "geoid_id": "GEOID_a7da7675",
+          "scenario": "established_theory"
+        },
+        {
+          "geoid_id": "GEOID_39283c88",
+          "scenario": "anomalous_observation"
+        },
+        {
+          "geoid_id": "GEOID_51739a35",
+          "scenario": "competing_hypothesis"
+        },
+        {
+          "geoid_id": "GEOID_4be6086a",
+          "scenario": "paradigm_shift_evidence"
+        }
+      ],
+      "contradictions_found": 0,
+      "insights": [],
+      "end_time": "2025-06-18T06:38:54.479791"
+    },
+    "crisis_management": {
+      "name": "crisis_management",
+      "start_time": "2025-06-18T06:38:57.493777",
+      "geoids_created": [
+        {
+          "geoid_id": "GEOID_79d70692",
+          "scenario": "resource_abundance"
+        },
+        {
+          "geoid_id": "GEOID_47dc7a01",
+          "scenario": "resource_scarcity_crisis"
+        },
+        {
+          "geoid_id": "GEOID_55c3a1bf",
+          "scenario": "information_paradox"
+        },
+        {
+          "geoid_id": "GEOID_093f564d",
+          "scenario": "false_calm"
+        }
+      ],
+      "contradictions_found": 0,
+      "insights": [],
+      "end_time": "2025-06-18T06:39:14.528224"
+    }
+  },
+  "system_metrics": {
+    "initial_status": {
+      "timestamp": 1750253854.537607,
+      "system_info": {
+        "active_geoids": 0,
+        "vault_a_scars": 252,
+        "vault_b_scars": 269,
+        "system_entropy": 0,
+        "cycle_count": 0
+      },
+      "embedding_performance": {
+        "total_embeddings": 0,
+        "total_time": 0.0,
+        "avg_time_per_embedding": 0.0,
+        "model_load_time": 4.545696496963501
+      },
+      "system_metrics": {
+        "cpu_percent": 14.4,
+        "memory_percent": 46.2,
+        "disk_usage": 63.3
+      },
+      "gpu_info": {
+        "gpu_available": true,
+        "gpu_count": 1,
+        "current_device": 0,
+        "gpu_name": "NVIDIA GeForce RTX 4090",
+        "gpu_memory_allocated": 1742063616,
+        "gpu_memory_reserved": 1759510528
+      },
+      "model_info": {
+        "embedding_model": "BAAI/bge-m3",
+        "embedding_dimension": 1024,
+        "model_type": "transformers"
+      },
+      "revolutionary_intelligence": {
+        "available": true,
+        "status": "operational"
+      }
+    }
+  },
+  "insights": [],
+  "performance": {},
+  "status": "completed",
+  "system_stress_test": {
+    "name": "system_stress_test",
+    "start_time": "2025-06-18T06:39:19.539005",
+    "operations_completed": 5,
+    "errors_encountered": 1,
+    "performance_metrics": {
+      "initial": {
+        "status": {
+          "timestamp": 1750253961.6014528,
+          "system_info": {
+            "active_geoids": 20,
+            "vault_a_scars": 252,
+            "vault_b_scars": 269,
+            "system_entropy": 42.300164822998354,
+            "cycle_count": 0
+          },
+          "embedding_performance": {
+            "total_embeddings": 20,
+            "total_time": 1.3117592334747314,
+            "avg_time_per_embedding": 0.06558796167373657,
+            "model_load_time": 4.545696496963501
+          },
+          "system_metrics": {
+            "cpu_percent": 3.0,
+            "memory_percent": 46.0,
+            "disk_usage": 63.3
+          },
+          "gpu_info": {
+            "gpu_available": true,
+            "gpu_count": 1,
+            "current_device": 0,
+            "gpu_name": "NVIDIA GeForce RTX 4090",
+            "gpu_memory_allocated": 1750583296,
+            "gpu_memory_reserved": 1761607680
+          },
+          "model_info": {
+            "embedding_model": "BAAI/bge-m3",
+            "embedding_dimension": 1024,
+            "model_type": "transformers"
+          },
+          "revolutionary_intelligence": {
+            "available": true,
+            "status": "operational"
+          }
+        },
+        "stability": {
+          "vault_pressure": 0.0,
+          "semantic_cohesion": 0.7812028619100828,
+          "entropic_stability": 0.5,
+          "axis_convergence": 0.7812028619100828,
+          "vault_resonance": 1.0,
+          "contradiction_lineage_ambiguity": 0.0
+        }
+      },
+      "final": {
+        "status": {
+          "timestamp": 1750254009.7203872,
+          "system_info": {
+            "active_geoids": 20,
+            "vault_a_scars": 311,
+            "vault_b_scars": 310,
+            "system_entropy": 46.19048732050431,
+            "cycle_count": 5
+          },
+          "embedding_performance": {
+            "total_embeddings": 120,
+            "total_time": 6.143453359603882,
+            "avg_time_per_embedding": 0.05119544466336568,
+            "model_load_time": 4.545696496963501
+          },
+          "system_metrics": {
+            "cpu_percent": 3.7,
+            "memory_percent": 46.0,
+            "disk_usage": 63.3
+          },
+          "gpu_info": {
+            "gpu_available": true,
+            "gpu_count": 1,
+            "current_device": 0,
+            "gpu_name": "NVIDIA GeForce RTX 4090",
+            "gpu_memory_allocated": 1750583296,
+            "gpu_memory_reserved": 1761607680
+          },
+          "model_info": {
+            "embedding_model": "BAAI/bge-m3",
+            "embedding_dimension": 1024,
+            "model_type": "transformers"
+          },
+          "revolutionary_intelligence": {
+            "available": true,
+            "status": "operational"
+          }
+        },
+        "stability": {
+          "vault_pressure": 1.0,
+          "semantic_cohesion": 0.7812028619100828,
+          "entropic_stability": 0.5,
+          "axis_convergence": 0.7812028619100828,
+          "vault_resonance": 0.0,
+          "contradiction_lineage_ambiguity": 1.0
+        }
+      },
+      "geoid_delta": 0
+    },
+    "end_time": "2025-06-18T06:40:15.930192"
+  },
+  "cross_domain_analysis": {
+    "total_contradictions": 0,
+    "domain_analysis": {
+      "financial_markets": {
+        "contradictions": 0,
+        "geoids_created": 4,
+        "insights": 0
+      },
+      "weather_systems": {
+        "contradictions": 0,
+        "geoids_created": 4,
+        "insights": 0
+      },
+      "social_dynamics": {
+        "contradictions": 0,
+        "geoids_created": 4,
+        "insights": 0
+      },
+      "scientific_discovery": {
+        "contradictions": 0,
+        "geoids_created": 4,
+        "insights": 0
+      },
+      "crisis_management": {
+        "contradictions": 0,
+        "geoids_created": 4,
+        "insights": 0
+      }
+    },
+    "cross_domain_patterns": [],
+    "system_adaptation": {
+      "entropy_state": {},
+      "stability_metrics": {
+        "vault_pressure": 1.0,
+        "semantic_cohesion": 0.7812028619100828,
+        "entropic_stability": 0.5,
+        "axis_convergence": 0.7812028619100828,
+        "vault_resonance": 0.0,
+        "contradiction_lineage_ambiguity": 1.0
+      },
+      "adaptation_evidence": "System maintained stability while processing complex contradictions"
+    }
+  },
+  "final_metrics": {
+    "status": {
+      "timestamp": 1750254029.3114066,
+      "system_info": {
+        "active_geoids": 20,
+        "vault_a_scars": 311,
+        "vault_b_scars": 310,
+        "system_entropy": 46.19048732050431,
+        "cycle_count": 5
+      },
+      "embedding_performance": {
+        "total_embeddings": 120,
+        "total_time": 6.143453359603882,
+        "avg_time_per_embedding": 0.05119544466336568,
+        "model_load_time": 4.545696496963501
+      },
+      "system_metrics": {
+        "cpu_percent": 2.7,
+        "memory_percent": 46.0,
+        "disk_usage": 63.3
+      },
+      "gpu_info": {
+        "gpu_available": true,
+        "gpu_count": 1,
+        "current_device": 0,
+        "gpu_name": "NVIDIA GeForce RTX 4090",
+        "gpu_memory_allocated": 1750583296,
+        "gpu_memory_reserved": 1761607680
+      },
+      "model_info": {
+        "embedding_model": "BAAI/bge-m3",
+        "embedding_dimension": 1024,
+        "model_type": "transformers"
+      },
+      "revolutionary_intelligence": {
+        "available": true,
+        "status": "operational"
+      }
+    },
+    "stability": {
+      "vault_pressure": 1.0,
+      "semantic_cohesion": 0.7812028619100828,
+      "entropic_stability": 0.5,
+      "axis_convergence": 0.7812028619100828,
+      "vault_resonance": 0.0,
+      "contradiction_lineage_ambiguity": 1.0
+    }
+  },
+  "end_time": "2025-06-18T06:40:35.539306"
+}

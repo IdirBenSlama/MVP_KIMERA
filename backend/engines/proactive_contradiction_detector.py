@@ -18,6 +18,23 @@ from ..core.native_math import NativeMath
 from .contradiction_engine import ContradictionEngine, TensionGradient
 
 
+def sanitize_for_json(obj):
+    """Convert numpy types to standard Python types for JSON serialization"""
+    if isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, dict):
+        return {k: sanitize_for_json(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [sanitize_for_json(item) for item in obj]
+    elif hasattr(obj, '__dict__'):
+        return {k: sanitize_for_json(v) for k, v in obj.__dict__.items()}
+    return obj
+
+
 @dataclass
 class ProactiveDetectionConfig:
     """Configuration for proactive contradiction detection"""
@@ -94,7 +111,8 @@ class ProactiveContradictionDetector:
         results["potential_scars"] = len(results["tensions_found"])
         results["status"] = "completed"
         
-        return results
+        # Sanitize all numpy types for JSON serialization
+        return sanitize_for_json(results)
     
     def _load_geoids_for_analysis(self, db: Session) -> List[GeoidState]:
         """Load geoids from database for analysis"""
@@ -171,7 +189,8 @@ class ProactiveContradictionDetector:
     
     def _calculate_similarity(self, geoid_a: GeoidState, geoid_b: GeoidState) -> float:
         """Calculate semantic similarity between two geoids"""
-        if not geoid_a.embedding_vector or not geoid_b.embedding_vector:
+        if geoid_a.embedding_vector is None or geoid_b.embedding_vector is None or \
+           len(geoid_a.embedding_vector) == 0 or len(geoid_b.embedding_vector) == 0:
             return 0.0
             
         try:

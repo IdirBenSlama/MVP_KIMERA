@@ -1,0 +1,8 @@
+2025-06-18 06:45:57,240 - INFO - KIMERA Real-World Test Suite starting...
+2025-06-18 06:45:57,240 - INFO - Targeting API Server at: http://localhost:8001
+2025-06-18 06:45:57,674 - INFO - ================================================================================
+2025-06-18 06:45:57,674 - INFO - 🌍 STARTING COMPREHENSIVE REAL-WORLD TEST SUITE
+2025-06-18 06:45:57,674 - INFO - ================================================================================
+2025-06-18 06:45:59,960 - ERROR - ❌ Cannot connect to KIMERA system: All connection attempts failed
+2025-06-18 06:45:59,961 - INFO - 💡 Make sure to start KIMERA with: python run_kimera.py
+2025-06-18 06:45:59,961 - ERROR - ❌❌❌ REAL-WORLD TEST SUITE FAILED ❌❌❌

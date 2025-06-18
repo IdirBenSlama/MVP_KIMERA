@@ -1,0 +1,83 @@
+{
+  "timestamp": "2025-06-18T03:39:33.816774",
+  "summary": {
+    "total_tests": 8,
+    "passed_tests": 6,
+    "success_rate": 0.75
+  },
+  "test_results": [
+    {
+      "test": "law_registry",
+      "passed": true,
+      "details": "Laws: 12, Integrity: True"
+    },
+    {
+      "test": "context_assessment",
+      "passed": true,
+      "details": "Passed: 4/4"
+    },
+    {
+      "test": "rule_flexibility",
+      "passed": true,
+      "details": "Authorizations: 4, Immutable protected: True"
+    },
+    {
+      "test": "compliance_enforcement",
+      "passed": false,
+      "details": "Passed: 2/4"
+    },
+    {
+      "test": "stabilization_system",
+      "passed": true,
+      "details": "Stabilizations: 0"
+    },
+    {
+      "test": "edge_cases",
+      "passed": true,
+      "details": "Passed: 3/4"
+    },
+    {
+      "test": "performance",
+      "passed": true,
+      "details": "Assessment: 0.00s, Enforcement: 0.00s"
+    },
+    {
+      "test": "full_integration",
+      "passed": false,
+      "details": "Scenarios passed: 1/3"
+    }
+  ],
+  "system_status": {
+    "law_registry_status": {
+      "version": "1.0.0",
+      "total_laws": 12,
+      "laws_by_category": {
+        "core": 2,
+        "neutrality": 3,
+        "safety": 2,
+        "cognitive": 4,
+        "thermodynamic": 1
+      },
+      "laws_by_flexibility": {
+        "immutable": 2,
+        "contextual": 8,
+        "adaptive": 2
+      },
+      "registry_hash": "cb57575082ec1692468b8a63ecae922cafe92ed928947c0c512301fdfcb0036d",
+      "last_integrity_check": "2025-06-18T03:39:33.791300",
+      "integrity_valid": true
+    },
+    "active_deviations": 0,
+    "stabilization_forces": 0,
+    "enforcement_history_size": 29,
+    "system_stability": {
+      "stability_score": 1.0,
+      "total_deviations": 0,
+      "critical_deviations": 0,
+      "average_deviation": 0.0,
+      "status": "stable"
+    },
+    "recent_assessments": 10,
+    "recent_authorizations": 8
+  }
+}

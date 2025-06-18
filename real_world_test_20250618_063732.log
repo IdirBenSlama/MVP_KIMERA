@@ -1,0 +1,32 @@
+2025-06-18 06:37:32,435 - INFO - KIMERA Real-World Test Suite starting...
+2025-06-18 06:37:32,435 - INFO - Targeting API Server at: http://localhost:8001
+2025-06-18 06:37:32,497 - INFO - ================================================================================
+2025-06-18 06:37:34,554 - INFO - ============================================================
+2025-06-18 06:37:34,559 - INFO - ============================================================
+2025-06-18 06:37:45,654 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:37:47,784 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:37:49,894 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:37:51,984 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:37:57,073 - INFO - ============================================================
+2025-06-18 06:38:07,812 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:09,932 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:12,042 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:14,182 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:17,195 - INFO - ============================================================
+2025-06-18 06:38:27,971 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:30,091 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:32,192 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:34,291 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:37,305 - INFO - ============================================================
+2025-06-18 06:38:48,110 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:50,219 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:52,349 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:54,479 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:38:57,493 - INFO - ============================================================
+2025-06-18 06:39:08,218 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:39:10,337 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:39:12,447 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:39:14,527 - ERROR - Contradiction processing failed: HTTP 500
+2025-06-18 06:39:19,538 - INFO - ============================================================
+2025-06-18 06:40:18,945 - INFO - ============================================================
+2025-06-18 06:40:35,582 - INFO - ================================================================================

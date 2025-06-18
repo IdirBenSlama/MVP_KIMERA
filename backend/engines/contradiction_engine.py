@@ -15,7 +15,7 @@ class TensionGradient:
     gradient_type: str
 
 class ContradictionEngine:
-    def __init__(self, tension_threshold: float = 0.75):
+    def __init__(self, tension_threshold: float = 0.4):
         self.tension_threshold = tension_threshold
 
     def detect_tension_gradients(self, geoids: List[GeoidState]) -> List[TensionGradient]:
@@ -27,6 +27,7 @@ class ContradictionEngine:
                 layer = self._layer_conflict_intensity(a, b)
                 sym = self._symbolic_opposition(a, b)
                 score = (emb + layer + sym) / 3
+
                 if score > self.tension_threshold:
                     tensions.append(
                         TensionGradient(a.geoid_id, b.geoid_id, score, "composite")
@@ -34,7 +35,8 @@ class ContradictionEngine:
         return tensions
 
     def _embedding_misalignment(self, a: GeoidState, b: GeoidState) -> float:
-        if not a.embedding_vector or not b.embedding_vector:
+        if a.embedding_vector is None or b.embedding_vector is None or \
+           len(a.embedding_vector) == 0 or len(b.embedding_vector) == 0:
             return 0.0
         
         # Use native cosine distance implementation
